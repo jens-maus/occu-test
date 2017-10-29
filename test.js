@@ -4,7 +4,7 @@ const Rega = require('homematic-rega');
 
 require('should');
 
-cp.spawnSync('./install_rega.sh', {shell: true, stdio: 'inherit'});
+cp.spawnSync('sudo ./install_rega.sh', {shell: true, stdio: 'inherit'});
 
 const regaSubscriptions = {};
 const regaBuffer = [];
