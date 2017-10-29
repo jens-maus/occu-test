@@ -6,6 +6,20 @@
 
 ... work in progress, only a simple PoC until now.
 
+
+## Todo
+
+* run tests on all 3 flavors of ReGaHSS (legacy, standard, community)
+* tests, tests, tests
+* integrate simulated rfd/hmipserver, test device interactions
+* ...
+
+
+## Contributing
+
+Pull Requests Welcome! :-)
+
+
 ## License
 
 MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
