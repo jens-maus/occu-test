@@ -140,6 +140,9 @@ describe('basic remote script tests', () => {
 
 describe('stop ReGaHss process', () => {
     it('should stop', function (done) {
-        regaProc.kill();
+        regaProc.on('close', () => {
+            done();
+        });
+        regaProc.kill('SIGHUP');
     });
 });
