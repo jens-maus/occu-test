@@ -1,0 +1,33 @@
+{
+  "name": "occu-test",
+  "version": "0.0.1",
+  "description": "Automated tests for the eQ-3 OCCU",
+  "private": true,
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hobbyquaker/occu-test.git"
+  },
+  "keywords": [
+    "eQ-3",
+    "Homematic",
+    "OCCU",
+    "ReGaHSS",
+    "test",
+    "automation"
+  ],
+  "author": "Sebastian Raff <hq@ccu.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hobbyquaker/occu-test/issues"
+  },
+  "homepage": "https://github.com/hobbyquaker/occu-test#readme",
+  "dependencies": {
+    "homematic-rega": "^1.0.0",
+    "mocha": "^4.0.1",
+    "should": "^13.1.3",
+    "stream-splitter": "^0.3.2"
+  }
+}
