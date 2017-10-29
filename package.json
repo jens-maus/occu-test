@@ -1,10 +1,10 @@
 {
   "name": "occu-test",
   "version": "0.0.1",
-  "description": "Automated tests for the eQ-3 OCCU",
+  "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {
-    "test": "mocha"
+    "test": "camo-purge; mocha"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/hobbyquaker/occu-test#readme",
   "dependencies": {
+    "camo-purge": "^1.0.2",
     "homematic-rega": "^1.0.0",
     "mocha": "^4.0.1",
     "should": "^13.1.3",
