@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hobbyquaker/occu-test.svg?branch=master)](https://travis-ci.org/hobbyquaker/occu-test)
 
-> Automated System Tests for the eQ-3 OCCU
+> Automated System Tests of ReGaHss - the HomeMatic (O)CCU "Logic Layer"
 
 ... work in progress, only a simple PoC until now.
 
