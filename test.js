@@ -162,7 +162,7 @@ const rega = new Rega({host: 'localhost', port: '8183'});
 
     describe('basic remote script tests', () => {
         it('should output Hello World', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             rega.exec('string x = "Hello";\nWriteLine(x # " World!");', (err, output, objects) => {
                 if (err) {
                     done(err);
@@ -173,6 +173,21 @@ const rega = new Rega({host: 'localhost', port: '8183'});
                 }
             });
         });
+        if (flavor !== '') {
+            it('should calculate Abs()', function (done) {
+                this.timeout(30000);
+                rega.exec('var y = -3;\nvar x = y.Abs();', (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.y === '-3' && objects.x === '3.000000') {
+                        done();
+                    } else {
+                        done(new Error('wrong output'));
+                    }
+                });
+            });
+        }
+
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
