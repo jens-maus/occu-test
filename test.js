@@ -285,6 +285,25 @@ integer length = s.Length(); ! length = 11
             });
         });
 
+        it('should do date/time Format()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+time t = @2008-12-24 18:30:00@;
+string sDate = t.Format("%d.%m.%Y"); ! sDate = "24.12.2008";
+string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00";
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.sDate === '24.12.2008' && objects.sTime === '18:30:00') {
+                    done();
+                } else {
+                    done(new Error('wrong output'));
+                }
+            });
+        });
+
+
+
 
     });
 
