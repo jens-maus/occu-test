@@ -269,7 +269,21 @@ string world = s.Substr(6, 4); ! world = "Welt"
             });
         });
 
-
+        it('should do Length()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string s = "Hallo\\tWelt!";
+integer length = s.Length(); ! length = 11
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.length === '11') {
+                    done();
+                } else {
+                    done(new Error('wrong output'));
+                }
+            });
+        });
 
 
     });
