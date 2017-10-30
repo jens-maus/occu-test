@@ -173,6 +173,7 @@ const rega = new Rega({host: 'localhost', port: '8183'});
                 }
             });
         });
+
         if (flavor !== '') {
             it('should calculate Abs()', function (done) {
                 this.timeout(30000);
@@ -180,6 +181,32 @@ const rega = new Rega({host: 'localhost', port: '8183'});
                     if (err) {
                         done(err);
                     } else if (objects.y === '-3' && objects.x === '3.000000') {
+                        done();
+                    } else {
+                        done(new Error('wrong output'));
+                    }
+                });
+            });
+
+            it('should return M_PI with 6 digits', function (done) {
+                this.timeout(30000);
+                rega.exec('Write(M_PI);', (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (output === '3.141593') {
+                        done();
+                    } else {
+                        done(new Error('wrong output'));
+                    }
+                });
+            });
+
+            it('should return M_PI with 15 digits', function (done) {
+                this.timeout(30000);
+                rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (output === '3.141592653589793') {
                         done();
                     } else {
                         done(new Error('wrong output'));
