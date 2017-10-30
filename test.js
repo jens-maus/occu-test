@@ -8,8 +8,8 @@ require('should');
 
 cp.spawnSync('sudo ./install_rega.sh', {shell: true, stdio: 'inherit'});
 
-const regaSubscriptions = {};
-const regaBuffer = [];
+let regaSubscriptions = {};
+let regaBuffer = [];
 const simSubscriptions = {};
 const simBuffer = [];
 
@@ -55,7 +55,10 @@ function matchSubscriptions(type, data) {
 let regaProc;
 
 function startRega(flavor) {
+    regaSubscriptions = {};
+    regaBuffer = [];
     regaProc = cp.spawn('/bin/ReGaHss' + flavor, ['-c', '-l', '0', '-f', '/etc/rega.conf']);
+    console.log('spawned /bin/ReGaHss' + flavor + ' (pid ' + regaProc.pid + ')');
     let regaPipeOut = regaProc.stdout.pipe(streamSplitter('\n'));
     let regaPipeErr = regaProc.stderr.pipe(streamSplitter('\n'));
     regaPipeOut.on('token', data => {
@@ -72,12 +75,15 @@ function startRega(flavor) {
     });
 }
 
+const rega = new Rega({host: 'localhost', port: '8183'});
 
 ['', '.normal', '.community'].forEach(flavor => {
-    const rega = new Rega({host: 'localhost', port: '8183'});
 
     describe('ReGaHss' + flavor, () => {
-        startRega(flavor);
+
+        it('should start', () => {
+            startRega(flavor);
+        });
 
         it('should start TimerSchedulerThread', function (done) {
             subscribe('rega', /TimerSchedulerThread started/, () => {
@@ -146,10 +152,12 @@ function startRega(flavor) {
 
     describe('stop ReGaHss' + flavor + ' process', () => {
         it('should stop', function (done) {
+            this.timeout(30000);
             regaProc.on('close', () => {
+                regaProc = null;
                 done();
             });
-            regaProc.kill('SIGHUP');
+            cp.spawnSync('kill', ['-9', regaProc.pid]);
         });
     });
 
