@@ -1,6 +1,6 @@
 {
   "name": "occu-test",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {

@@ -53,7 +53,7 @@ function matchSubscriptions(type, data) {
 let regaProc;
 
 function startRega() {
-    regaProc = cp.spawn('/bin/ReGaHss', ['-c', '-l', '0', '-f', '/etc/rega.conf']);
+    regaProc = cp.spawn('/bin/ReGaHss' + flavor, ['-c', '-l', '0', '-f', '/etc/rega.conf']);
     let regaPipeOut = regaProc.stdout.pipe(streamSplitter('\n'));
     let regaPipeErr = regaProc.stderr.pipe(streamSplitter('\n'));
     regaPipeOut.on('token', data => {
@@ -66,83 +66,87 @@ function startRega() {
     });
 }
 
-startRega();
 
+['', '.normal', '.community'].forEach(flavor => {
+    const rega = new Rega({host: 'localhost', port: '8183'});
 
-const rega = new Rega({host: 'localhost', port: '8183'});
+    describe('ReGaHss' + flavor, () => {
+        startRega(flavor);
 
-describe('rega process', () => {
-    it('should start TimerSchedulerThread', function (done) {
-        subscribe('rega', /TimerSchedulerThread started/, () => {
-            done();
-        })
-    });
-
-    it('should init XmlRpcMethodListDevices', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, () => {
-            done();
-        });
-    });
-
-    it('should init XmlRpcMethodNewDevices', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, () => {
-            done();
-        });
-    });
-
-    it('should init XmlRpcMethodDeleteDevices', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, () => {
-            done();
-        });
-    });
-
-    it('should init XmlRpcMethodReportValueUsage', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, () => {
-            done();
-        });
-    });
-
-    it('should init XmlRpcMethodUpdateDevice', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, () => {
-            done();
-        });
-    });
-
-    it('should init XmlRpcMethodReplaceDevice', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, () => {
-            done();
-        });
-    });
-
-    it('should init XmlRpcMethodSetReadyConfig', function (done) {
-        subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, () => {
-            done();
-        });
-    });
-
-});
-
-
-describe('basic remote script tests', () => {
-    it('should output Hello World', function (done) {
-        rega.exec('string x = "Hello";\nWriteLine(x # " World!");', (err, output, objects) => {
-            if (err) {
-                throw err;
-            }
-            if (output === 'Hello World!\r\n') {
+        it('should start TimerSchedulerThread', function (done) {
+            subscribe('rega', /TimerSchedulerThread started/, () => {
                 done();
-            } else {
-                done(new Error('wrong output'));
-            }
+            })
+        });
+
+        it('should init XmlRpcMethodListDevices', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, () => {
+                done();
+            });
+        });
+
+        it('should init XmlRpcMethodNewDevices', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, () => {
+                done();
+            });
+        });
+
+        it('should init XmlRpcMethodDeleteDevices', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, () => {
+                done();
+            });
+        });
+
+        it('should init XmlRpcMethodReportValueUsage', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, () => {
+                done();
+            });
+        });
+
+        it('should init XmlRpcMethodUpdateDevice', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, () => {
+                done();
+            });
+        });
+
+        it('should init XmlRpcMethodReplaceDevice', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, () => {
+                done();
+            });
+        });
+
+        it('should init XmlRpcMethodSetReadyConfig', function (done) {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, () => {
+                done();
+            });
+        });
+
+    });
+
+
+    describe('basic remote script tests', () => {
+        it('should output Hello World', function (done) {
+            rega.exec('string x = "Hello";\nWriteLine(x # " World!");', (err, output, objects) => {
+                if (err) {
+                    throw err;
+                }
+                if (output === 'Hello World!\r\n') {
+                    done();
+                } else {
+                    done(new Error('wrong output'));
+                }
+            });
         });
     });
+
+    describe('stop ReGaHss' + flavor + ' process', () => {
+        it('should stop', function (done) {
+            regaProc.on('close', () => {
+                done();
+            });
+            regaProc.kill('SIGHUP');
+        });
+    });
+
 });
 
-describe('stop ReGaHss process', () => {
-    it('should stop', function (done) {
-        regaProc.on('close', () => {
-            done();
-        });
-        regaProc.kill('SIGHUP');
-    });
-});
