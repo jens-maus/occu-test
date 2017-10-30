@@ -174,6 +174,74 @@ const rega = new Rega({host: 'localhost', port: '8183'});
             });
         });
 
+
+        if (flavor === '') {
+            it('should terminate while(true) after 5000 iterations', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+integer i = 0;
+while (true) { i = i + 1; }
+! i = 5001
+            `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.i === '5001') {
+                        done();
+                    } else {
+                        done(new Error('wrong result'));
+                    }
+                });
+            });
+        } else {
+            it('should terminate while(true) after 50000 iterations', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+integer i = 0;
+while (true) { i = i + 1; }
+            `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.i === '50001') {
+                        done();
+                    } else {
+                        done(new Error('wrong result'));
+                    }
+                });
+            });
+        }
+
+
+        it('should do VarType()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+boolean b;
+integer bType = b.VarType(); ! type = 1;
+
+integer i;
+integer iType = i.VarType(); ! type = 2;
+
+real r;
+integer rType = r.VarType(); ! type = 3;
+
+string s;
+integer sType = s.VarType(); ! type = 4;
+
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (
+                    objects.bType === '1' &&
+                    objects.iType === '2' &&
+                    objects.rType === '3' &&
+                    objects.sType === '4'
+                ) {
+                    done();
+                } else {
+                    done(new Error('wrong result'));
+                }
+            });
+        });
+
         if (flavor !== '') {
             it('should calculate Abs()', function (done) {
                 this.timeout(30000);
@@ -301,6 +369,22 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00";
                 }
             });
         });
+
+        it('should handle scientific real representation -1.0E-1 = -0.1', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+real r = -1.0E-1; ! -0.1
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.r === '-0.1') {
+                    done();
+                } else {
+                    done(new Error('wrong result: ' + objects.r));
+                }
+            });
+        });
+
 
 
 
