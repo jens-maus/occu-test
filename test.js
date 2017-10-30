@@ -86,67 +86,83 @@ const rega = new Rega({host: 'localhost', port: '8183'});
         });
 
         it('should start TimerSchedulerThread', function (done) {
-	        this.timeout(10000);
+	        this.timeout(30000);
             subscribe('rega', /TimerSchedulerThread started/, () => {
                 done();
             })
         });
 
         it('should init XmlRpcMethodListDevices', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodNewDevices', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodDeleteDevices', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodReportValueUsage', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodUpdateDevice', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodReplaceDevice', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodSetReadyConfig', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, () => {
                 done();
             });
         });
+
+        it('should start HTTP server', function (done) {
+            this.timeout(30000);
+            subscribe('rega', /HTTP server started successfully/, () => {
+                done();
+            });
+        });
+
+        if (flavor !== '') {
+            it('should execute /bin/hm_startup', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Executing \/bin\/hm_startup/, () => {
+                    done();
+                });
+            });
+        }
 
     });
 
 
     describe('basic remote script tests', () => {
         it('should output Hello World', function (done) {
-			this.timeout(10000);
+			this.timeout(30000);
             rega.exec('string x = "Hello";\nWriteLine(x # " World!");', (err, output, objects) => {
                 if (err) {
                     done(err);
