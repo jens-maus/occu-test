@@ -54,7 +54,7 @@ function matchSubscriptions(type, data) {
 
 let regaProc;
 
-function startRega() {
+function startRega(flavor) {
     regaProc = cp.spawn('/bin/ReGaHss' + flavor, ['-c', '-l', '0', '-f', '/etc/rega.conf']);
     let regaPipeOut = regaProc.stdout.pipe(streamSplitter('\n'));
     let regaPipeErr = regaProc.stderr.pipe(streamSplitter('\n'));
