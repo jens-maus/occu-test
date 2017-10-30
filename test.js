@@ -215,6 +215,27 @@ const rega = new Rega({host: 'localhost', port: '8183'});
             });
         }
 
+        it('should do Split() and sum up ToInteger()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string summanden = "1,2,3";
+integer summe = 0;
+string summand;
+foreach(summand, summanden.Split(","))
+{
+    summe = summe + summand.ToInteger();
+}
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.summe === '6') {
+                    done();
+                } else {
+                    done(new Error('wrong output'));
+                }
+            });
+        });
+
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
