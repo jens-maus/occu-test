@@ -253,6 +253,23 @@ integer world = s.Find("welt"); ! world = -1
             });
         });
 
+        it('should do Substr()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string s = "Hallo Welt!";
+string world = s.Substr(6, 4); ! world = "Welt"
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.world === 'Welt') {
+                    done();
+                } else {
+                    done(new Error('wrong output'));
+                }
+            });
+        });
+
+
 
 
     });
