@@ -2,6 +2,8 @@ const cp = require('child_process');
 const streamSplitter = require('stream-splitter');
 const Rega = require('homematic-rega');
 
+const regaOutput = false; // Set to true to show stdout/stderr of ReGaHss process
+
 require('should');
 
 cp.spawnSync('sudo ./install_rega.sh', {shell: true, stdio: 'inherit'});
@@ -57,11 +59,15 @@ function startRega() {
     let regaPipeOut = regaProc.stdout.pipe(streamSplitter('\n'));
     let regaPipeErr = regaProc.stderr.pipe(streamSplitter('\n'));
     regaPipeOut.on('token', data => {
-        //console.log('rega', data.toString());
+        if (regaOutput) {
+            console.log('ReGaHss', data.toString());
+        }
         matchSubscriptions('rega', data.toString());
     });
     regaPipeErr.on('token', data => {
-        //console.log('rega', data.toString());
+        if (regaOutput) {
+            console.log('ReGaHss', data.toString());
+        }
         matchSubscriptions('rega', data.toString());
     });
 }
@@ -128,9 +134,8 @@ function startRega() {
         it('should output Hello World', function (done) {
             rega.exec('string x = "Hello";\nWriteLine(x # " World!");', (err, output, objects) => {
                 if (err) {
-                    throw err;
-                }
-                if (output === 'Hello World!\r\n') {
+                    done(err);
+                } else if (output === 'Hello World!\r\n') {
                     done();
                 } else {
                     done(new Error('wrong output'));
