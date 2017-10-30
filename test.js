@@ -236,6 +236,25 @@ foreach(summand, summanden.Split(","))
             });
         });
 
+        it('should Find() string positions', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string s = "Hallo Welt";
+integer World = s.Find("Welt"); ! World = 6
+integer world = s.Find("welt"); ! world = -1
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.World === '6' && objects.world === '-1') {
+                    done();
+                } else {
+                    done(new Error('wrong output'));
+                }
+            });
+        });
+
+
+
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
