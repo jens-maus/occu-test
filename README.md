@@ -11,8 +11,9 @@
 
 * ~~run tests on all 3 flavors of ReGaHss (legacy, standard, community)~~
 * tests, tests, tests
-* trigger travis builds on commits in [occu repository](https://github.com/eq-3/occu)
+* create a regadom with several test variables and programs
 * integrate [simulated rfd/hmipserver](https://github.com/hobbyquaker/hm-simulator), test device interactions
+* trigger travis builds on commits in [occu repository](https://github.com/eq-3/occu)
 * WebUI tests?
 * ...
 
