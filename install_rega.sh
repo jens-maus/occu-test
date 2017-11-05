@@ -14,9 +14,11 @@ echo "cloning repository"
 git clone https://github.com/eq-3/occu /occu
 
 echo "copying files"
+cp -v homematic.regadom /etc/config/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
+cp -v homematic.regadom /etc/config/
 
 echo "installing i386 libs"
 apt-get install libc6:i386 libstdc++6:i386
