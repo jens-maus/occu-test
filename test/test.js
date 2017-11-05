@@ -1,6 +1,7 @@
 const cp = require('child_process');
 const streamSplitter = require('stream-splitter');
 const Rega = require('homematic-rega');
+const path = require('path');
 
 const regaOutput = false; // Set to true to show stdout/stderr of ReGaHss process
 
@@ -9,10 +10,19 @@ require('should');
 
 cp.spawnSync('sudo ./install_rega.sh', {shell: true, stdio: 'inherit'});
 
-let regaSubscriptions = {};
-let regaBuffer = [];
+
+const simCmd = path.join(__dirname, '../node_modules/.bin/hm-simulator');
+const simArgs = [];
+let sim;
+let simPipeOut;
+let simPipeErr;
 const simSubscriptions = {};
 const simBuffer = [];
+
+
+
+let regaSubscriptions = {};
+let regaBuffer = [];
 
 let subIndex = 0;
 
@@ -53,6 +63,20 @@ function matchSubscriptions(type, data) {
     });
 }
 
+function startSim() {
+    sim = cp.spawn(simCmd, simArgs);
+    simPipeOut = sim.stdout.pipe(streamSplitter('\n'));
+    simPipeErr = sim.stderr.pipe(streamSplitter('\n'));
+    simPipeOut.on('token', data => {
+        console.log('sim', data.toString());
+        matchSubscriptions('sim', data.toString());
+    });
+    simPipeErr.on('token', data => {
+        console.log('sim', data.toString());
+        matchSubscriptions('sim', data.toString());
+    });
+}
+
 let regaProc;
 
 function startRega(flavor) {
@@ -75,6 +99,12 @@ function startRega(flavor) {
         matchSubscriptions('rega', data.toString());
     });
 }
+
+describe('Simulator', () => {
+    it('should start', function () {
+        startSim();
+    });
+});
 
 const rega = new Rega({host: 'localhost', port: '8183'});
 
