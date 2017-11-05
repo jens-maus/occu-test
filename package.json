@@ -1,6 +1,6 @@
 {
   "name": "occu-test",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {
@@ -29,7 +29,7 @@
     "hm-simulator": "latest",
     "homematic-rega": "latest",
     "mocha": "latest",
-    "mocha-clean": "^1.0.0",
+    "mocha-clean": "latest",
     "should": "latest",
     "stream-splitter": "latest"
   }
