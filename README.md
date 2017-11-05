@@ -20,12 +20,14 @@ The Rega is started with a prebuilt homematic.regadom:
 
 #### Programs
 
-* Bool1OnFalse
-* Bool1OnTrue
-* Bool1OnFalseUpdate
-* Bool1OnTrueUpdate
-* TimeEveryMinute
-* Time0100
+* Bool1OnFalse - BidCoS-RF:13 PRESS_LONG
+* Bool1OnTrue - BidCoS-RF:12 PRESS_LONG
+* Bool1OnFalseUpdate - BidCoS-RF:14 PRESS_LONG
+* Bool1OnTrueUpdate - BidCoS-RF:15 PRESS_LONG
+* TimeEveryMinute - BidCoS-RF:50 PRESS_LONG
+* Time0100 - BidCoS-RF:11 PRESS_LONG
+* Key16Key17 - on BidCoS-RF:16 PRESS_LONG => BidCoS-RF:17 PRESS_LONG
+* Key1 - on BidCos-RF:1 PRESS_SHORT => BidCoS-RF:2 PRESS_LONG
 
 
 ## Todo
