@@ -806,7 +806,7 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 
     describe('timer triggers program', () => {
         /*
-        TODO Implement FAKETIME and set to 00:59 before starting rega, test edge cases DST and leap year
+        TODO Implement https://github.com/wolfcw/libfaketime and set to 00:59 before starting rega, test edge cases DST and leap year
 
         it('should PRESS_LONG BidCoS-RF:11 at 01:00 (program Timer0100)', function (done) {
             this.timeout(60000);
