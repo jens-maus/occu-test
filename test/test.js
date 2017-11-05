@@ -17,8 +17,8 @@ const simArgs = [];
 let sim;
 let simPipeOut;
 let simPipeErr;
-const simSubscriptions = {};
-const simBuffer = [];
+let simSubscriptions = {};
+let simBuffer = [];
 
 
 
@@ -65,6 +65,8 @@ function matchSubscriptions(type, data) {
 }
 
 function startSim() {
+    simSubscriptions = {};
+    simBuffer = [];
     sim = cp.spawn(simCmd, simArgs);
     simPipeOut = sim.stdout.pipe(streamSplitter('\n'));
     simPipeErr = sim.stderr.pipe(streamSplitter('\n'));
@@ -105,15 +107,17 @@ function startRega(flavor) {
     });
 }
 
-describe('rfd/hmipserver Simulator', () => {
-    it('should start', function () {
-        startSim();
-    });
-});
+
 
 const rega = new Rega({host: 'localhost', port: '8183'});
 
 ['', '.normal', '.community'].forEach(flavor => {
+
+    describe('rfd/hmipserver Simulator', () => {
+        it('should start', function () {
+            startSim();
+        });
+    });
 
     describe('ReGaHss' + flavor, () => {
 
@@ -204,7 +208,7 @@ const rega = new Rega({host: 'localhost', port: '8183'});
 
         it('should do init on simulated rfd', function (done) {
             this.timeout(30000);
-            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","1100"]/, () => {
+            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, () => {
                 done();
             });
         });
@@ -790,6 +794,60 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 
     });
 
+    describe('virtual key triggers program', () => {
+        it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1', function (done) {
+            // BidCoS-RF:1 PRESS_SHORT is pressed by the simulator every 5 seconds
+            this.timeout(12000);
+            subscribe('sim', /setValue rfd BidCoS-RF:2 PRESS_LONG true/, () => {
+                done();
+            });
+        });
+    });
+
+    describe('timer triggers program', () => {
+        /*
+        TODO Implement FAKETIME and set to 00:59 before starting rega, test edge cases DST and leap year
+
+        it('should PRESS_LONG BidCoS-RF:11 at 01:00 (program Timer0100)', function (done) {
+            this.timeout(60000);
+            subscribe('sim', /BidCoS-RF:11/, () => {
+                done();
+            });
+        });
+           */
+
+
+        it('should PRESS_LONG BidCoS-RF:50 every minute (program TimerEveryMinute)', function (done) {
+            this.timeout(60000);
+            subscribe('sim', /BidCoS-RF:50/, () => {
+                done();
+            });
+        });
+    });
+
+
+
+    describe('variable change triggers program', () => {
+
+        it('should PRESS_LONG BidCoS-RF:12 when VarBool1 changes to true (program Bool1OnTrue)', function (done) {
+            this.timeout(7000);
+            subscribe('sim', /setValue rfd BidCoS-RF:12 PRESS_LONG true/, () => {
+                done();
+            });
+            rega.exec('var b1 = dom.GetObject(1237);\nb1.State(true);');
+        });
+        it('should PRESS_LONG BidCoS-RF:13 when VarBool1 changes to false (program Bool1OnTrue)', function (done) {
+            this.timeout(7000);
+            subscribe('sim', /setValue rfd BidCoS-RF:13 PRESS_LONG true/, () => {
+                done();
+            });
+            rega.exec('var b1 = dom.GetObject(1237);\nb1.State(false);');
+        });
+    });
+
+    describe('variable update triggers program', () => {
+
+    });
 
 
     describe('stop ReGaHss' + flavor + ' process', () => {
@@ -803,10 +861,12 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
         });
     });
 
+
+    describe('stop simulator', () => {
+        it('should stop', function () {
+            sim.kill();
+        });
+    });
+
 });
 
-describe('stop simulator', () => {
-    it('should stop', function () {
-        sim.kill();
-    });
-});
