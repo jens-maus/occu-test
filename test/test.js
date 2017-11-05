@@ -4,6 +4,7 @@ const Rega = require('homematic-rega');
 const path = require('path');
 
 const regaOutput = false; // Set to true to show stdout/stderr of ReGaHss process
+const simOutput = false; // Set to true to show stdout/stderr of hm-simulator
 
 require('should');
 
@@ -68,11 +69,15 @@ function startSim() {
     simPipeOut = sim.stdout.pipe(streamSplitter('\n'));
     simPipeErr = sim.stderr.pipe(streamSplitter('\n'));
     simPipeOut.on('token', data => {
-        console.log('sim', data.toString());
+        if (simOutput) {
+            console.log('sim', data.toString());
+        }
         matchSubscriptions('sim', data.toString());
     });
     simPipeErr.on('token', data => {
-        console.log('sim', data.toString());
+        if (simOutput) {
+            console.log('sim', data.toString());
+        }
         matchSubscriptions('sim', data.toString());
     });
 }
@@ -100,7 +105,7 @@ function startRega(flavor) {
     });
 }
 
-describe('Simulator', () => {
+describe('rfd/hmipserver Simulator', () => {
     it('should start', function () {
         startSim();
     });
@@ -172,6 +177,15 @@ const rega = new Rega({host: 'localhost', port: '8183'});
             });
         });
 
+        it('should load /etc/config/homematic.regadom', function (done) {
+            this.timeout(30000);
+            subscribe('rega', /successfully loaded "\/etc\/config\/homematic\.regadom"/, () => {
+                done();
+            });
+        });
+
+
+
         it('should start HTTP server', function (done) {
             this.timeout(30000);
             subscribe('rega', /HTTP server started successfully/, () => {
@@ -187,6 +201,13 @@ const rega = new Rega({host: 'localhost', port: '8183'});
                 });
             });
         }
+
+        it('should do init on simulated rfd', function (done) {
+            this.timeout(30000);
+            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","1100"]/, () => {
+                done();
+            });
+        });
 
     });
 
@@ -340,17 +361,16 @@ while (true) { i = i + 1; }
             });
 
         } else {
-            // FIXME documentation does not mention that standard/community terminates after 50000 iterations!
-            it('5.2 should terminate while(true) after 5000 iterations (standard/community)', function (done) {
+            // FIXME documentation does not mention that standard/community terminates after 500000 iterations!
+            it('5.2 should terminate while(true) after 500000 iterations (standard/community)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 integer i = 0;
 while (true) { i = i + 1; }
-! i = 5001
             `, (err, output, objects) => {
                     if (err) {
                         done(err);
-                    } else if (objects.i === '5001') {
+                    } else if (objects.i === '500001') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
@@ -785,3 +805,8 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 
 });
 
+describe('stop simulator', () => {
+    it('should stop', function () {
+        sim.kill();
+    });
+});
