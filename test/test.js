@@ -429,8 +429,8 @@ boolean didNotQuit = true;
             });
         });
 
-        if (flavor === '') {
-            it('6.1.1 should determine VarType() (legacy)', function (done) {
+        if (flavor !== '.community') {
+            it('6.1.1 should determine VarType() (legacy/standard)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 boolean b;
@@ -466,7 +466,7 @@ integer tType = t.VarType(); ! 5
             });
 
         } else {
-            it('6.1.1 should determine VarType() (standard/community)', function (done) {
+            it('6.1.1 should determine VarType() (community)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 var v;
