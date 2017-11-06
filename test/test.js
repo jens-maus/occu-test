@@ -86,10 +86,14 @@ function startSim() {
 
 let regaProc;
 
-function startRega(flavor) {
+function startRega(flavor, faketime) {
     regaSubscriptions = {};
     regaBuffer = [];
-    regaProc = cp.spawn('/bin/ReGaHss' + flavor, ['-c', '-l', '0', '-f', '/etc/rega.conf']);
+    if (faketime) {
+        regaProc = cp.spawn('/usr/bin/faketime', [faketime, '/bin/ReGaHss' + flavor, '-c', '-l', '0', '-f', '/etc/rega.conf']);
+    } else {
+        regaProc = cp.spawn('/bin/ReGaHss' + flavor, ['-c', '-l', '0', '-f', '/etc/rega.conf']);
+    }
     //console.log('spawned /bin/ReGaHss' + flavor + ' (pid ' + regaProc.pid + ')');
     let regaPipeOut = regaProc.stdout.pipe(streamSplitter('\n'));
     let regaPipeErr = regaProc.stderr.pipe(streamSplitter('\n'));
@@ -121,7 +125,7 @@ const rega = new Rega({host: 'localhost', port: '8183'});
 
     describe('ReGaHss' + flavor, () => {
 
-        it('should start', () => {
+        it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
 
@@ -795,7 +799,7 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
     });
 
     describe('virtual key triggers program', () => {
-        it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1', function (done) {
+        it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1 (program Key1)', function (done) {
             // BidCoS-RF:1 PRESS_SHORT is pressed by the simulator every 5 seconds
             this.timeout(12000);
             subscribe('sim', /setValue rfd BidCoS-RF:2 PRESS_LONG true/, () => {
@@ -857,7 +861,54 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
                 regaProc = null;
                 done();
             });
-            cp.spawnSync('kill', ['-9', regaProc.pid]);
+            //console.log('kill pid ' + regaProc.pid);
+            //cp.spawnSync('kill', ['-9', regaProc.pid]);
+            console.log('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
+            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
+        });
+    });
+
+    describe('stop simulator', () => {
+        it('should stop', function () {
+            sim.kill();
+        });
+    });
+
+    describe('rfd/hmipserver Simulator', () => {
+        it('should start', function () {
+            startSim();
+        });
+    });
+
+
+
+    describe('start ReGaHss' + flavor + ' faketime tests 2020-03-29 00:59:30 (leap year, begin of DST)', () => {
+        it('should start ReGaHss' + flavor, () => {
+            startRega(flavor, '2020-03-29 00:59:30');
+        });
+
+    });
+
+    describe('timer tests', () => {
+        it('should PRESS_LONG BidCoS-RF:11 at 01:00 (program Timer0100)', function (done) {
+            this.timeout(60000);
+            subscribe('sim', /BidCoS-RF:11/, () => {
+                done();
+            });
+        });
+    });
+
+    describe('stop ReGaHss' + flavor + ' process', () => {
+        it('should stop', function (done) {
+            this.timeout(30000);
+            regaProc.on('close', () => {
+                regaProc = null;
+                done();
+            });
+            //console.log('kill pid ' + regaProc.pid);
+            //cp.spawnSync('kill', ['-9', regaProc.pid]);
+            console.log('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
+            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
     });
 
