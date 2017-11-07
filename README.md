@@ -4,7 +4,7 @@
 
 > Automated System Tests of ReGaHss - the HomeMatic (O)CCU "Logic Layer"
 
-... work in progress, only a simple PoC until now.
+**... work in progress**
 
 
 ## homematic.regadom
@@ -42,10 +42,10 @@ The Rega is started with a prebuilt homematic.regadom:
 ## Todo
 
 * ~~run tests on all 3 flavors of ReGaHss (legacy, standard, community)~~
-* documentation on how to run the tests in a local docker container
+* **documentation on how to run the tests in a local docker container**
 * tests, tests, tests
 * test all examples of the official homematic script documentation
-* test time based triggers (edge cases: DST, leap year)
+* test time based triggers (edge cases: DST, leap year) **wip**
 * test popular scripts published on homematic-forum.de
 * ~~create a regadom with several test variables and programs~~ extend regadom with more testvars/programs/devices
 * ~~integrate simulated rfd/hmipserver~~
