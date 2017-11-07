@@ -24,10 +24,7 @@ let {
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
-        it('should wait 20 seconds', function (done) {
-            this.timeout(21000);
-            setTimeout(done, 20000);
-        });
+
         it('should start TimerSchedulerThread', function (done) {
 	        this.timeout(30000);
             subscribe('rega', /TimerSchedulerThread started/, () => {
