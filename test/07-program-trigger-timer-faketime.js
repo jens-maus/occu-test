@@ -19,25 +19,23 @@ let {
         });
     });
 
-    describe('ReGaHss' + flavor, () => {
 
+    describe('start ReGaHss' + flavor + ' faketime tests 2020-03-29 00:59:30 (leap year, begin of DST)', () => {
         it('should start ReGaHss' + flavor, () => {
-            startRega(flavor);
+            startRega(flavor, '2020-03-29 00:59:30');
         });
-        it('should wait 20 seconds', function (done) {
-            this.timeout(21000);
-            setTimeout(done, 20000);
-        });
+
     });
 
-    describe('timer triggers program', () => {
-        it('should PRESS_LONG BidCoS-RF:50 every minute (program TimerEveryMinute)', function (done) {
+    describe('timer tests', () => {
+        it('should PRESS_LONG BidCoS-RF:11 at 01:00 (program Timer0100)', function (done) {
             this.timeout(60000);
-            subscribe('sim', /BidCoS-RF:50/, () => {
+            subscribe('sim', /BidCoS-RF:11/, () => {
                 done();
             });
         });
     });
+
 
     describe('stop ReGaHss' + flavor + ' process', () => {
         it('should wait 20 seconds', function (done) {
