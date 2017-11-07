@@ -10,8 +10,8 @@ echo -e "#!/bin/bash\necho /bin/hm_startup executed" > /bin/hm_startup
 echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" > /bin/hm_autoconf
 chmod a+x /bin/hm_startup /bin/hm_autoconf
 
-echo "cloning repository"
-git clone https://github.com/eq-3/occu /occu
+echo "cloning/pulling occu"
+if cd /occu; then git pull; else git clone https://github.com/eq-3/occu /occu; fi
 
 echo "copying files"
 cp -v homematic.regadom /etc/config/
