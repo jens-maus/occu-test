@@ -11,7 +11,9 @@ echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" > /bin/hm_autoconf
 chmod a+x /bin/hm_startup /bin/hm_autoconf
 
 echo "cloning/pulling occu"
+DIR=$(pwd)
 if cd /occu; then git pull; else git clone https://github.com/eq-3/occu /occu; fi
+cd ${DIR}
 
 echo "copying files"
 cp -v homematic.regadom /etc/config/
