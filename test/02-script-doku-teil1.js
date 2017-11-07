@@ -1,119 +1,15 @@
-const cp = require('child_process');
-const streamSplitter = require('stream-splitter');
-const Rega = require('homematic-rega');
-const path = require('path');
-
-const regaOutput = false; // Set to true to show stdout/stderr of ReGaHss process
-const simOutput = false; // Set to true to show stdout/stderr of hm-simulator
-
-require('should');
-
-
-cp.spawnSync('sudo ./install_rega.sh', {shell: true, stdio: 'inherit'});
-
-
-const simCmd = path.join(__dirname, '../node_modules/.bin/hm-simulator');
-const simArgs = [];
-let sim;
-let simPipeOut;
-let simPipeErr;
-let simSubscriptions = {};
-let simBuffer = [];
-
-
-
-let regaSubscriptions = {};
-let regaBuffer = [];
-
-let subIndex = 0;
-
-function subscribe(type, rx, cb) {
-    subIndex += 1;
-    if (type === 'sim') {
-        simSubscriptions[subIndex] = {rx, cb};
-    } else if (type === 'rega') {
-        regaSubscriptions[subIndex] = {rx, cb};
-    }
-    matchSubscriptions(type);
-    return subIndex;
-}
-
-
-function matchSubscriptions(type, data) {
-    let subs;
-    let buf;
-    if (type === 'sim') {
-        subs = simSubscriptions;
-        buf = simBuffer;
-    } else if (type === 'rega') {
-        subs = regaSubscriptions;
-        buf = regaBuffer;
-    }
-    if (data) {
-        buf.push(data);
-    }
-    buf.forEach((line, index) => {
-        Object.keys(subs).forEach(key => {
-            const sub = subs[key];
-            if (line.match(sub.rx)) {
-                sub.cb(line);
-                delete subs[key];
-                buf.splice(index, 1);
-            }
-        });
-    });
-}
-
-function startSim() {
-    simSubscriptions = {};
-    simBuffer = [];
-    sim = cp.spawn(simCmd, simArgs);
-    simPipeOut = sim.stdout.pipe(streamSplitter('\n'));
-    simPipeErr = sim.stderr.pipe(streamSplitter('\n'));
-    simPipeOut.on('token', data => {
-        if (simOutput) {
-            console.log('sim', data.toString());
-        }
-        matchSubscriptions('sim', data.toString());
-    });
-    simPipeErr.on('token', data => {
-        if (simOutput) {
-            console.log('sim', data.toString());
-        }
-        matchSubscriptions('sim', data.toString());
-    });
-}
-
-let regaProc;
-
-function startRega(flavor, faketime) {
-    regaSubscriptions = {};
-    regaBuffer = [];
-    if (faketime) {
-        regaProc = cp.spawn('/usr/bin/faketime', [faketime, '/bin/ReGaHss' + flavor, '-c', '-l', '0', '-f', '/etc/rega.conf']);
-    } else {
-        regaProc = cp.spawn('/bin/ReGaHss' + flavor, ['-c', '-l', '0', '-f', '/etc/rega.conf']);
-    }
-    //console.log('spawned /bin/ReGaHss' + flavor + ' (pid ' + regaProc.pid + ')');
-    let regaPipeOut = regaProc.stdout.pipe(streamSplitter('\n'));
-    let regaPipeErr = regaProc.stderr.pipe(streamSplitter('\n'));
-    regaPipeOut.on('token', data => {
-        if (regaOutput) {
-            console.log('ReGaHss', data.toString());
-        }
-        matchSubscriptions('rega', data.toString());
-    });
-    regaPipeErr.on('token', data => {
-        if (regaOutput) {
-            console.log('ReGaHss', data.toString());
-        }
-        matchSubscriptions('rega', data.toString());
-    });
-}
-
-
-
-const rega = new Rega({host: 'localhost', port: '8183'});
+let {
+    cp,
+    rega,
+    subscribe,
+    startRega,
+    startSim,
+    procs,
+    simSubscriptions,
+    simBuffer,
+    regaSubscriptions,
+    regaBuffer
+} = require('../lib/helper.js');
 
 ['', '.normal', '.community'].forEach(flavor => {
 
@@ -128,95 +24,10 @@ const rega = new Rega({host: 'localhost', port: '8183'});
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
-
-        it('should start TimerSchedulerThread', function (done) {
-	        this.timeout(30000);
-            subscribe('rega', /TimerSchedulerThread started/, () => {
-                done();
-            })
+        it('should wait 20 seconds', function (done) {
+            this.timeout(21000);
+            setTimeout(done, 20000);
         });
-
-        it('should init XmlRpcMethodListDevices', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, () => {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodNewDevices', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, () => {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodDeleteDevices', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, () => {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodReportValueUsage', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, () => {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodUpdateDevice', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, () => {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodReplaceDevice', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, () => {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodSetReadyConfig', function (done) {
-			this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, () => {
-                done();
-            });
-        });
-
-        it('should load /etc/config/homematic.regadom', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /successfully loaded "\/etc\/config\/homematic\.regadom"/, () => {
-                done();
-            });
-        });
-
-
-
-        it('should start HTTP server', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /HTTP server started successfully/, () => {
-                done();
-            });
-        });
-
-        if (flavor !== '') {
-            it('should execute /bin/hm_startup', function (done) {
-                this.timeout(30000);
-                subscribe('rega', /Executing \/bin\/hm_startup/, () => {
-                    done();
-                });
-            });
-        }
-
-        it('should do init on simulated rfd', function (done) {
-            this.timeout(30000);
-            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, () => {
-                done();
-            });
-        });
-
     });
 
     describe('test examples from HM-Skript_Teil_1_Sprachbeschreibung_V2.0', () => {
@@ -790,134 +601,32 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 
     });
 
-    describe('test examples from HM_Script_Teil_2_Objektmodell_V1.2', () => {
-
-    });
-
-    describe('test examples from HM_Script_Teil_3_Beispiele_V1.1', () => {
-
-    });
-
-    describe('virtual key triggers program', () => {
-        it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1 (program Key1)', function (done) {
-            // BidCoS-RF:1 PRESS_SHORT is pressed by the simulator every 5 seconds
-            this.timeout(12000);
-            subscribe('sim', /setValue rfd BidCoS-RF:2 PRESS_LONG true/, () => {
-                done();
-            });
-        });
-    });
-
-    describe('timer triggers program', () => {
-        /*
-        TODO Implement https://github.com/wolfcw/libfaketime and set to 00:59 before starting rega, test edge cases DST and leap year
-
-        it('should PRESS_LONG BidCoS-RF:11 at 01:00 (program Timer0100)', function (done) {
-            this.timeout(60000);
-            subscribe('sim', /BidCoS-RF:11/, () => {
-                done();
-            });
-        });
-           */
-
-
-        it('should PRESS_LONG BidCoS-RF:50 every minute (program TimerEveryMinute)', function (done) {
-            this.timeout(60000);
-            subscribe('sim', /BidCoS-RF:50/, () => {
-                done();
-            });
-        });
-    });
-
-
-
-    describe('variable change triggers program', () => {
-
-        it('should PRESS_LONG BidCoS-RF:12 when VarBool1 changes to true (program Bool1OnTrue)', function (done) {
-            this.timeout(7000);
-            subscribe('sim', /setValue rfd BidCoS-RF:12 PRESS_LONG true/, () => {
-                done();
-            });
-            rega.exec('var b1 = dom.GetObject(1237);\nb1.State(true);');
-        });
-        it('should PRESS_LONG BidCoS-RF:13 when VarBool1 changes to false (program Bool1OnTrue)', function (done) {
-            this.timeout(7000);
-            subscribe('sim', /setValue rfd BidCoS-RF:13 PRESS_LONG true/, () => {
-                done();
-            });
-            rega.exec('var b1 = dom.GetObject(1237);\nb1.State(false);');
-        });
-    });
-
-    describe('variable update triggers program', () => {
-
-    });
-
-
     describe('stop ReGaHss' + flavor + ' process', () => {
+        it('should wait 20 seconds', function (done) {
+            this.timeout(21000);
+            setTimeout(done, 20000);
+        });
+
         it('should stop', function (done) {
-            this.timeout(30000);
-            regaProc.on('close', () => {
-                regaProc = null;
+            this.timeout(60000);
+            procs.rega.on('close', () => {
+                procs.rega = null;
                 done();
             });
-            //console.log('kill pid ' + regaProc.pid);
-            //cp.spawnSync('kill', ['-9', regaProc.pid]);
-            console.log('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
-    });
 
-    describe('stop simulator', () => {
-        it('should stop', function () {
-            sim.kill();
-        });
-    });
-
-    describe('rfd/hmipserver Simulator', () => {
-        it('should start', function () {
-            startSim();
-        });
-    });
-
-
-
-    describe('start ReGaHss' + flavor + ' faketime tests 2020-03-29 00:59:30 (leap year, begin of DST)', () => {
-        it('should start ReGaHss' + flavor, () => {
-            startRega(flavor, '2020-03-29 00:59:30');
-        });
-
-    });
-
-    describe('timer tests', () => {
-        it('should PRESS_LONG BidCoS-RF:11 at 01:00 (program Timer0100)', function (done) {
-            this.timeout(60000);
-            subscribe('sim', /BidCoS-RF:11/, () => {
-                done();
-            });
-        });
-    });
-
-    describe('stop ReGaHss' + flavor + ' process', () => {
-        it('should stop', function (done) {
-            this.timeout(30000);
-            regaProc.on('close', () => {
-                regaProc = null;
-                done();
-            });
-            //console.log('kill pid ' + regaProc.pid);
-            //cp.spawnSync('kill', ['-9', regaProc.pid]);
-            console.log('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
-            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
+        it('should wait 5 seconds', function (done) {
+            this.timeout(6000);
+            setTimeout(done, 5000);
         });
     });
 
 
     describe('stop simulator', () => {
         it('should stop', function () {
-            sim.kill();
+            procs.sim.kill();
         });
     });
 
 });
-
