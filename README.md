@@ -7,6 +7,32 @@
 **... work in progress**
 
 
+## how to run the tests locally
+
+```bash
+# Start the travis container
+docker run --name travis -dit quay.io/travisci/travis-ruby /sbin/init
+
+# Get a shell
+docker exec -it travis bash -l
+
+# Install Node.js
+nvm install 6
+nvm use 6
+
+# Clone the repo
+cd /home/travis
+git clone https://github.com/hobbyquaker/occu-test
+
+# Install dependencies
+cd occu-test
+npm install
+
+# Run the tests
+npm test
+```
+
+
 ## homematic.regadom
 
 The Rega is started with a prebuilt homematic.regadom:
@@ -42,7 +68,7 @@ The Rega is started with a prebuilt homematic.regadom:
 ## Todo
 
 * ~~run tests on all 3 flavors of ReGaHss (legacy, standard, community)~~
-* **documentation on how to run the tests in a local docker container**
+* ~~documentation on how to run the tests in a local docker container~~
 * tests, tests, tests
 * test all examples of the official homematic script documentation
 * test time based triggers (edge cases: DST, leap year) **wip**
@@ -58,8 +84,8 @@ The Rega is started with a prebuilt homematic.regadom:
 ## Links
 
 * [occu](https://github.com/eq-3/occu)
-* [hm-simulator](https://github.com/hobbyquaker/hm-simulator)
-* [ccu x86 docker image](https://hub.docker.com/r/litti/ccu2/)
+* [hm-simulator](https://github.com/hobbyquaker/hm-simulator) (simulates rfd/hmipserver)
+* [ccu x86 docker image](https://hub.docker.com/r/litti/ccu2/) (used for creation of the prebuilt homematic.regadom)
 
 
 ## Contributing
