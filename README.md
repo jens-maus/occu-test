@@ -50,17 +50,17 @@ The Rega is started with a prebuilt homematic.regadom:
 * Bool1OnTrue - BidCoS-RF:12 PRESS_LONG
 * Bool1OnFalseUpdate - BidCoS-RF:14 PRESS_LONG
 * Bool1OnTrueUpdate - BidCoS-RF:15 PRESS_LONG
-* TimeEveryMinute - BidCoS-RF:50 PRESS_LONG
-* Time0100 - BidCoS-RF:11 PRESS_LONG
-* Time0130 - BidCoS-RF:20 PRESS_LONG
-* Time0155 - BidCoS-RF:21 PRESS_LONG
-* Time0200 - BidCoS-RF:22 PRESS_LONG
-* Time0205 - BidCoS-RF:23 PRESS_LONG
-* Time0230 - BidCoS-RF:24 PRESS_LONG
-* Time0255 - BidCoS-RF:25 PRESS_LONG
-* Time0300 - BidCoS-RF:26 PRESS_LONG
-* Time0305 - BidCoS-RF:27 PRESS_LONG
-* Time0330 - BidCoS-RF:28 PRESS_LONG
+* TimeEveryMinute - id: 1302 - BidCoS-RF:50 PRESS_LONG
+* Time0100 - id: 1314 - BidCoS-RF:11 PRESS_LONG
+* Time0130 - id: 1430 - BidCoS-RF:20 PRESS_LONG
+* Time0155 - id: 1458 - BidCoS-RF:21 PRESS_LONG
+* Time0200 - id: 1470 - BidCoS-RF:22 PRESS_LONG
+* Time0205 - id: 1478 - BidCoS-RF:23 PRESS_LONG
+* Time0230 - id: 1510 - BidCoS-RF:24 PRESS_LONG
+* Time0255 - id: 1522 - BidCoS-RF:25 PRESS_LONG
+* Time0300 - id: 1534 - BidCoS-RF:26 PRESS_LONG
+* Time0305 - id: 1546 - BidCoS-RF:27 PRESS_LONG
+* Time0330 - id: 1558 - BidCoS-RF:28 PRESS_LONG
 * Key16Key17 - on BidCoS-RF:16 PRESS_LONG => BidCoS-RF:17 PRESS_LONG
 * Key1 - on BidCos-RF:1 PRESS_SHORT => BidCoS-RF:2 PRESS_LONG
 
