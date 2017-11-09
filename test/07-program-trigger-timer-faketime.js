@@ -16,11 +16,11 @@ let {
 
     function test(time, program, id) {
         describe('start ReGaHss' + flavor + ' faketime tests ' + time, () => {
-            console.log('sudo /bin/date', time);
-            cp.spawnSync('sudo', ['/bin/date', time]);
-
-            it('should start ReGaHss' + flavor, () => {
+            it('should start ReGaHss' + flavor, (done) => {
+                cp.spawnSync('sudo', ['/bin/date', time]);
+                console.log('sudo /bin/date', time);
                 startRega(flavor);
+                setTimeout(done, 5000);
             });
         });
 
