@@ -1,9 +1,12 @@
 #!/bin/bash
 
+echo "setting CET/CEST timezone"
+echo "Europe/Berlin" >/etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+
 echo "creating directories"
-mkdir /etc/config
+mkdir -p /etc/config
 mkdir -p /www/rega
-mkdir /config
+mkdir -p /config
 
 echo "creating hook scripts"
 echo -e "#!/bin/bash\necho /bin/hm_startup executed" > /bin/hm_startup
@@ -16,7 +19,6 @@ if cd /occu; then git pull; else git clone https://github.com/eq-3/occu /occu; f
 cd ${DIR}
 
 echo "copying files"
-cp -v homematic.regadom /etc/config/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
