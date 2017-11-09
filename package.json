@@ -4,7 +4,7 @@
   "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {
-    "test": "camo-purge; mocha"
+    "test": "camo-purge; mocha test/07-program-trigger-timer-faketime.js"
   },
   "repository": {
     "type": "git",
