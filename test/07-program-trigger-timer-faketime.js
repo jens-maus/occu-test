@@ -11,7 +11,7 @@ let {
     regaBuffer
 } = require('../lib/helper.js');
 
-['' /*, '.normal', '.community'*/].forEach(flavor => {
+['', '.normal', '.community'].forEach(flavor => {
 
 
     function test(time, program, id) {
@@ -46,9 +46,9 @@ let {
     }
 
 
-  /*
 
-    FIXME tests don't work :( Tests shitty or Rega Bug?
+
+  //  FIXME tests don't work :( Tests shitty or Rega Bug?
 
     test('2020-03-28 23:59:40', 'Time0100', '1314');
     test('2020-03-28 00:29:40', 'Time0130', '1430');
@@ -59,6 +59,6 @@ let {
     test('2020-03-29 01:54:40', 'Time0255', '1522');
     test('2020-03-29 01:59:40', 'Time0300', '1534');
     test('2020-03-29 02:04:40', 'Time0305', '1546');
-    test('2020-03-29 02:29:40', 'Time0330', '1558');*/
+    test('2020-03-29 02:29:40', 'Time0330', '1558');
 
 });
