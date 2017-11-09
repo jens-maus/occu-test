@@ -11,13 +11,16 @@ let {
     regaBuffer
 } = require('../lib/helper.js');
 
-[''/*, '.normal', '.community'*/].forEach(flavor => {
+['', '.normal', '.community'].forEach(flavor => {
 
 
     function test(time, program, id) {
         describe('start ReGaHss' + flavor + ' faketime tests ' + time, () => {
-            it('should start ReGaHss' + flavor, () => {
+            it('should set date', function (done) {
                 cp.spawnSync('sudo', ['/bin/date', time], {stdio: 'inherit'});
+                done();
+            });
+            it('should start ReGaHss' + flavor, () => {
                 startRega(flavor);
             });
         });
