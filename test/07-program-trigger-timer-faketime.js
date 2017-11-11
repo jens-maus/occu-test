@@ -16,8 +16,10 @@ let {
 
     function test(time, program, id) {
         describe('fake time', () => {
-            it('should set date', () => {
-                cp.spawn('sudo', ['/bin/date', time], {stdio: [process.stdin, process.stdout, process.stdout]});
+            it('should set date', function () {
+                this.timeout(10000);
+                cp.spawnSync('sudo', ['/bin/date', time], {stdio: [process.stdin, process.stdout, process.stdout]});
+                done();
             });
         });
         it('should start ReGaHss' + flavor, () => {
