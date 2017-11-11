@@ -11,14 +11,14 @@ let {
     regaBuffer
 } = require('../lib/helper.js');
 
-['', '.normal', '.community'].forEach(flavor => {
+[''/*, '.normal', '.community'*/].forEach(flavor => {
 
 
     function test(time, program, id) {
         describe('start ReGaHss' + flavor + ' faketime tests ' + time, () => {
             it('should start ReGaHss' + flavor, function (done) {
                 this.timeout(10000);
-                cp.spawnSync('sudo', ['/bin/date', time], {stdio: inherit});
+                cp.spawnSync('sudo', ['/bin/date', time], {stdio: 'inherit'});
                 startRega(flavor);
                 setTimeout(done, 2000);
             });
@@ -49,7 +49,8 @@ let {
     }
 
 
-    test('032823592020.40', 'Time0100', '1314');
+    test('032823592020.52', 'Time0100', '1314');
+    /*
     test('032900292020.40', 'Time0130', '1430');
     test('032900542020.40', 'Time0155', '1458');
     test('032900592020.40', 'Time0200', '1470');
@@ -59,5 +60,5 @@ let {
     test('032901592020.40', 'Time0300', '1534');
     test('032902042020.40', 'Time0305', '1546');
     test('032902292020.40', 'Time0330', '1558');
-
+*/
 });
