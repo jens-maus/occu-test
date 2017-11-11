@@ -16,9 +16,8 @@ let {
 
     function test(time, program, id) {
         describe('fake time test ' + time, () => {
-            it('should set date', function (done) {
-                this.timeout(2500);
-                cp.execSync('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
+            it('should set date', () => {
+                cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
                 done();
             });
             it('should start ReGaHss' + flavor, () => {
@@ -51,7 +50,7 @@ let {
     }
 
 
-    test('032823592020.52', 'Time0100', '1314');
+    test('032823592020.54', 'Time0100', '1314');
     /*
     test('032900292020.40', 'Time0130', '1430');
     test('032900542020.40', 'Time0155', '1458');
