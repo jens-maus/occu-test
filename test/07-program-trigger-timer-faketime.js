@@ -18,7 +18,7 @@ let {
         describe('fake time', () => {
             it('should set date', function () {
                 this.timeout(10000);
-                cp.spawnSync('sudo', ['/bin/date', time], {stdio: [process.stdin, process.stdout, process.stdout]});
+                cp.spawnSync('sudo', ['/bin/date', time], {stdio: ['ignore', process.stdout, process.stdout]});
                 done();
             });
         });
