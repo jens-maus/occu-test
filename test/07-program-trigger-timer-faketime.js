@@ -17,7 +17,7 @@ let {
     function test(time, program, id) {
         describe('fake time test ' + time, () => {
             it('should set date', () => {
-                cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
+                cp.exec('sudo /bin/date2' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
             });
             it('should start ReGaHss' + flavor, () => {
                 startRega(flavor);
@@ -49,15 +49,15 @@ let {
     }
 
 
-    test('032823592020.54', 'Time0100', '1314');
-    test('032900292020.54', 'Time0130', '1430');
-    test('032900542020.54', 'Time0155', '1458');
-    test('032900592020.54', 'Time0200', '1470');
-    test('032901042020.54', 'Time0205', '1478');
-    test('032901292020.54', 'Time0230', '1510');
-    test('032901542020.54', 'Time0255', '1522');
-    test('032901592020.54', 'Time0300', '1534');
-    test('032902042020.54', 'Time0305', '1546');
-    test('032902292020.54', 'Time0330', '1558');
+    test('032823592020.52', 'Time0100', '1314');
+    test('032900292020.52', 'Time0130', '1430');
+    test('032900542020.52', 'Time0155', '1458');
+    test('032900592020.52', 'Time0200', '1470');
+    test('032901042020.52', 'Time0205', '1478');
+    test('032901292020.52', 'Time0230', '1510');
+    test('032901542020.52', 'Time0255', '1522');
+    test('032901592020.52', 'Time0300', '1534');
+    test('032902042020.52', 'Time0305', '1546');
+    test('032902292020.52', 'Time0330', '1558');
 
 });
