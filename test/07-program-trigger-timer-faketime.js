@@ -15,16 +15,17 @@ let {
 
 
     function test(time, program, id) {
-        describe('fake time', () => {
+        describe('fake time test ' + time, () => {
             it('should set date', function (done) {
                 this.timeout(2500);
                 cp.spawnSync('sudo', ['/bin/date', time], {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
                 done();
             });
+            it('should start ReGaHss' + flavor, () => {
+                startRega(flavor);
+            });
         });
-        it('should start ReGaHss' + flavor, () => {
-            startRega(flavor);
-        });
+
 
         describe('timer tests', () => {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
