@@ -18,7 +18,7 @@ let {
         describe('fake time test ' + time, () => {
             it('should set date', function (done) {
                 this.timeout(2500);
-                cp.spawnSync('sudo', ['/bin/date', time], {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
+                cp.execSync('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
                 done();
             });
             it('should start ReGaHss' + flavor, () => {
