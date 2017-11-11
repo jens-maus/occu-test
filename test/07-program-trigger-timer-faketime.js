@@ -20,7 +20,7 @@ let {
                 this.timeout(10000);
                 cp.spawnSync('sudo', ['/bin/date', time], {stdio: 'inherit'});
                 startRega(flavor);
-                setTimeout(done, 2000);
+                done();
             });
         });
 
@@ -28,7 +28,6 @@ let {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
                 this.timeout(150000);
                 subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
-                    console.log(output);
                     done();
                 });
             });
