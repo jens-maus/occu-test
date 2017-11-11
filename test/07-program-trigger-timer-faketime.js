@@ -20,10 +20,8 @@ let {
                 cp.spawn('sudo', ['/bin/date', time], {stdio: [process.stdin, process.stdout, process.stdout]});
             });
         });
-        describe('start ReGaHss' + flavor + ' faketime tests ' + time, () => {
-            it('should start ReGaHss' + flavor, function () {
-                startRega(flavor);
-            });
+        it('should start ReGaHss' + flavor, () => {
+            startRega(flavor);
         });
 
         describe('timer tests', () => {
