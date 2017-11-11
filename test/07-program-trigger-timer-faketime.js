@@ -17,7 +17,7 @@ let {
     function test(time, program, id) {
         describe('start ReGaHss' + flavor + ' faketime tests ' + time, () => {
             it('should start ReGaHss' + flavor, function () {
-                //cp.spawnSync('sudo', ['/bin/date', time], {stdio: 'inherit'});
+                cp.spawn('sudo', ['/bin/date', time], {stdio: [process.stdin, process.stdout, process.stdout]});
                 startRega(flavor);
             });
         });
