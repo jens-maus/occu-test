@@ -17,7 +17,6 @@ let {
     function test(time, program, id) {
         describe('start ReGaHss' + flavor + ' faketime tests ' + time, () => {
             it('should start ReGaHss' + flavor, function () {
-                this.timeout(10000);
                 cp.spawnSync('sudo', ['/bin/date', time], {stdio: 'inherit'});
                 startRega(flavor);
             });
