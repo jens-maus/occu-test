@@ -18,7 +18,6 @@ let {
         describe('fake time test ' + time, () => {
             it('should set date', () => {
                 cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
-                done();
             });
             it('should start ReGaHss' + flavor, () => {
                 startRega(flavor);
