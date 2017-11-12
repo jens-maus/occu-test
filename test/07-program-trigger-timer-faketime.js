@@ -13,7 +13,6 @@ let {
 
 ['', '.normal', '.community'].forEach(flavor => {
 
-
     function test(time, program, id) {
         describe('fake time test ' + time, function () {
             it('should start ReGaHss' + flavor, function (done) {
@@ -75,6 +74,4 @@ let {
     test('102501592020.52', 'Time0300', '1534');
     test('102502042020.52', 'Time0305', '1546');
     test('102502292020.52', 'Time0330', '1558');
-
-
 });
