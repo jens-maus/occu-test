@@ -18,11 +18,13 @@ let {
         describe('fake time test ' + time, () => {
             it('should start ReGaHss' + flavor, function (done) {
                 this.timeout(6000);
+                setTimeout(() => {
+                    console.log('...');
+                    done();
+                }, 5000);
                 console.log('sudo /bin/date ' + time);
                 cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
                 startRega(flavor);
-                console.log('...');
-                done();
             });
         });
 
