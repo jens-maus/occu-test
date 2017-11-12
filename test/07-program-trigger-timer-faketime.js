@@ -32,14 +32,14 @@ let {
                 this.timeout(10000);
                 var isDone = false;
                 subscribe('rega', /DST offset/, output => {
-                    console.log(output);
+                    console.log('    ' + output);
                     if (!isDone) {
                         isDone = true;
                         done();
                     }
                 });
                 subscribe('rega', /GetNextTimer called for reference time/, output => {
-                    console.log(output);
+                    console.log('    ' + output);
                     if (!isDone) {
                         isDone = true;
                         done();
@@ -52,7 +52,7 @@ let {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
                 this.timeout(20000);
                 subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
-                    console.log(output);
+                    //console.log('    ' + output);
                     done();
                 });
             });
