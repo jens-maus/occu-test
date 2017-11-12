@@ -16,11 +16,13 @@ let {
     function test(time, program, id) {
         describe('fake time test ' + time, function () {
             it('should start ReGaHss' + flavor, function (done) {
-                done();
                 console.log('sudo /bin/date ' + time);
-                cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
-                cp.exec('/bin/date', {timeout: 2000, stdio: 'inherit'});
-                startRega(flavor);
+                cp.exec('sudo /bin/date ' + time);
+                cp.exec('/bin/date', (err, stdout, stderr) => {
+                    console.log(stdout);
+                    startRega(flavor);
+                    done();
+                });
             });
         });
 
@@ -78,7 +80,7 @@ let {
     test('032900292020.48', 'Time0130', '1430');
     test('032900542020.48', 'Time0155', '1458');
     test('032900592020.48', 'Time0200', '1470');
-    test('032901042020.48', 'Time0205', '1478');
+    test('032901042020.48', 'Time0205', '1498');
     test('032901292020.48', 'Time0230', '1510');
     test('032901542020.48', 'Time0255', '1522');
     test('032901592020.48', 'Time0300', '1534');
@@ -90,7 +92,7 @@ let {
     test('102500292020.48', 'Time0130', '1430');
     test('102500542020.48', 'Time0155', '1458');
     test('102500592020.48', 'Time0200', '1470');
-    test('102501042020.48', 'Time0205', '1478');
+    test('102501042020.48', 'Time0205', '1498');
     test('102501292020.48', 'Time0230', '1510');
     test('102501542020.48', 'Time0255', '1522');
     test('102501592020.48', 'Time0300', '1534');
