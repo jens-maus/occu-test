@@ -18,7 +18,6 @@ docker exec -it travis bash -l
 
 # Install Node.js
 nvm install 6
-nvm use 6
 
 # Clone the repo
 cd /home/travis
