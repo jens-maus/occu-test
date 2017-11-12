@@ -16,18 +16,22 @@ let {
 
     function test(time, program, id) {
         describe('fake time test ' + time, () => {
-            it('should start ReGaHss' + flavor, () => {
+            it('should start ReGaHss' + flavor, function (done) {
+                this.timeout(6000);
                 console.log('sudo /bin/date ' + time);
                 cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
                 startRega(flavor);
+                console.log('...');
+                done();
             });
         });
 
 
         describe('timer tests', () => {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
-                this.timeout(150000);
+                this.timeout(15000);
                 subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
+                    console.log(output);
                     done();
                 });
             });
@@ -48,10 +52,11 @@ let {
     }
 
 
+    test('010123592018.52', 'Time0100', '1314');
+    test('010100292018.52', 'Time0130', '1430');
+    /*
     test('032823592020.52', 'Time0100', '1314');
     test('032900292020.52', 'Time0130', '1430');
-
-    /*
     test('032900542020.52', 'Time0155', '1458');
     test('032900592020.52', 'Time0200', '1470');
     test('032901042020.52', 'Time0205', '1478');
