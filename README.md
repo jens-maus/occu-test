@@ -9,6 +9,8 @@
 
 ## how to run the tests locally
 
+__As the "fake time" tests are done by setting a date/time via /bin/date that will not work in docker container.__
+
 ```bash
 # Start the travis container
 docker run --name travis -dit quay.io/travisci/travis-ruby /sbin/init
