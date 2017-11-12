@@ -24,14 +24,16 @@ let {
         });
 
         describe('rega output', function () {
-            it('should output DST offset', function () {
+            it('should output DST offset', function (done) {
                 subscribe('rega', /DST offset/, output => {
                     console.log(output);
+                    done();
                 });
             });
-            it('should output reference time', function () {
+            it('should output reference time', function (done) {
                 subscribe('rega', /GetNextTimer called for reference time/, output => {
                     console.log(output);
+                    done();
                 });
             });
         });
