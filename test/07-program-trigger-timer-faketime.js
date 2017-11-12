@@ -25,12 +25,14 @@ let {
 
         describe('rega output', function () {
             it('should output DST offset', function (done) {
+                this.timeout(6000);
                 subscribe('rega', /DST offset/, output => {
                     console.log(output);
                     done();
                 });
             });
             it('should output reference time', function (done) {
+                this.timeout(6000);
                 subscribe('rega', /GetNextTimer called for reference time/, output => {
                     console.log(output);
                     done();
