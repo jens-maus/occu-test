@@ -29,7 +29,7 @@ let {
 
         describe('rega output', function () {
             it('should output DST offset and reference time', function (done) {
-                this.timeout(10000);
+                this.timeout(30000);
                 var isDone = false;
                 subscribe('rega', /DST offset/, output => {
                     console.log('    ' + output);
