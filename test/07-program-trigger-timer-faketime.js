@@ -19,21 +19,18 @@ let {
                 done();
                 console.log('sudo /bin/date ' + time);
                 cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
-                cp.exec('/bin/date', {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
+                cp.exec('/bin/date', {timeout: 2000, stdio: 'inherit'});
                 startRega(flavor);
             });
         });
 
         describe('rega output', function () {
-            it('should output DST offset', function (done) {
+            it('should output DST offset and reference time', function (done) {
                 this.timeout(10000);
                 subscribe('rega', /DST offset/, output => {
                     console.log(output);
                     done();
                 });
-            });
-            it('should output reference time', function (done) {
-                this.timeout(6000);
                 subscribe('rega', /GetNextTimer called for reference time/, output => {
                     console.log(output);
                     done();
