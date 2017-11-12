@@ -56,7 +56,7 @@ The Rega is started with a prebuilt homematic.regadom:
 * Time0130 - id: 1430 - BidCoS-RF:20 PRESS_LONG
 * Time0155 - id: 1458 - BidCoS-RF:21 PRESS_LONG
 * Time0200 - id: 1470 - BidCoS-RF:22 PRESS_LONG
-* Time0205 - id: 1478 - BidCoS-RF:23 PRESS_LONG
+* Time0205 - id: 1498 - BidCoS-RF:23 PRESS_LONG
 * Time0230 - id: 1510 - BidCoS-RF:24 PRESS_LONG
 * Time0255 - id: 1522 - BidCoS-RF:25 PRESS_LONG
 * Time0300 - id: 1534 - BidCoS-RF:26 PRESS_LONG
