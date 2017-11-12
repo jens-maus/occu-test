@@ -16,6 +16,7 @@ let {
     function test(time, program, id) {
         describe('fake time test ' + time, function () {
             it('should start ReGaHss' + flavor, function (done) {
+                this.timeout(10000);
                 console.log('sudo /bin/date ' + time);
                 cp.exec('sudo /bin/date ' + time);
                 cp.exec('/bin/date', (err, stdout, stderr) => {
