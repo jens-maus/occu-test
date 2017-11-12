@@ -15,9 +15,9 @@ let {
 
 
     function test(time, program, id) {
-        describe('fake time test ' + time, () => {
+        describe('fake time test ' + time, function () {
             it('should start ReGaHss' + flavor, function (done) {
-                this.timeout(6000);
+                this.timeout(7000);
                 setTimeout(() => {
                     console.log('...');
                     done();
@@ -28,8 +28,7 @@ let {
             });
         });
 
-
-        describe('timer tests', () => {
+        describe('timer tests', function () {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
                 this.timeout(15000);
                 subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
@@ -39,17 +38,15 @@ let {
             });
         });
 
-
-        describe('stop ReGaHss' + flavor + ' process', () => {
+        describe('stop ReGaHss' + flavor + ' process', function () {
             it('should stop', function (done) {
-                this.timeout(60000);
+                this.timeout(7000);
                 procs.rega.on('close', () => {
                     procs.rega = null;
                     done();
                 });
                 cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
             });
-
         });
     }
 
