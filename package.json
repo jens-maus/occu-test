@@ -1,10 +1,10 @@
 {
   "name": "occu-test",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {
-    "test": "camo-purge; mocha test/07-program-trigger-timer-faketime.js"
+    "test": "camo-purge; mocha"
   },
   "repository": {
     "type": "git",
