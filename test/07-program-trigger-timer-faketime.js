@@ -20,8 +20,8 @@ let {
                 cp.exec('sudo /bin/date ' + time);
                 cp.exec('/bin/date', (err, stdout, stderr) => {
                     console.log(stdout);
-                    startRega(flavor);
                     done();
+                    startRega(flavor);
                 });
             });
         });
