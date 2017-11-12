@@ -19,6 +19,7 @@ let {
                 done();
                 console.log('sudo /bin/date ' + time);
                 cp.exec('sudo /bin/date ' + time, {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
+                cp.exec('/bin/date', {timeout: 2000, stdio: ['ignore', process.stdout, process.stdout]});
                 startRega(flavor);
             });
         });
