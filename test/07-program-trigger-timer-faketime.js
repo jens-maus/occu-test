@@ -23,6 +23,19 @@ let {
             });
         });
 
+        describe('rega output', function () {
+            it('should output DST offset', function () {
+                subscribe('rega', /DST offset/, output => {
+                    console.log(output);
+                });
+            });
+            it('should output reference time', function () {
+                subscribe('rega', /GetNextTimer called for reference time/, output => {
+                    console.log(output);
+                });
+            });
+        });
+
         describe('timer tests', function () {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
                 this.timeout(15000);
