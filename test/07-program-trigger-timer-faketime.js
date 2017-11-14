@@ -17,13 +17,11 @@ let {
         describe('fake time test ' + time, function () {
             it('should start ReGaHss' + flavor, function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                cp.exec('cat /etc/timezone', function (e, stdout) {
-                   console.log('timezone: ' + stdout);
-                cp.exec('sudo /bin/date ' + time, function (e, stdout) {
+                cp.exec('sudo /bin/date -s ' + time, function (e, stdout) {
                     console.log('      ' + stdout.replace('\n', ''));
                     done();
                     startRega(flavor);
-                });});
+                });
             });
         });
 
@@ -67,7 +65,7 @@ let {
     }
 
 
-    test('010123592018.48', 'Time0100', '1314');
+    test('2018-01-01 00:59:48', 'Time0100', '1314');
 
     // leap year, Feb, 29.
     test('022900592020.48', 'Time0200', '1470');
