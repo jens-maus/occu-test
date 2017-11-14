@@ -130,10 +130,12 @@ let {
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
 
+        /*
         it('should wait 5 seconds', function (done) {
             this.timeout(6000);
             setTimeout(done, 5000);
         });
+        */
     });
 
 
