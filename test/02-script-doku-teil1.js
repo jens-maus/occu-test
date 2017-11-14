@@ -361,15 +361,14 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
 
         it('6.1.4 should do ToTime()', function (done) {
             this.timeout(30000);
-            // FIXME Example seems to be wrong in Documentation! (01:00:01 vs 00:00:01)
             rega.exec(`
 var i = 1;
-var t = i.ToTime(); ! t = @1970-01-01 01:00:01@  
+var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
 
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.t === '1970-01-01 00:00:01') {
+                } else if (objects.t === '1970-01-01 01:00:01') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
