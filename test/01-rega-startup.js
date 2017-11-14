@@ -116,9 +116,9 @@ let {
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
-        it('should wait 20 seconds', function (done) {
-            this.timeout(21000);
-            setTimeout(done, 20000);
+        it('should wait 10 seconds', function (done) {
+            this.timeout(11000);
+            setTimeout(done, 10000);
         });
 
         it('should stop', function (done) {
