@@ -616,9 +616,9 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
 
-        it('should wait 5 seconds', function (done) {
-            this.timeout(6000);
-            setTimeout(done, 5000);
+        it('should wait 2 seconds', function (done) {
+            this.timeout(3000);
+            setTimeout(done, 2000);
         });
     });
 
