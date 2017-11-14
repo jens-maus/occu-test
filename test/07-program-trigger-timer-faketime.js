@@ -16,10 +16,10 @@ let {
     function test(time, program, id) {
         describe('fake time test ' + time, function () {
             it('should start ReGaHss' + flavor, function (done) {
-                this.timeout(30000);
+                this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 cp.exec('sudo /bin/date ' + time, function (e, stdout) {
-                    done();
                     console.log('      ' + stdout.replace('\n', ''));
+                    done();
                     startRega(flavor);
                 });
             });
