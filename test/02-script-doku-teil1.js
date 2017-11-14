@@ -602,9 +602,9 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
-        it('should wait 5 seconds', function (done) {
-            this.timeout(6000);
-            setTimeout(done, 5000);
+        it('should wait 2 seconds', function (done) {
+            this.timeout(3000);
+            setTimeout(done, 2000);
         });
 
         it('should stop', function (done) {
