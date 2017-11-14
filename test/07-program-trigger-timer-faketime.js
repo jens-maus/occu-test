@@ -18,32 +18,29 @@ let {
             it('should start ReGaHss' + flavor, function (done) {
                 this.timeout(30000);
                 console.log('    sudo /bin/date ' + time);
-                cp.exec('sudo /bin/date ' + time);
-                cp.exec('/bin/date', (err, stdout, stderr) => {
-                    console.log('    ' + stdout.replace('\n', ''));
-                    done();
-                    startRega(flavor);
+                cp.exec('sudo /bin/date ' + time, () => {
+                    cp.exec('/bin/date', (err, stdout, stderr) => {
+                        console.log('    ' + stdout.replace('\n', ''));
+                        done();
+                        startRega(flavor);
+                    });
                 });
             });
         });
 
         describe('rega output', function () {
-            it('should output DST offset and reference time', function (done) {
+            it('should output DST offset', function (done) {
                 this.timeout(30000);
-                var isDone = false;
                 subscribe('rega', /DST offset/, output => {
                     console.log('    ' + output);
-                    if (!isDone) {
-                        isDone = true;
-                        done();
-                    }
+                    done();
                 });
+            });
+            it('should output reference time', function (done) {
+                this.timeout(30000);
                 subscribe('rega', /GetNextTimer called for reference time/, output => {
                     console.log('    ' + output);
-                    if (!isDone) {
-                        isDone = true;
-                        done();
-                    }
+                    done();
                 });
             });
         });
