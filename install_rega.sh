@@ -1,9 +1,10 @@
 #!/bin/bash
 
 echo "setting CET/CEST timezone"
-echo "Europe/Berlin" >/etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+cat /etc/timezone
+echo "Europe/Berlin" >/etc/timezone && sudo dpkg-reconfigure -f noninteractive tzdata
+cat /etc/timezone
 date
-date --help
 
 echo "creating directories"
 mkdir -p /etc/config
