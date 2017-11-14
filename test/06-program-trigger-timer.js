@@ -24,10 +24,12 @@ let {
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
+        /*
         it('should wait 15 seconds', function (done) {
             this.timeout(16000);
             setTimeout(done, 15000);
         });
+        */
     });
 
     describe('timer triggers program', () => {
@@ -40,11 +42,12 @@ let {
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
+        /*
         it('should wait 5 seconds', function (done) {
             this.timeout(6000);
             setTimeout(done, 5000);
         });
-
+        */
         it('should stop', function (done) {
             this.timeout(60000);
             procs.rega.on('close', () => {
@@ -53,11 +56,12 @@ let {
             });
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
-
+        /*
         it('should wait 5 seconds', function (done) {
             this.timeout(6000);
             setTimeout(done, 5000);
         });
+        */
     });
 
 
