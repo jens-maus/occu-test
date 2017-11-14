@@ -602,11 +602,12 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
+        /*
         it('should wait 2 seconds', function (done) {
             this.timeout(3000);
             setTimeout(done, 2000);
         });
-
+        */
         it('should stop', function (done) {
             this.timeout(60000);
             procs.rega.on('close', () => {
@@ -615,11 +616,12 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
             });
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
-
+        /*
         it('should wait 2 seconds', function (done) {
             this.timeout(3000);
             setTimeout(done, 2000);
         });
+        */
     });
 
 
