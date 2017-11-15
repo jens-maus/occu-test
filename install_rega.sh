@@ -21,11 +21,12 @@ echo "copying files"
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
+ln -sf /bin/ReGaHss /bin/ReGaHss.legacy
 cp -v homematic.regadom /etc/config/
 
-echo "installing i386 libs and faketime"
+echo "installing i386 libs"
 apt-get update
-apt-get install libc6:i386 libstdc++6:i386 faketime:i386
+apt-get install libc6:i386 libstdc++6:i386
 
 echo "adding /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/ to ldconfig"
 echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" > /etc/ld.so.conf.d/hm.conf

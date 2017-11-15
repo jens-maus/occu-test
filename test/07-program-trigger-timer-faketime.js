@@ -11,11 +11,12 @@ let {
     regaBuffer
 } = require('../lib/helper.js');
 
-['', '.normal', '.community'].forEach(flavor => {
+['.legacy', '.normal', '.community'].forEach(flavor => {
 
     function test(time, program, id) {
-        describe('fake time test ' + time, function () {
-            it('should start ReGaHss' + flavor, function (done) {
+
+        describe('ReGaHss' + flavor + ': fake time test start (' + time + ')', function () {
+            it('should start' + flavor, function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
                     console.log('      ' + stdout.replace('\n', ''));
@@ -25,10 +26,10 @@ let {
             });
         });
 
-        describe('rega output', function () {
+        describe('ReGaHss' + flavor + ': rega output', function () {
             it('should output DST offset', function (done) {
                 this.timeout(30000);
-                subscribe('rega', /DST offset/, output => {
+                subscribe('rega', /DST offset =/, output => {
                     console.log('      ' + output);
                     done();
                 });
@@ -42,17 +43,21 @@ let {
             });
         });
 
-        describe('timer tests', function () {
+        describe('ReGaHss' + flavor + ': timer test (' + time + ')', function () {
             it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
                 this.timeout(20000);
                 subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
                     //console.log('    ' + output);
-                    done();
+                    cp.exec('date', function (e, stdout) {
+                    {
+                      console.log('      ' + output);
+                      done();
+                    });
                 });
             });
         });
 
-        describe('stop ReGaHss' + flavor + ' process', function () {
+        describe('ReGaHss' + flavor + ': stopping', function () {
             it('should stop', function (done) {
                 this.timeout(7000);
                 procs.rega.on('close', () => {
