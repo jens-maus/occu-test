@@ -8,11 +8,11 @@ let {
     simSubscriptions,
     simBuffer,
     regaSubscriptions,
-    regaBuffer
+    regaBuffer,
+    flavors
 } = require('../lib/helper.js');
 
-//['.legacy', '.normal', '.community'].forEach(flavor => {
-flavor = '.' + process.env.FLAVOR;
+flavors.forEach(flavor => {
 
     describe('rfd/hmipserver Simulator', () => {
         it('should start', function () {
@@ -147,4 +147,4 @@ flavor = '.' + process.env.FLAVOR;
         });
     });
 
-//});
+});
