@@ -20,7 +20,11 @@ flavors.forEach(flavor => {
             it('should fake datetime', function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
-                    done();
+                    if(!stdout || stdout.replace('\n', '').length === 0) {
+                      done('invalid faketime: "' + time + '"');
+                    } else {
+                      done();
+                    }
                     console.log('      ' + stdout.replace('\n', ''));
                 });
             });
