@@ -65,7 +65,7 @@ if (system.IsVar("MY_DEFINE"))
                 } else if (output === 'OK') {
                     done();
                 } else {
-                    done(new Error(objects.output + ' != "OK"'));
+                    done(new Error(output + ' != "OK"'));
                 }
             });
         });
@@ -94,7 +94,97 @@ if (system.IsVar("myVar"))
             });
         });
 
+        it('4.2 (VarBool1) should do dom.GetObject()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+var myObject = dom.GetObject("VarBool1");
+if (myObject)
+{
+    Write("OK");
+}             `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (output === 'OK') {
+                    done();
+                } else {
+                    done(new Error(output + ' != "OK"'));
+                }
+            });
+        });
 
+        it('4.3 (VarBool1) should do .ID()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+var myObject = dom.GetObject("VarBool1");
+if (myObject)
+{
+    Write(myObject.ID());
+}             `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (output === '1237') {
+                    done();
+                } else {
+                    done(new Error(output + ' != 1237'));
+                }
+            });
+        });
+
+        it('4.4 (VarBool1) should do .Name()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+var myObject = dom.GetObject("VarBool1");
+if (myObject)
+{
+    Write(myObject.Name());
+}             `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (output === 'VarBool1') {
+                    done();
+                } else {
+                    done(new Error(output + ' != "VarBool1"'));
+                }
+            });
+        });
+
+        // TODO 4.5 .Type()
+
+        it('4.6 (VarBool1) should do .TypeName()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+var myObject = dom.GetObject("VarBool1");
+if (myObject)
+{
+    Write(myObject.TypeName());
+}             `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (output === 'VARDP') {
+                    done();
+                } else {
+                    done(new Error(output + ' != "VARDP"'));
+                }
+            });
+        });
+
+        it('4.7 (VarBool1) should do .IsTypeOf()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+var myObject = dom.GetObject("VarBool1");
+if (myObject.IsTypeOf(OT_VARDP))
+{
+    Write("OK");
+}             `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (output === 'OK') {
+                    done();
+                } else {
+                    done(new Error(output + ' != "OK"'));
+                }
+            });
+        });
 
     });
 
