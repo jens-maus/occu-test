@@ -97,7 +97,7 @@ let {
             });
         });
 
-        if (flavor !== '') {
+        if (flavor !== '.legacy') {
             it('should execute /bin/hm_startup', function (done) {
                 this.timeout(30000);
                 subscribe('rega', /Executing \/bin\/hm_startup/, () => {

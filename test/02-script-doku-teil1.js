@@ -161,7 +161,7 @@ else { s = "i != 1"; }
             });
         });
 
-        if (flavor === '') {
+        if (flavor === '.legacy') {
             it('5.2 should terminate while(true) after 5000 iterations (legacy)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -555,7 +555,7 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
         });
 
 
-        if (flavor !== '') {
+        if (flavor !== '.legacy') {
 
             it('8.1 should calculate Abs() (standard/community)', function (done) {
                 this.timeout(30000);

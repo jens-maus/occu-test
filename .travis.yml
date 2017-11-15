@@ -1,6 +1,13 @@
-sudo: true
+sudo: required
+dist: trusty
 language: node_js
 node_js:
   - '6'
+
+install:
+  - sudo dpkg --add-architecture i386
+  - sudo apt-get -qq update || true
+  - sudo apt-get -qq install libc6:i386 libstdc++6:i386
+
 before_install:
   - export TZ=Europe/Berlin
