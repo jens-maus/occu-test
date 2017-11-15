@@ -21,7 +21,7 @@ flavors.forEach(flavor => {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
                     if(!stdout || stdout.replace('\n', '').length === 0) {
-                      done('invalid faketime: "' + time + '"');
+                      done(new Error('invalid faketime: "' + time + '"'));
                     } else {
                       done();
                     }
