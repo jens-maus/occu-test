@@ -15,8 +15,5 @@ env:
   - FLAVOR=normal
   - FLAVOR=community
 
-script:
-  - travis_wait 45 npm test
-
 before_install:
   - export TZ=Europe/Berlin
