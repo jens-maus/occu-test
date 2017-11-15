@@ -49,7 +49,6 @@ let {
                 subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
                     //console.log('    ' + output);
                     cp.exec('date', function (e, stdout) {
-                    {
                       console.log('      ' + output);
                       done();
                     });
