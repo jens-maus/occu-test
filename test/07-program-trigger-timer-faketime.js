@@ -19,12 +19,14 @@ let {
             it('should fake datetime', function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
-                    console.log('      ' + stdout.replace('\n', ''));
                     done();
+                    console.log('      ' + stdout.replace('\n', ''));
                 });
             });
             it('should start ReGaHss' + flavor, function (done) {
+                this.timeout(15000);
                 startRega(flavor);
+                done();
             });
         });
 
