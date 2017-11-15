@@ -11,7 +11,8 @@ let {
     regaBuffer
 } = require('../lib/helper.js');
 
-['.legacy', '.normal', '.community'].forEach(flavor => {
+//['.legacy', '.normal', '.community'].forEach(flavor => {
+flavor = '.' + process.env.FLAVOR;
 
     describe('rfd/hmipserver Simulator', () => {
         it('should start', function () {
@@ -146,4 +147,4 @@ let {
         });
     });
 
-});
+//});
