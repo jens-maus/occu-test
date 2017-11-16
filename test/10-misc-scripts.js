@@ -122,21 +122,15 @@ if (c_zeit < c_tagesbeginn - 2) {
             });
         });
 
-        describe('stop ReGaHss' + flavor + ' process', () => {
-            it('should stop', function (done) {
-                this.timeout(60000);
-                procs.rega.on('close', () => {
-                    procs.rega = null;
-                    done();
-                });
-                cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
+        it('should stop ReGaHss' + flavor, function (done) {
+            this.timeout(60000);
+            procs.rega.on('close', () => {
+                procs.rega = null;
+                done();
             });
+            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
 
     });
 
-
 });
-
-
-
