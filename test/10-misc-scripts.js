@@ -15,18 +15,48 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-    describe('ReGaHss' + flavor, () => {
 
-        it('should start ReGaHss' + flavor, () => {
-            startRega(flavor);
+
+    describe('test https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', () => {
+        it('should fake datetime', function (done) {
+            this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
+            const time = '2017-12-01 12:00:00';
+            cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
+                if(!stdout || stdout.replace('\n', '').length === 0) {
+                    done(new Error('invalid faketime: "' + time + '"'));
+                } else {
+                    done();
+                }
+                console.log('      ' + stdout.replace('\n', ''));
+            });
         });
+
+        it('should start ReGaHss' + flavor, function (done) {
+            this.timeout(15000);
+            startRega(flavor);
+            done();
+        });
+
+        it('should output DST offset', function (done) {
+            this.timeout(30000);
+            subscribe('rega', /DST offset =/, output => {
+                console.log('      ' + output);
+                done();
+            });
+        });
+
+        it('should output reference time', function (done) {
+            this.timeout(30000);
+            subscribe('rega', /GetNextTimer called for reference time/, output => {
+                console.log('      ' + output);
+                done();
+            });
+        });
+
         it('should wait 15 seconds', function (done) {
             this.timeout(16000);
             setTimeout(done, 15000);
         });
-    });
-
-    describe('test https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', () => {
 
         it('should run tageszeit-in-abschnitte-unterteilen', function (done) {
             this.timeout(30000);
@@ -86,26 +116,26 @@ if (c_zeit < c_tagesbeginn - 2) {
                 if (err) {
                     done(err);
                 } else {
-
+                    console.log(objects);
                     done();
                 }
             });
         });
 
-
-
-    });
-
-    describe('stop ReGaHss' + flavor + ' process', () => {
-        it('should stop', function (done) {
-            this.timeout(60000);
-            procs.rega.on('close', () => {
-                procs.rega = null;
-                done();
+        describe('stop ReGaHss' + flavor + ' process', () => {
+            it('should stop', function (done) {
+                this.timeout(60000);
+                procs.rega.on('close', () => {
+                    procs.rega = null;
+                    done();
+                });
+                cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
             });
-            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
+
     });
+
+
 });
 
 
