@@ -247,103 +247,90 @@ Write(']');
                     done(err);
                 } else {
                     const data = JSON.parse(output);
-                    data.should.deepEqual( [
+                    for (let i = 0; i < data.length; i++) {
+                        delete data[i].ts;
+                    }
+                    data.should.deepEqual([
                         {
                             id: '1269',
                             name: 'Bool1OnFalse',
-                            active: true,
-                            ts: '2020-10-25 03:30:26'
+                            active: true
                         },
                         {
                             id: '1244',
                             name: 'Bool1OnFalseUpdate',
-                            active: true,
-                            ts: '2020-10-25 03:30:26'
+                            active: true
                         },
                         {
                             id: '1280',
                             name: 'Bool1OnTrue',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1291',
                             name: 'Bool1OnTrueUpdate',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
-                        { id: '1337', name: 'Key1', active: true, ts: '1970-01-01 01:00:00' },
+                        { id: '1337', name: 'Key1', active: true },
                         {
                             id: '1326',
                             name: 'Key16Key17',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1314',
                             name: 'Time0100',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1430',
                             name: 'Time0130',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1458',
                             name: 'Time0155',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1470',
                             name: 'Time0200',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1498',
                             name: 'Time0205',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1510',
                             name: 'Time0230',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1522',
                             name: 'Time0255',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1534',
                             name: 'Time0300',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1546',
                             name: 'Time0305',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1558',
                             name: 'Time0330',
-                            active: true,
-                            ts: '1970-01-01 01:00:00'
+                            active: true
                         },
                         {
                             id: '1302',
                             name: 'TimeEveryMinute',
-                            active: true,
-                            ts: '2020-10-25 03:30:26'
+                            active: true
                         }
                     ]);
                     done();
