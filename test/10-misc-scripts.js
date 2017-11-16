@@ -16,7 +16,6 @@ require('should');
 
 flavors.forEach(flavor => {
 
-
     describe('test https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', () => {
         it('should fake datetime', function (done) {
             this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
@@ -116,7 +115,11 @@ if (c_zeit < c_tagesbeginn - 2) {
                 if (err) {
                     done(err);
                 } else {
-                    console.log(objects);
+                    objects.c_zeit.should.equal('12.000000');
+                    objects.c_tagesbeginn.should.equal('7.580000');
+                    objects.c_tagesende.should.equal('15.530000');
+                    objects.c_mittag.should.equal('13.000000');
+                    objects.v_tageszeit.should.equal('4');
                     done();
                 }
             });
