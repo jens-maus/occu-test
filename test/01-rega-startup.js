@@ -26,6 +26,22 @@ flavors.forEach(flavor => {
             startRega(flavor);
         });
 
+        it('should output build label', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string build = dom.BuildLabel();
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.build !== 'undefined') {
+                    done();
+                    console.log('      ' + objects.build);
+                } else {
+                    done(new Error('dom.BuildLabel() returned error'));
+                }
+            });
+        });
+
         it('should start TimerSchedulerThread', function (done) {
 	        this.timeout(30000);
             subscribe('rega', /TimerSchedulerThread started/, () => {
