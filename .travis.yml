@@ -4,6 +4,11 @@ language: node_js
 node_js:
   - '6'
 
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
 install:
   - sudo dpkg --add-architecture i386
   - sudo apt-get -qq update || true
