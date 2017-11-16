@@ -40,7 +40,7 @@ The Rega is started with a prebuilt homematic.regadom:
 
 #### Variables
 
-* VarBool1
+* VarBool1 - id: 1237
 * VarEnum1
 * VarNum1
 * VarString1
