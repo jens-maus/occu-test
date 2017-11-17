@@ -21,9 +21,11 @@ flavors.forEach(flavor => {
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
-        it('should wait 15 seconds', function (done) {
-            this.timeout(16000);
-            setTimeout(done, 15000);
+        it('should start HTTP server', function (done) {
+            this.timeout(30000);
+            subscribe('rega', /HTTP server started successfully/, () => {
+                done();
+            });
         });
     });
 
