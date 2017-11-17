@@ -215,6 +215,27 @@ else { s = "i != 1"; }
             });
         });
 
+        if (flavor !== '.legacy') {
+            it('5.1.1 should be able to handle elseif()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+integer i = 2;
+string s;
+if (i == 1) { s = "i == 1"; }
+elseif (i == 2) { s = "i == 2"; }
+else { s = "i != 1 && i != 2"; }
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.s === 'i == 2') {
+                        done();
+                    } else {
+                        done(new Error(JSON.stringify(objects)));
+                    }
+                });
+            });
+        }
+
         if (flavor === '.legacy') {
             it('5.2 should terminate while(true) after 5000 iterations (legacy)', function (done) {
                 this.timeout(30000);
