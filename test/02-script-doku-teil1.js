@@ -79,6 +79,59 @@ integer i = "Hallo Welt!"; ! i ist eine Zeichenkette
             });
         });
 
+        it('4.0 should handle operators correctly', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+var i = 1; ! i=1
+var j = i + 1;  ! j=2
+var k = i - 1;  ! k=0
+var l = i * 10; ! l=10
+real m = i / 10; ! m=0
+boolean b = (i == 1); ! b=true
+boolean c = (i <> 1); ! c=false
+boolean d = (i != 1); ! d=false
+boolean e = (i < 1);  ! e=false
+boolean f = (i <= 1); ! f=true
+boolean g = (i > 1);  ! g=false
+boolean h = (i >= 1); ! h=true
+boolean n = (b && true); ! n=true
+boolean o = (b || true); ! o=true
+boolean p = !b; ! p=false
+integer q = i & 1; ! q=1
+integer r = i | 1; ! r=1
+string s = "Hallo" # "Welt"; ! s="HalloWelt"
+boolean t = system.IsVar("i"); ! t=true
+integer u = i % 3; ! u=1
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.i === '1' &&
+                           objects.j === '2' &&
+                           objects.k === '0' &&
+                           objects.l === '10' &&
+                           objects.m === '0' &&
+                           objects.b === 'true' &&
+                           objects.c === 'false' &&
+                           objects.d === 'false' &&
+                           objects.e === 'false' &&
+                           objects.f === 'true' &&
+                           objects.g === 'false' &&
+                           objects.h === 'true' &&
+                           objects.n === 'true' &&
+                           objects.o === 'true' &&
+                           objects.p === 'false' &&
+                           objects.q === '1' &&
+                           objects.r === '1' &&
+                           objects.s === 'HalloWelt' &&
+                           objects.t === 'true' &&
+                           objects.u === '1') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+            });
+        });
+
         it('4.1 should do right to left interpretation', function (done) {
             this.timeout(30000);
             rega.exec(`
