@@ -411,7 +411,7 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
                     done(err);
                 } else if (objects.i === '1.234560' &&
                            objects.s === '1.235' &&
-                           objects.r === '1.2') {
+                           objects.r === (flavor !== '.legacy') ? '1.2' : '1.235') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
