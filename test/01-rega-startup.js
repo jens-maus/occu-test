@@ -26,22 +26,6 @@ flavors.forEach(flavor => {
             startRega(flavor);
         });
 
-        it('should output build label', function (done) {
-            this.timeout(30000);
-            rega.exec(`
-string build = dom.BuildLabel();
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else if (objects.build !== 'undefined') {
-                    done();
-                    console.log('      ' + objects.build);
-                } else {
-                    done(new Error('dom.BuildLabel() returned error'));
-                }
-            });
-        });
-
         it('should start TimerSchedulerThread', function (done) {
 	        this.timeout(30000);
             subscribe('rega', /TimerSchedulerThread started/, () => {
@@ -106,13 +90,29 @@ string build = dom.BuildLabel();
         });
 
 
-
         it('should start HTTP server', function (done) {
             this.timeout(30000);
             subscribe('rega', /HTTP server started successfully/, () => {
                 done();
             });
         });
+
+        it('should output build label', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string build = dom.BuildLabel();
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.build !== 'undefined') {
+                    done();
+                    console.log('      ' + objects.build);
+                } else {
+                    done(new Error('dom.BuildLabel() returned error'));
+                }
+            });
+        });
+
 
         if (flavor !== '.legacy') {
             it('should execute /bin/hm_startup', function (done) {
