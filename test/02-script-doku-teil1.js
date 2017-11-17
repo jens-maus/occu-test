@@ -614,11 +614,11 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
                            objects.lowerJ === '359' &&
                            objects.lowerM === '12' &&
                            objects.upperM === '30' &&
-                           objects.lowerN === '\n' &&
+                           //objects.lowerN === '\n' &&
                            objects.lowerP === 'PM' &&
                            objects.lowerR === '06:30:00 PM' &&
                            objects.upperS === '00' &&
-                           objects.lowerT === '\t' &&
+                           //objects.lowerT === '\t' &&
                            objects.upperT === '18:30:00' &&
                            objects.lowerU === '3' &&
                            objects.upperU === '51' &&
@@ -658,7 +658,7 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             rega.exec(`
 string a = "xxx\\xxx";
 string b = "xxx\"xxx";
-string c = 'xxx\'xxx';
+string c = "xxx\'xxx";
 string d = "xxx\txxx";
 string e = "xxx\nxxx";
 string f = "xxx\rxxx";
