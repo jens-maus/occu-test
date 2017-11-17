@@ -565,7 +565,7 @@ string lowerA = t.Format("%a"); ! lowerA = "Wed"
 string upperA = t.Format("%A"); ! upperA = "Wednesday"
 string lowerB = t.Format("%b"); ! lowerB = "Dec"
 string upperB = t.Format("%B"); ! upperB = "December"
-string lowerC = t.Format("%c"); ! lowerC = "Wed Dec 18:30:00 2008"
+string lowerC = t.Format("%c"); ! lowerC = "Wed Dec 24 18:30:00 2008"
 string upperC = t.Format("%C"); ! upperC = "20"
 string lowerD = t.Format("%d"); ! lowerD = "24"
 string upperD = t.Format("%D"); ! upperD = "12/24/08"
@@ -573,7 +573,7 @@ string upperF = t.Format("%F"); ! upperF = "2008-12-24"
 string lowerH = t.Format("%h"); ! lowerH = "Dec"
 string upperH = t.Format("%H"); ! upperH = "18"
 string upperI = t.Format("%I"); ! upperI = "06"
-string lowerJ = t.Format("%J"); ! lowerJ = "359"
+string lowerJ = t.Format("%j"); ! lowerJ = "359"
 string lowerM = t.Format("%m"); ! lowerM = "12"
 string upperM = t.Format("%M"); ! upperM = "30"
 string lowerN = t.Format("%n"); ! lowerN = "<NEWLINE>"
@@ -603,7 +603,7 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
                            objects.upperA === 'Wednesday' &&
                            objects.lowerB === 'Dec' &&
                            objects.upperB === 'December' &&
-                           objects.lowerC === 'Wed Dec 18:30:00 2008' &&
+                           objects.lowerC === 'Wed Dec 24 18:30:00 2008' &&
                            objects.upperC === '20' &&
                            objects.lowerD === '24' &&
                            objects.upperD === '12/24/08' &&
@@ -657,11 +657,11 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             this.timeout(30000);
             rega.exec(`
 string a = "xxx\\xxx";
-string b = "xxx\"xxx";
-string c = "xxx\'xxx";
-string d = "xxx\txxx";
-string e = "xxx\nxxx";
-string f = "xxx\rxxx";
+! string b = "xxx\"xxx";
+! string c = "xxx\'xxx";
+! string d = "xxx\txxx";
+! string e = "xxx\nxxx";
+! string f = "xxx\rxxx";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
