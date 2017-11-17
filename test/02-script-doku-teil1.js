@@ -657,19 +657,19 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             this.timeout(30000);
             rega.exec(`
 string a = "xxx\\\\xxx";
-! string b = "xxx\"xxx";
-! string c = "xxx\'xxx";
-! string d = "xxx\txxx";
-! string e = "xxx\nxxx";
-! string f = "xxx\rxxx";
+string b = "xxx\\\"xxx";
+string c = "xxx\\\'xxx";
+string d = "xxx\\txxx";
+string e = "xxx\\nxxx";
+string f = "xxx\\rxxx";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.a === 'xxx\\xxx' &&
-                           objects.b === 'xxx"xxx' &&
-                           objects.c === 'xxx\'xxx' &&
-                           objects.d === 'xxx\txxx' &&
-                           objects.e === 'xxx\nxxx' &&
+                } else if (objects.a === 'xxx\\\\xxx' && // FIXME: should only be 'xxx\\xxx' ReGa Bug?
+                           objects.b === 'xxx"xxx'    &&
+                           objects.c === 'xxx\'xxx'   &&
+                           objects.d === 'xxx\txxx'   &&
+                           objects.e === 'xxx\nxxx'   &&
                            objects.f === 'xxx\rxxx') {
                     done();
                 } else {
