@@ -405,11 +405,29 @@ integer dType = d.VarType(); ! 10
             rega.exec(`
 var i = 1.23456;
 var s = i.ToString(3); ! s = "1.235"; s ist eine Zeichenkette
-
+var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.s === '1.235') {
+                } else if (objects.i === '1.234560' &&
+                           objects.s === '1.235' &&
+                           objects.r === '1.2') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+            });
+        });
+
+        it('6.1.2.1 should do ToString() on time', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+time t = @2008-12-24 18:30:00@;
+string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.sDate === '24.12.2008') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
