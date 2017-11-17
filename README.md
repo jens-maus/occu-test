@@ -7,33 +7,6 @@
 **... work in progress**
 
 
-## how to run the tests locally
-
-__As the "fake time" tests are done by setting a date/time via /bin/date that will not work in docker container.__
-
-```bash
-# Start the travis container
-docker run --name travis -dit quay.io/travisci/travis-ruby /sbin/init
-
-# Get a shell
-docker exec -it travis bash -l
-
-# Install Node.js
-nvm install 6
-
-# Clone the repo
-cd /home/travis
-git clone https://github.com/hobbyquaker/occu-test
-
-# Install dependencies
-cd occu-test
-npm install
-
-# Run the tests
-npm test
-```
-
-
 ## homematic.regadom
 
 The Rega is started with a prebuilt homematic.regadom:
