@@ -25,15 +25,20 @@ flavors.forEach(flavor => {
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
+
+        it('should do init on simulated rfd', function (done) {
+            this.timeout(60000);
+            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, () => {
+                done();
+            });
+        });
     });
-
-
 
 
     describe('virtual key triggers program', () => {
         it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1 (program Key1)', function (done) {
             // BidCoS-RF:1 PRESS_SHORT is pressed by the simulator every 5 seconds
-            this.timeout(60000);
+            this.timeout(90000);
             subscribe('sim', /setValue rfd BidCoS-RF:2 PRESS_LONG true/, () => {
                 done();
             });

@@ -26,7 +26,7 @@ flavors.forEach(flavor => {
             startRega(flavor);
         });
         it('should start HTTP server', function (done) {
-            this.timeout(30000);
+            this.timeout(60000);
             subscribe('rega', /HTTP server started successfully/, () => {
                 done();
             });
