@@ -45,6 +45,7 @@ The Rega is started with a prebuilt homematic.regadom:
 * test script error handling
 * test popular scripts published on homematic-inside.de and homematic-forum.de **wip**
 * extend regadom with more testvars/programs/devices
+* add more devices to rfd and hmipserver simulator and add them to regadom
 * test device interactions (add/delete/readyconfig, test programs, ...) **wip**
 * trigger travis builds on commits in occu repository
 * WebUI tests?
