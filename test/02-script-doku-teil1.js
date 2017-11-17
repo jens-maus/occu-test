@@ -653,6 +653,31 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             });
         });
 
+        it('6.6.1 should correctly deal with escape chars', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+string a = "xxx\\xxx";
+string b = "xxx\"xxx";
+string c = 'xxx\'xxx';
+string d = "xxx\txxx";
+string e = "xxx\nxxx";
+string f = "xxx\rxxx";
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.a === 'xxx\\xxx' &&
+                           objects.b === 'xxx"xxx' &&
+                           objects.c === 'xxx\'xxx' &&
+                           objects.d === 'xxx\txxx' &&
+                           objects.e === 'xxx\nxxx' &&
+                           objects.f === 'xxx\rxxx') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+            });
+        });
+
         it('6.6.2 should do ToFloat()', function (done) {
             this.timeout(30000);
             rega.exec(`
