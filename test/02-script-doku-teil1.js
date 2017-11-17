@@ -457,11 +457,59 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
             rega.exec(`
 var i = 1;
 var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
-
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
                 } else if (objects.t === '1970-01-01 01:00:01') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+            });
+        });
+
+        it('6.2 should handle boolean values', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+boolean bTRUE = true;
+boolean bFALSE = false;
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.bTRUE === 'true' &&
+                           objects.bFALSE === 'false') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+            });
+        });
+
+        it('6.3 should handle negative integers', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+integer i = -123;
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.i === '-123') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+            });
+        });
+
+        it('6.4 should handle real values', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+real r = 1.0;
+real s = "-1.0E-1".ToFloat(); ! -0.1
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.r === '1.000000' &&
+                           objects.s === '0.100000') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
@@ -488,6 +536,7 @@ integer isDST = t.IsDST(); ! isDST = 0
                 if (err) {
                     done(err);
                 } else if (
+                    objects.t === '2008-12-24 18:30:00' &&
                     objects.year === '2008' &&
                     objects.month === '12' &&
                     objects.day === '24' &&
@@ -511,12 +560,79 @@ integer isDST = t.IsDST(); ! isDST = 0
             this.timeout(30000);
             rega.exec(`
 time t = @2008-12-24 18:30:00@;
+string perc = t.Format("%%");   ! perc = "%"
+string lowerA = t.Format("%a"); ! lowerA = "Wed"
+string upperA = t.Format("%A"); ! upperA = "Wednesday"
+string lowerB = t.Format("%b"); ! lowerB = "Dec"
+string upperB = t.Format("%B"); ! upperB = "December"
+string lowerC = t.Format("%c"); ! lowerC = "Wed Dec 18:30:00 2008"
+string upperC = t.Format("%C"); ! upperC = "20"
+string lowerD = t.Format("%d"); ! lowerD = "24"
+string upperD = t.Format("%D"); ! upperD = "12/24/08"
+string upperF = t.Format("%F"); ! upperF = "2008-12-24"
+string lowerH = t.Format("%h"); ! lowerH = "Dec"
+string upperH = t.Format("%H"); ! upperH = "18"
+string upperI = t.Format("%I"); ! upperI = "06"
+string lowerJ = t.Format("%J"); ! lowerJ = "359"
+string lowerM = t.Format("%m"); ! lowerM = "12"
+string upperM = t.Format("%M"); ! upperM = "30"
+string lowerN = t.Format("%n"); ! lowerN = "\n"
+string lowerP = t.Format("%p"); ! lowerP = "PM"
+string lowerR = t.Format("%r"); ! lowerR = "06:30:00 PM"
+string upperS = t.Format("%S"); ! upperS = "00"
+string lowerT = t.Format("%t"); ! lowerT = "\t"
+string upperT = t.Format("%T"); ! upperT = "18:30:00"
+string lowerU = t.Format("%u"); ! lowerU = "3"
+string upperU = t.Format("%U"); ! upperU = "51"
+string upperV = t.Format("%V"); ! upperV = "52"
+string lowerW = t.Format("%w"); ! lowerW = "3"
+string upperW = t.Format("%W"); ! upperW = "51"
+string lowerX = t.Format("%x"); ! lowerX = "12/24/08"
+string upperX = t.Format("%X"); ! upperX = "18:30:00"
+string lowerY = t.Format("%y"); ! lowerY = "08"
+string upperY = t.Format("%Y"); ! upperY = "2008"
+string lowerZ = t.Format("%z"); ! lowerZ = "+0100"
+string upperZ = t.Format("%Z"); ! upperZ = "CET"
 string sDate = t.Format("%d.%m.%Y"); ! sDate = "24.12.2008";
 string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.sDate === '24.12.2008' && objects.sTime === '18:30:00') {
+                } else if (objects.perc === '%' &&
+                           objects.lowerA === 'Wed' &&
+                           objects.upperA === 'Wednesday' &&
+                           objects.lowerB === 'Dec' &&
+                           objects.upperB === 'December' &&
+                           objects.lowerC === 'Wed Dec 18:30:00 2008' &&
+                           objects.upperC === '20' &&
+                           objects.lowerD === '24' &&
+                           objects.upperD === '12/24/08' &&
+                           objects.upperF === '2008-12-24' &&
+                           objects.lowerH === 'Dec' &&
+                           objects.upperH === '18' &&
+                           objects.upperI === '06' &&
+                           objects.lowerJ === '359' &&
+                           objects.lowerM === '12' &&
+                           objects.upperM === '30' &&
+                           objects.lowerN === '\\n' &&
+                           objects.lowerP === 'PM' &&
+                           objects.lowerR === '06:30:00 PM' &&
+                           objects.upperS === '00' &&
+                           objects.lowerT === '\\t' &&
+                           objects.upperT === '18:30:00' &&
+                           objects.lowerU === '3' &&
+                           objects.upperU === '51' &&
+                           objects.upperV === '52' &&
+                           objects.lowerW === '3' &&
+                           objects.upperW === '51' &&
+                           objects.lowerX === '12/24/08' &&
+                           objects.upperX === '18:30:00' &&
+                           objects.lowerY === '08' &&
+                           objects.upperY === '2008' &&
+                           objects.lowerZ === '+0100' &&
+                           objects.upperZ === 'CET' &&
+                           objects.sDate === '24.12.2008' &&
+                           objects.sTime === '18:30:00') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
