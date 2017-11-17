@@ -156,10 +156,13 @@ integer k = (3 * 2) + 1; ! k = 1 + (3 * 2) = 7
             rega.exec(`
 var x = 1 / 10.0; ! x = 0; x ist eine Ganzzahl
 var y = 1.0 / 10; ! y = 0.1; y ist eine Gleitkommazahl
+var z = 1.0 + "1.0"; ! z == 2.0
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.x === '0' && objects.y === '0.100000') {
+                } else if (objects.x === '0' &&
+                           objects.y === '0.100000' &&
+                           objetcs.z === '2.0') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
@@ -226,10 +229,25 @@ string s;
 if (i == 1) { s = "i == 1"; }
 elseif (i == 2) { s = "i == 2"; }
 else { s = "i != 1 && i != 2"; }
+integer x = 3;
+integer y = 1;
+if (y==1) {
+  if (x == 1) { y = 2; }
+  elseif (x == 2) { y = 3; }
+  elseif (x == 3) { y = 4; }
+  elseif (x == 4) { y = 5; }
+  elseif (x == 5) { y = 6; }
+  elseif (x == 6) { y = 7; }
+  elseif (x == 7) { y = 8; }
+  else { y = 9; }
+  x=10;
+}
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
-                    } else if (objects.s === 'i == 2') {
+                    } else if (objects.s === 'i == 2' &&
+                               objects.x === '10' &&
+                               objects.y === '4') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
@@ -442,6 +460,7 @@ string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
             rega.exec(`
 var s = "100";
 var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
+var r = 1.234567
 
             `, (err, output, objects) => {
                 if (err) {
@@ -753,6 +772,28 @@ integer world = s.Find("welt"); ! world = -1
             });
         });
 
+        if(flavor !== '.legacy') {
+            it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string s = "Hallo Welt";
+boolean bWorld = s.Contains("Welt"); ! bWorld = true
+boolean bStart = s.StartsWith("Hallo"); !bStart = true
+boolean bEnd = s.EndsWith("Welt"); !bEnd = true
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else if (objects.bWorld === 'true' &&
+                           objects.bStart === 'true' &&
+                           objetcs.bEnd === ' true') {
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
+                });
+            });
+        }
+
         it('6.6.6 should do Split() and sum up ToInteger()', function (done) {
             this.timeout(30000);
             rega.exec(`
@@ -792,6 +833,98 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 
 
         if (flavor !== '.legacy') {
+
+            it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string str = " !\\\"#$%&’()";
+string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%3F%28%29
+string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&?()
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.kodiert === '%20%21%22%23%24%25%26%3F%28%29' &&
+                               objects.dekodiert === ' !"#$%&?\'()') {
+                        done();
+                    } else {
+                        done(new Error(JSON.stringify(objects)));
+                    }
+                });
+            });
+
+            it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string str = "Übergrößenträger";
+string utf8 = str.ToUTF8(); ! utf8 = "ÃbergrÃ¶ÃentrÃ¤ger“
+string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.utf8 === 'ÃbergrÃ¶ÃentrÃ¤ger' &&
+                               objects.latin === 'Übergrößenträger') {
+                        done();
+                    } else {
+                        done(new Error(JSON.stringify(objects)));
+                    }
+                });
+            });
+
+            it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string str = "AbCdEfGhI";
+string upper = str.ToUpper(); ! upper = "ABCDEFGHI“
+string lower = str.ToLower(); ! lower = "abcdefghi“
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.upper === 'ABCDEFGHI' &&
+                               objects.latin === 'abcdefghi') {
+                        done();
+                    } else {
+                        done(new Error(JSON.stringify(objects)));
+                    }
+                });
+            });
+
+            it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string str = " \\tAnfang und Ende \\r\\n";
+string trim = str.Trim();               ! trim = "Anfang und Ende"
+string ltrim = str.LTrim();             ! ltrim = "Anfang und Ende \\r\\n"
+string rtrim = str.RTrim();             ! rtrim = " \\tAnfang und Ende"
+string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.trim === 'Anfang und Ende' &&
+                               objects.ltrim === 'Anfang und Ende \r\n' &&
+                               objects.rtrim === ' \tAnfang und Ende' &&
+                               objects.trimc === 'und Ende \r') {
+                        done();
+                    } else {
+                        done(new Error(JSON.stringify(objects)));
+                    }
+                });
+            });
+
+            it('6.6.12 should use Replace() (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string str = "John hates Jane";
+string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.replaced === 'John loves Jane') {
+                        done();
+                    } else {
+                        done(new Error(JSON.stringify(objects)));
+                    }
+                });
+            });
 
             it('8.1 should calculate Abs() (standard/community)', function (done) {
                 this.timeout(30000);
