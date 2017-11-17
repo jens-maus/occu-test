@@ -162,7 +162,7 @@ var z = 1.0 + "1.0"; ! z == 2.0
                     done(err);
                 } else if (objects.x === '0' &&
                            objects.y === '0.100000' &&
-                           objetcs.z === '2.0') {
+                           objects.z === '2.0') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
@@ -460,8 +460,6 @@ string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
             rega.exec(`
 var s = "100";
 var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
-var r = 1.234567
-
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
@@ -785,7 +783,7 @@ boolean bEnd = s.EndsWith("Welt"); !bEnd = true
                     done(err);
                 } else if (objects.bWorld === 'true' &&
                            objects.bStart === 'true' &&
-                           objetcs.bEnd === ' true') {
+                           objects.bEnd === 'true') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
@@ -837,14 +835,14 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
             it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string str = " !\\\"#$%&’()";
+string str = " !\\\"#$%&\\’()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%3F%28%29
-string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&?()
+string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
                     } else if (objects.kodiert === '%20%21%22%23%24%25%26%3F%28%29' &&
-                               objects.dekodiert === ' !"#$%&?\'()') {
+                               objects.dekodiert === ' !"#$%&\'()') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
@@ -861,7 +859,7 @@ string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
-                    } else if (objects.utf8 === 'ÃbergrÃ¶ÃentrÃ¤ger' &&
+                    } else if (objects.utf8 === 'ÃbergrÃ¶ÃentrÃ¤ger' &&
                                objects.latin === 'Übergrößenträger') {
                         done();
                     } else {
@@ -880,7 +878,7 @@ string lower = str.ToLower(); ! lower = "abcdefghi“
                     if (err) {
                         done(err);
                     } else if (objects.upper === 'ABCDEFGHI' &&
-                               objects.latin === 'abcdefghi') {
+                               objects.lower === 'abcdefghi') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
