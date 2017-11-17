@@ -41,18 +41,20 @@ The Rega is started with a prebuilt homematic.regadom:
 
 ## Todo
 
-* ~~run tests on all 3 flavors of ReGaHss (legacy, standard, community)~~
-* ~~documentation on how to run the tests in a local docker container~~
 * test all examples of the official homematic script documentation **wip**
-* ~~test time based triggers (edge cases: DST, leap year)~~
+* test script error handling
 * test popular scripts published on homematic-inside.de and homematic-forum.de **wip**
-* ~~create a regadom with several test variables and programs~~ 
 * extend regadom with more testvars/programs/devices
-* ~~integrate simulated rfd/hmipserver~~
 * test device interactions (add/delete/readyconfig, test programs, ...) **wip**
 * trigger travis builds on commits in occu repository
 * WebUI tests?
 * ...
+
+* ~~run tests on all 3 flavors of ReGaHss (legacy, standard, community)~~
+* ~~documentation on how to run the tests in a local docker container~~
+* ~~test time based triggers (edge cases: DST, leap year)~~
+* ~~create a regadom with several test variables and programs~~ 
+* ~~integrate simulated rfd/hmipserver~~
 
 
 ## Links
