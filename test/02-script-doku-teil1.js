@@ -162,7 +162,7 @@ var z = 1.0 + "1.0"; ! z == 2.0
                     done(err);
                 } else if (objects.x === '0' &&
                            objects.y === '0.100000' &&
-                           objects.z === '2.0') {
+                           objects.z === '2.000000') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));
@@ -835,7 +835,7 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
             it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string str = " !\\\"#$%&\\’()";
+string str = " !\\\"#$%&'()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%3F%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                 `, (err, output, objects) => {
