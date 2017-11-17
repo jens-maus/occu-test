@@ -560,41 +560,41 @@ integer isDST = t.IsDST(); ! isDST = 0
             this.timeout(30000);
             rega.exec(`
 time t = @2008-12-24 18:30:00@;
-string perc = t.Format("%%");   ! perc = "%";
-string lowerA = t.Format("%a"); ! lowerA = "Wed";
-string upperA = t.Format("%A"); ! upperA = "Wednesday";
-string lowerB = t.Format("%b"); ! lowerB = "Dec";
-string upperB = t.Format("%B"); ! upperB = "December";
-string lowerC = t.Format("%c"); ! lowerC = "Wed Dec 18:30:00 2008";
-string upperC = t.Format("%C"); ! upperC = "20";
-string lowerD = t.Format("%d"); ! lowerD = "24";
-string upperD = t.Format("%D"); ! upperD = "12/24/08";
-string upperF = t.Format("%F"); ! upperF = "2008-12-24";
-string lowerH = t.Format("%h"); ! lowerH = "Dec";
-string upperH = t.Format("%H"); ! upperH = "18";
-string upperI = t.Format("%I"); ! upperI = "06";
-string lowerJ = t.Format("%J"); ! lowerJ = "359";
-string lowerM = t.Format("%m"); ! lowerM = "12";
-string upperM = t.Format("%M"); ! upperM = "30";
-string lowerN = t.Format("%n"); ! lowerN = "<NEWLINE>";
-string lowerP = t.Format("%p"); ! lowerP = "PM";
-string lowerR = t.Format("%r"); ! lowerR = "06:30:00 PM";
-string upperS = t.Format("%S"); ! upperS = "00";
-string lowerT = t.Format("%t"); ! lowerT = "<TAB>";
-string upperT = t.Format("%T"); ! upperT = "18:30:00";
-string lowerU = t.Format("%u"); ! lowerU = "3";
-string upperU = t.Format("%U"); ! upperU = "51";
-string upperV = t.Format("%V"); ! upperV = "52";
-string lowerW = t.Format("%w"); ! lowerW = "3";
-string upperW = t.Format("%W"); ! upperW = "51";
-string lowerX = t.Format("%x"); ! lowerX = "12/24/08";
-string upperX = t.Format("%X"); ! upperX = "18:30:00";
-string lowerY = t.Format("%y"); ! lowerY = "08";
-string upperY = t.Format("%Y"); ! upperY = "2008";
-string lowerZ = t.Format("%z"); ! lowerZ = "+0100";
-string upperZ = t.Format("%Z"); ! upperZ = "CET";
-string sDate = t.Format("%d.%m.%Y"); ! sDate = "24.12.2008";
-string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00";
+string perc = t.Format("%%");   ! perc = "%"
+string lowerA = t.Format("%a"); ! lowerA = "Wed"
+string upperA = t.Format("%A"); ! upperA = "Wednesday"
+string lowerB = t.Format("%b"); ! lowerB = "Dec"
+string upperB = t.Format("%B"); ! upperB = "December"
+string lowerC = t.Format("%c"); ! lowerC = "Wed Dec 18:30:00 2008"
+string upperC = t.Format("%C"); ! upperC = "20"
+string lowerD = t.Format("%d"); ! lowerD = "24"
+string upperD = t.Format("%D"); ! upperD = "12/24/08"
+string upperF = t.Format("%F"); ! upperF = "2008-12-24"
+string lowerH = t.Format("%h"); ! lowerH = "Dec"
+string upperH = t.Format("%H"); ! upperH = "18"
+string upperI = t.Format("%I"); ! upperI = "06"
+string lowerJ = t.Format("%J"); ! lowerJ = "359"
+string lowerM = t.Format("%m"); ! lowerM = "12"
+string upperM = t.Format("%M"); ! upperM = "30"
+string lowerN = t.Format("%n"); ! lowerN = "<NEWLINE>"
+string lowerP = t.Format("%p"); ! lowerP = "PM"
+string lowerR = t.Format("%r"); ! lowerR = "06:30:00 PM"
+string upperS = t.Format("%S"); ! upperS = "00"
+string lowerT = t.Format("%t"); ! lowerT = "<TAB>"
+string upperT = t.Format("%T"); ! upperT = "18:30:00"
+string lowerU = t.Format("%u"); ! lowerU = "3"
+string upperU = t.Format("%U"); ! upperU = "51"
+string upperV = t.Format("%V"); ! upperV = "52"
+string lowerW = t.Format("%w"); ! lowerW = "3"
+string upperW = t.Format("%W"); ! upperW = "51"
+string lowerX = t.Format("%x"); ! lowerX = "12/24/08"
+string upperX = t.Format("%X"); ! upperX = "18:30:00"
+string lowerY = t.Format("%y"); ! lowerY = "08"
+string upperY = t.Format("%Y"); ! upperY = "2008"
+string lowerZ = t.Format("%z"); ! lowerZ = "+0100"
+string upperZ = t.Format("%Z"); ! upperZ = "CET"
+string sDate = t.Format("%d.%m.%Y"); ! sDate = "24.12.2008"
+string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
@@ -614,11 +614,11 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00";
                            objects.lowerJ === '359' &&
                            objects.lowerM === '12' &&
                            objects.upperM === '30' &&
-                           objects.lowerN === '\\n' &&
+                           objects.lowerN === '\n' &&
                            objects.lowerP === 'PM' &&
                            objects.lowerR === '06:30:00 PM' &&
                            objects.upperS === '00' &&
-                           objects.lowerT === '\\t' &&
+                           objects.lowerT === '\t' &&
                            objects.upperT === '18:30:00' &&
                            objects.lowerU === '3' &&
                            objects.upperU === '51' &&
