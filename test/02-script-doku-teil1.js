@@ -935,20 +935,80 @@ string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
             it('8.1 should use additional math functions (standard/community)', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-var r;
-r = -1.5;
-var a = r.Abs(); ! a = 1.5
-r = 5.0;
-var d = r.Mod(3); ! d = 2.0
-r = 5.0;
-var m = r.Min(8.0); ! m = 5.0;
-                rega.exec('var y = -3;\nvar x = y.Abs();', (err, output, objects) => {
+var a;
+a = -1.5;
+var b = a.Abs();      ! b = 1.5
+a = 5.0;
+var c = a.Mod(3);     ! c = 2.0
+var d = a.Min(8.0);   ! d = 5.0
+var e = a.Max(8.0);   ! e = 8.0
+a = 2.0;
+var f = a.Exp();      ! f = 7.389056
+var g = a.Exp2();     ! g = 4.0
+var h = a.Exp10();    ! h = 100.0
+var i = a.Expm1();    ! i = 6.389056
+var j = a.Log();      ! j = 0.693147
+var k = a.Log2();     ! k = 1.0
+var l = a.Log10();    ! l = 0.301030
+var m = a.Log1p();    ! m = 1.098612
+var n = a.Sqrt();     ! n = 1.414214
+var o = a.Cbrt();     ! o = 1.259921
+var p = a.Pow(2.0);   ! p = 4.0
+var q = a.Sin();      ! q = 0.909297
+var r = a.Cos();      ! r = -0.416147
+var s = a.Tan();      ! s = -2.185040
+a = 1.0;
+var t = a.Asin();     ! t = 1.570796
+a = 0.0;
+var u = a.Acos();     ! u = 1.570796
+var v = a.Atan();     ! v = 1.570796
+a = 2.0;
+var w = a.Sinh();     ! w = 3.626860
+var x = a.Cosh();     ! x = 3.762196
+var y = a.Tanh();     ! y = 0.964028
+var z = a.Asinh();    ! z = 1.443635
+var za = a.Acosh();   ! za = 1.316958
+a = 0.5;
+var zb = a.Atanh();   ! zb = 0.549306
+a = 0.4521;
+var zc = a.Ceil();    ! zc = 1.0
+var zd = a.Floor();   ! zd = 0.0
+var ze = a.Trunc(1);  ! ze = 0.4
+var zf = a.Round(1);  ! zf = 0.5
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
-                    } else if (objects.a === '1.500000' &&
-                               objects.d === '2.000000' &&
-                               objects.m === '5.000000') {
+                    } else if (objects.b === '1.500000' &&
+                               objects.c === '2.000000' &&
+                               objects.d === '5.000000' &&
+                               objects.e === '8.000000' &&
+                               objects.f === '7.389056' &&
+                               objects.g === '2.000000' &&
+                               objects.h === '100.000000' &&
+                               objects.i === '6.389056' &&
+                               objects.j === '0.693147' &&
+                               objects.k === '1.000000' &&
+                               objects.l === '0.301030' &&
+                               objects.m === '1.098612' &&
+                               objects.n === '1.414214' &&
+                               objects.o === '1.259921' &&
+                               objects.p === '4.000000' &&
+                               objects.q === '0.909297' &&
+                               objects.r === '-0.416147' &&
+                               objects.s === '-2.185040' &&
+                               objects.t === '1.570796' &&
+                               objects.u === '1.570796' &&
+                               objects.v === '1.570796' &&
+                               objects.w === '3.626860' &&
+                               objects.x === '3.762196' &&
+                               objects.y === '0.964028' &&
+                               objects.z === '1.443635' &&
+                               objects.za === '1.316958' &&
+                               objects.zb === '0.549306' &&
+                               objects.zc === '1.000000' &&
+                               objects.zd === '0.000000' &&
+                               objects.ze === '0.400000' &&
+                               objects.zf === '0.500000') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
