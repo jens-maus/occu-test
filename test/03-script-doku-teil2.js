@@ -31,6 +31,13 @@ flavors.forEach(flavor => {
                 done();
             });
         });
+        if (flavor === '.legacy') {
+            // Prevent problem that rega didn't stop after the tests...?!
+            it('should wait 10 seconds', function (done) {
+                this.timeout(11000);
+                setTimeout(done, 10000);
+            });
+        }
     });
 
     describe('test examples from HM_Script_Teil_2_Objektmodell_V1.2.pdf', () => {
