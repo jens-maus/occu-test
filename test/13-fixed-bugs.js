@@ -35,7 +35,7 @@ flavors.forEach(flavor => {
 
     });
 
-    describe('ReGaHss' + flavor + ': verifying bug fixes, () => {
+    describe('ReGaHss' + flavor + ': verifying bug fixes', () => {
         it('correct date/time output at DST boюndaries', function (done) {
             this.timeout(30000);
             rega.exec(`
