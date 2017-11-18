@@ -108,6 +108,9 @@ Write(']');
                     done(err);
                 } else {
                     const data = JSON.parse(output);
+                    for (let i = 0; i < data.length; i++) {
+                        delete data[i].ts;
+                    }
                     data.should.deepEqual([
                         {
                             id: '40',
@@ -133,7 +136,6 @@ Write(']');
                             id: '1234',
                             name: '${sysVarAlarmZone1}',
                             val: false,
-                            ts: '1970-01-01 01:00:00',
                             min: null,
                             max: null,
                             unit: '',
@@ -144,7 +146,6 @@ Write(']');
                             id: '950',
                             name: '${sysVarPresence}',
                             val: true,
-                            ts: '2020-10-25 03:30:25',
                             min: null,
                             max: null,
                             unit: '',
@@ -155,7 +156,6 @@ Write(']');
                             id: '1240',
                             name: 'VarAlarm1',
                             val: false,
-                            ts: '1970-01-01 01:00:00',
                             min: null,
                             max: null,
                             unit: '',
@@ -166,7 +166,6 @@ Write(']');
                             id: '1237',
                             name: 'VarBool1',
                             val: false,
-                            ts: '2020-10-25 03:30:25',
                             min: null,
                             max: null,
                             unit: '',
@@ -177,7 +176,6 @@ Write(']');
                             id: '1238',
                             name: 'VarEnum1',
                             val: 0,
-                            ts: '2020-10-25 03:30:25',
                             min: null,
                             max: null,
                             unit: '',
@@ -188,7 +186,6 @@ Write(']');
                             id: '1239',
                             name: 'VarNum1',
                             val: 0,
-                            ts: '2020-10-25 03:30:25',
                             min: 0,
                             max: 65000,
                             unit: '',
@@ -199,7 +196,6 @@ Write(']');
                             id: '1243',
                             name: 'VarString1',
                             val: '???',
-                            ts: '2020-10-25 03:30:25',
                             min: null,
                             max: null,
                             unit: '',
