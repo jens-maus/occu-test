@@ -848,7 +848,7 @@ string str = " !\\"#$%&'()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%3F%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                 `, (err, output, objects) => {
-                    console.log('kodiert', objects.kodiert, 'dekodiert', object.dekodiert);
+                    console.log('kodiert', objects.kodiert, 'dekodiert', objects.dekodiert);
                     if (err) {
                         done(err);
                     } else if (objects.kodiert === '%20%21%22%23%24%25%26%3F%28%29' &&
