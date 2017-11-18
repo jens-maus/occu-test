@@ -48,12 +48,12 @@ flavors.forEach(flavor => {
 
 
     describe('stop ReGaHss' + flavor + ' process', () => {
-        /*
-        it('should wait 5 seconds', function (done) {
-            this.timeout(6000);
-            setTimeout(done, 5000);
+
+        it('should wait 10 seconds', function (done) {
+            this.timeout(11000);
+            setTimeout(done, 10000);
         });
-        */
+
 
         it('should stop', function (done) {
             this.timeout(60000);
