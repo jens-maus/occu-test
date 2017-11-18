@@ -45,8 +45,7 @@ flavors.forEach(flavor => {
         it('2.2 should handle comments', function (done) {
             this.timeout(30000);
             rega.exec(`
-! Dies ist ein Kommentar. Die nächste Zeile auch
-!
+! Dies ist ein Kommentar.
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
             `, (err, output, objects) => {
                 if (err) {
@@ -690,7 +689,6 @@ string c = "xxx\\\'xxx";
 string d = "xxx\\txxx";
 string e = "xxx\\nxxx";
 string f = "xxx\\rxxx";
-string g = "Das ist ein <html & Test";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
@@ -699,8 +697,7 @@ string g = "Das ist ein <html & Test";
                            objects.c === 'xxx\'xxx'   &&
                            objects.d === 'xxx\txxx'   &&
                            objects.e === 'xxx\nxxx'   &&
-                           objects.f === 'xxx\rxxx'   &&
-                           objects.g === 'Das ist ein <html & Test') {
+                           objects.f === 'xxx\rxxx') {
                     done();
                 } else {
                     done(new Error(JSON.stringify(objects)));

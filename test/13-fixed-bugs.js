@@ -38,9 +38,10 @@ flavors.forEach(flavor => {
     });
 
     describe('ReGaHss' + flavor + ': verifying bug fixes', () => {
-        it('correct date/time output at DST boюndaries', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+        if(flavor !== '.legacy') {
+            it('correct date/time output at DST boюndaries', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var t0=@2016-10-30 01:59:57@;
 var x0=t0.ToInteger();
 var j=0;
@@ -61,11 +62,11 @@ while (j<3)
   }
   j=j+1;
 }
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal(`\r
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal(`\r
 1477785597 1 1 2016-10-30 01:59:57 +0200 CEST\r
 1477785598 1 1 2016-10-30 01:59:58 +0200 CEST\r
 1477785599 1 1 2016-10-30 01:59:59 +0200 CEST\r
@@ -84,6 +85,88 @@ while (j<3)
 1477792800 1 0 2016-10-30 03:00:00 +0100 CET\r
 1477792801 1 0 2016-10-30 03:00:01 +0100 CET\r
 1477792802 1 0 2016-10-30 03:00:02 +0100 CET\r
+`);
+                        done();
+                    }
+                });
+            });
+
+            it('empty line comment', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+! Die nächste Zeile ist ein leerer Kommentar (erzeugt Fehler in Legacy version)
+!
+string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.MyString.should.equal('Hallo Welt!');
+                        done();
+                    }
+                });
+            });
+
+            it('can deal with unclosed <html tags', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string a = "Das ist ein <html & Test";
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('Das ist ein <html & Test');
+                        done();
+                    }
+                });
+            });
+
+            it('should handle special chars in method call', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string a = "Hallo\\tWelt";
+integer b = a.Find("\\t");
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('Hallo\tWelt');
+                        objects.b.should.equal('5');
+                        done();
+                    }
+                });
+            });
+        }
+
+        it('operand tests', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+WriteLine("");
+Write("01: ");WriteLine("1" + 2);
+Write("02: ");WriteLine(1 + 2);
+Write("03: ");WriteLine(1 + "2");
+Write("04: ");WriteLine(1 + "2" + 3);
+Write("05: ");WriteLine(1 + 2 + "3");
+Write("06: ");WriteLine(1 + "2" + "3");
+Write("07: ");WriteLine("1" + 2 + 3);
+Write("08: ");WriteLine("1" + 2 + "3");
+Write("09: ");WriteLine("1" + "2" + 3);
+Write("10: ");WriteLine("1" + "2" + "3");
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    output.should.equal(`\r
+01: 12\r
+02: 3\r
+03: 3\r
+04: 24\r
+05: 6\r
+06: 24\r
+07: 15\r
+08: 15\r
+09: 123\r
+10: 123\r
 `);
                     done();
                 }
