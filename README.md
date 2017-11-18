@@ -42,7 +42,7 @@ The Rega is started with a prebuilt homematic.regadom:
 ## Todo
 
 * test all examples of the official homematic script documentation **wip**
-* test script error handling
+* test script error handling **wip**
 * test popular scripts published on homematic-inside.de and homematic-forum.de **wip**
 * extend regadom with more testvars/programs/devices
 * add more devices to rfd and hmipserver simulator and add them to regadom

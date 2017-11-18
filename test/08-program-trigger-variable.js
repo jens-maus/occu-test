@@ -31,6 +31,10 @@ flavors.forEach(flavor => {
                 done();
             });
         });
+        it('should wait 10 seconds', function (done) {
+            this.timeout(11000);
+            setTimeout(done, 10000);
+        });
     });
 
 

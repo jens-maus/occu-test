@@ -25,11 +25,12 @@ flavors.forEach(flavor => {
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
+
     });
 
     describe('timer triggers program', () => {
         it('should PRESS_LONG BidCoS-RF:50 every minute (program TimerEveryMinute)', function (done) {
-            this.timeout(60000);
+            this.timeout(125000);
             subscribe('sim', /BidCoS-RF:50/, () => {
                 done();
             });
