@@ -1035,6 +1035,8 @@ var m_2_pi = (2.0 / M_PI) == M_2_PI;
 var m_2_sqrtpi = (2.0 / M_PI.Sqrt()) == M_2_SQRTPI;
 var m_sqrt2 = (two.Sqrt() == M_SQRT2);
 var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
+var r = 4.2; ! Kreisradius in cm
+var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
@@ -1053,7 +1055,8 @@ var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
                                objects.m_2_pi === 'true' &&
                                objects.m_2_sqrtpi === 'true' &&
                                objects.m_sqrt2 === 'true' &&
-                               objects.m_sqrt1_2 === 'true') {
+                               objects.m_sqrt1_2 === 'true' &&
+                               objects.A === '55.420000') {
                         done();
                     } else {
                         done(new Error(output));
@@ -1087,8 +1090,25 @@ var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
                     }
                 });
             });
-        }
 
+            it('9.1 should have working random generator (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+var dice = system.Random(1, 6);
+system.Srandom(12345);
+var nonrandom = system.Random(-1000, 1000);
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (parseFloat(objects.dice) >= 1 && parseFloat(objects.dice) <= 6 &&
+                               parseFloat(objects.nonrandom) === 12) {
+                        done();
+                    } else {
+                        done(new Error(output));
+                    }
+                });
+            });
+        }
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
