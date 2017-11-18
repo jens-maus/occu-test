@@ -961,8 +961,8 @@ a = 1.0;
 var t = a.Asin();     ! t = 1.570796
 a = 0.0;
 var u = a.Acos();     ! u = 1.570796
-var v = a.Atan();     ! v = 1.570796
 a = 2.0;
+var v = a.Atan();     ! v = 1.107149
 var w = a.Sinh();     ! w = 3.626860
 var x = a.Cosh();     ! x = 3.762196
 var y = a.Tanh();     ! y = 0.964028
@@ -983,7 +983,7 @@ var zf = a.Round(1);  ! zf = 0.5
                                objects.d === '5.000000' &&
                                objects.e === '8.000000' &&
                                objects.f === '7.389056' &&
-                               objects.g === '2.000000' &&
+                               objects.g === '4.000000' &&
                                objects.h === '100.000000' &&
                                objects.i === '6.389056' &&
                                objects.j === '0.693147' &&
@@ -998,7 +998,7 @@ var zf = a.Round(1);  ! zf = 0.5
                                objects.s === '-2.185040' &&
                                objects.t === '1.570796' &&
                                objects.u === '1.570796' &&
-                               objects.v === '1.570796' &&
+                               objects.v === '1.107149' &&
                                objects.w === '3.626860' &&
                                objects.x === '3.762196' &&
                                objects.y === '0.964028' &&
