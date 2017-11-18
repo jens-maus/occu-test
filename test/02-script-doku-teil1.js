@@ -842,7 +842,7 @@ string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                     if (err) {
                         done(err);
                     } else if (objects.kodiert === '%20%21%22%23%24%25%26%3F%28%29' &&
-                               objects.dekodiert === ' !\\"#$%&\'()') {
+                               objects.dekodiert === ' !"#$%&\'()') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
