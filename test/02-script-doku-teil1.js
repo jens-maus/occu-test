@@ -842,11 +842,13 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 
             it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
                 this.timeout(30000);
+                // single quote is %27, question mark is %3F
                 rega.exec(`
 string str = " !\\"#$%&'()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%3F%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                 `, (err, output, objects) => {
+                    console.log('kodiert', objects.kodiert, 'dekodiert', object.dekodiert);
                     if (err) {
                         done(err);
                     } else if (objects.kodiert === '%20%21%22%23%24%25%26%3F%28%29' &&
