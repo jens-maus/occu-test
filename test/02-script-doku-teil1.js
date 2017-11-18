@@ -1096,12 +1096,12 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
                 rega.exec(`
 var dice = system.Random(1, 6);
 system.Srandom(12345);
-var nonrandom = system.Random(-1000, 1000);
+var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
                     } else if (parseFloat(objects.dice) >= 1 && parseFloat(objects.dice) <= 6 &&
-                               parseFloat(objects.nonrandom) === 12) {
+                               objects.nonrandom === '545') {
                         done();
                     } else {
                         done(new Error(output));
