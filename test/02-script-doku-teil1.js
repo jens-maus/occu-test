@@ -1016,6 +1016,51 @@ var zf = a.Round(1);  ! zf = 0.5
                 });
             });
 
+            it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+var one = 1.0;
+var two = 2.0;
+var ten = 10.0;
+var m_e = one.Exp() == M_E;
+var m_log2e = M_E.Log2() == M_LOG2E;
+var m_log10e = M_E.Log10() == M_LOG10E;
+var m_ln2 = two.Log() == M_LN2;
+var m_ln10 = ten.Log() == M_LN10;
+var m_pi = 3.141592653589793 == M_PI;
+var m_pi_2 = (M_PI / 2.0) == M_PI_2;
+var m_pi_4 = (M_PI / 4.0) == M_PI_4;
+var m_1_pi = (1.0 / M_PI) == M_1_PI;
+var m_2_pi = (2.0 / M_PI) == M_2_PI;
+var m_2_sqrtpi = (2.0 / M_PI.Sqrt()) == M_2_SQRTPI;
+var m_sqrt2 = (two.Sqrt() == M_SQRT2);
+var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else if (objects.one === '1.000000' &&
+                               objects.two === '2.000000' &&
+                               objects.ten === '10.000000' &&
+                               objects.m_e === 'true' &&
+                               objects.m_log2e === 'true' &&
+                               objects.m_log10e === 'true' &&
+                               objects.m_ln2 === 'true' &&
+                               objects.m_ln10 === 'true' &&
+                               objects.m_pi === 'true' &&
+                               objects.m_pi_2 === 'true' &&
+                               objects.m_pi_4 === 'true' &&
+                               objects.m_1_pi === 'true' &&
+                               objects.m_2_pi === 'true' &&
+                               objects.m_2_sqrtpi === 'true' &&
+                               objects.m_sqrt2 === 'true' &&
+                               objects.m_sqrt1_2 === 'true') {
+                        done();
+                    } else {
+                        done(new Error(output));
+                    }
+                });
+            });
+
 
             it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
                 this.timeout(30000);
