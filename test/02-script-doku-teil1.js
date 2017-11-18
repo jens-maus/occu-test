@@ -844,12 +844,12 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
                 this.timeout(30000);
                 rega.exec(`
 string str = " !\\\"#$%&'()";
-string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%3F%28%29
+string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%27%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                 `, (err, output, objects) => {
                     if (err) {
                         done(err);
-                    } else if (objects.kodiert === '%20%21%22%23%24%25%26%3F%28%29' &&
+                    } else if (objects.kodiert === '%20%21%22%23%24%25%26%27%28%29' &&
                                objects.dekodiert === ' !"#$%&\'()') {
                         done();
                     } else {
@@ -932,12 +932,23 @@ string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
                 });
             });
 
-            it('8.1 should calculate Abs() (standard/community)', function (done) {
+            it('8.1 should use additional math functions (standard/community)', function (done) {
                 this.timeout(30000);
+                rega.exec(`
+var r;
+r = -1.5;
+var a = r.Abs(); ! a = 1.5
+r = 5.0;
+var d = r.Mod(3); ! d = 2.0
+r = 5.0;
+var m = r.Min(8.0); ! m = 5.0;
                 rega.exec('var y = -3;\nvar x = y.Abs();', (err, output, objects) => {
+                `, (err, output, objects) => {
                     if (err) {
                         done(err);
-                    } else if (objects.y === '-3' && objects.x === '3.000000') {
+                    } else if (objects.a === '1.500000' &&
+                               objects.d === '2.000000' &&
+                               objects.m === '5.000000') {
                         done();
                     } else {
                         done(new Error(JSON.stringify(objects)));
