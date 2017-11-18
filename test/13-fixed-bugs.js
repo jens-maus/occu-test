@@ -136,6 +136,25 @@ integer b = a.Find("\\t");
                     }
                 });
             });
+
+            it('should be able to handle more than 200 variables', function (done) {
+                this.timeout(30000);
+                var prg = "";
+                var res = "";
+                for(i=1; i <= 1000; i++) {
+                  prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
+                  res = res + i + '\r\n';
+                }
+                rega.exec(prg, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i876.should.equal('876');
+                        output.should.equal(res);
+                        done();
+                    }
+                });
+            });
         }
 
         it('operand tests', function (done) {
