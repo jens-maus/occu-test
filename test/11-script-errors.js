@@ -28,10 +28,9 @@ flavors.forEach(flavor => {
             });
         });
         if (flavor === '.legacy') {
-            // Prevent problem that rega didn't stop after the tests...?!
-            it('should wait 10 seconds', function (done) {
-                this.timeout(11000);
-                setTimeout(done, 10000);
+            it('should wait 30 seconds', function (done) {
+                this.timeout(31000);
+                setTimeout(done, 30000);
             });
         }
 
@@ -39,7 +38,7 @@ flavors.forEach(flavor => {
 
     describe('test script error handling', () => {
         it('should handle unknown methods', function (done) {
-            this.timeout(30000);
+            this.timeout(60000);
             subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 2 col 27 near \^\("muh"\);/, () => {
                 done();
             });
@@ -48,8 +47,15 @@ dom.MethodDoesNotExist("muh");
             `);
         });
 
+        if (flavor === '.legacy') {
+            it('should wait 15 seconds', function (done) {
+                this.timeout(16000);
+                setTimeout(done, 15000);
+            });
+        }
+
         it('should handle syntax Errors', function (done) {
-            this.timeout(30000);
+            this.timeout(60000);
             subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 3 col 39 near/, () => {
                 done();
             });
@@ -61,8 +67,15 @@ WriteLine(bla");
             });
         });
 
+        if (flavor === '.legacy') {
+            it('should wait 15 seconds', function (done) {
+                this.timeout(16000);
+                setTimeout(done, 15000);
+            });
+        }
+
         it('should handle illegal method invocation', function (done) {
-            this.timeout(30000);
+            this.timeout(60000);
 
             subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
                 done();
@@ -75,8 +88,15 @@ WriteLine(unknown.Name());
             });
         });
 
+        if (flavor === '.legacy') {
+            it('should wait 15 seconds', function (done) {
+                this.timeout(16000);
+                setTimeout(done, 15000);
+            });
+        }
+
         it('should log division by zero', function (done) {
-            this.timeout(30000);
+            this.timeout(60000);
             subscribe('rega', /Error: IseVar::Div - division by 0!/, () => {
                 done();
             });
