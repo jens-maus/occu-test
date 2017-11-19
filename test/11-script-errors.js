@@ -16,8 +16,6 @@ flavors.forEach(flavor => {
 
     describe('ReGaHss' + flavor, () => {
 
-
-
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
@@ -27,6 +25,13 @@ flavors.forEach(flavor => {
                 done();
             });
         });
+        if (flavor === 'legacy') {
+
+            it('should wait 15 seconds', function (done) {
+                this.timeout(16000);
+                setTimeout(done, 15000);
+            });
+        }
     });
 
     describe('test script error handling', () => {
