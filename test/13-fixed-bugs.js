@@ -157,6 +157,36 @@ integer b = a.Find("\\t");
             });
         }
 
+        it('floating-point accuracy test', function (done) {
+            this.timeout(30000);
+            rega.exec(`
+real lReal1 = 0.7;
+real lReal2 = 0.4;
+real lReal3 = lReal1 - lReal2;
+boolean diff1 = (lReal3 == 0.3);
+
+real lReal4 = "1.1920928955078125E-07".ToFloat();
+real lReal5 = lReal2 + lReal4;
+boolean diff2 = (lReal2 != lReal5);
+
+real lReal6 = "2.2204460492503131e-16".ToFloat();
+real lReal7 = lReal2 + lReal6;
+boolean diff3 = (lReal2 == lReal7);
+
+boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.diff1.should.equal('true');
+                    objects.diff2.should.equal('false');
+                    objects.diff3.should.equal('true');
+                    objects.diff4.should.equal('true');
+                    done();
+                }
+            });
+        });
+
         it('operand tests', function (done) {
             this.timeout(30000);
             rega.exec(`
