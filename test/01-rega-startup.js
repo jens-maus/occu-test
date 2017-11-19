@@ -114,14 +114,15 @@ string build = dom.BuildLabel();
         });
 
 
-        if (flavor !== '.legacy') {
-            it('should execute /bin/hm_startup', function (done) {
-                this.timeout(30000);
-                subscribe('rega', /Executing \/bin\/hm_startup/, () => {
-                    done();
-                });
+        it('should execute /bin/hm_startup', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            subscribe('rega', /Executing \/bin\/hm_startup/, () => {
+                done();
             });
-        }
+        });
 
         it('should do init on simulated rfd', function (done) {
             this.timeout(30000);
