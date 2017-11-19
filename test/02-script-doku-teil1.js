@@ -31,14 +31,14 @@ flavors.forEach(flavor => {
                 done();
             });
         });
-        if (flavor === '.legacy') {
-            // Prevent problem that rega didn't stop after the tests...?!
-            it('should wait 10 seconds', function (done) {
-                this.timeout(11000);
-                setTimeout(done, 10000);
-            });
-        }
-
+        // Prevent problem that rega didn't stop after the tests...?!
+        it('should wait 10 seconds', function (done) {
+            if (flavor !== '.legacy') {
+                return this.skip();
+            }
+            this.timeout(11000);
+            setTimeout(done, 10000);
+        });
     });
 
     describe('test examples from HM-Skript_Teil_1_Sprachbeschreibung_V2.0', () => {
@@ -264,44 +264,26 @@ if (y==1) {
             });
         }
 
-        if (flavor === '.legacy') {
-            it('5.2 should terminate while(true) after 5000 iterations (legacy)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('5.2 should terminate while(true) after max iterations', function (done) {
+            this.timeout(30000);
+            rega.exec(`
 integer i = 0;
 while (true) { i = i + 1; }
-! i = 5001
-            `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.i === '5001') {
-                        done();
+        `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    if (flavor === '.legacy') {
+                        objects.i.should.equal('5001');
                     } else {
-                        done(new Error(JSON.stringify(objects)));
+                        objects.i.should.equal('500001');
                     }
-                });
+                    done();
+                } else {
+                    done(new Error(JSON.stringify(objects)));
+                }
             });
-
-        } else {
-            // FIXME documentation does not mention that standard/community terminates after 500000 iterations!
-            it('5.2 should terminate while(true) after 500000 iterations (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
-integer i = 0;
-while (true) { i = i + 1; }
-            `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.i === '500001') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
-            });
-
-        }
-
+        });
 
         it('5.3 should do foreach', function (done) {
             this.timeout(30000);

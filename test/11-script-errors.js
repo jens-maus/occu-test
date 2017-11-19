@@ -25,13 +25,13 @@ flavors.forEach(flavor => {
                 done();
             });
         });
-        if (flavor === '.legacy') {
-
-            it('should wait 15 seconds', function (done) {
-                this.timeout(16000);
-                setTimeout(done, 15000);
-            });
-        }
+        it('should wait 15 seconds', function (done) {
+            if (flavor !== '.legacy') {
+                return this.skip();
+            }
+            this.timeout(16000);
+            setTimeout(done, 15000);
+        });
     });
 
     describe('test script error handling', () => {
@@ -78,23 +78,24 @@ WriteLine(unknown.Name());
             });
         });
 
-        if (flavor === '.community') {
-            it('should handle invalid method use', function (done) {
-                this.timeout(60000);
+        it('should handle invalid method use', function (done) {
+            if (flavor !== '.community') {
+                return this.skip();
+            }
+            this.timeout(60000);
 
-                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
-                    done();
-                });
+            subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
+                done();
+            });
 
-                rega.exec(`
+            rega.exec(`
 var a = system.ToFloat();
 var b = system.ToFloat("1.4");
 var c = system.ToFloat("a");
-                `, (err, stdout, objects) => {
-                    //console.log(err, stdout, objects);
-                });
+            `, (err, stdout, objects) => {
+                //console.log(err, stdout, objects);
             });
-        }
+        });
 
         it('should log division by zero', function (done) {
             this.timeout(60000);
