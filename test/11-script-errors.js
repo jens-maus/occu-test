@@ -27,12 +27,12 @@ flavors.forEach(flavor => {
                 done();
             });
         });
-        if (flavor === '.legacy') {
+        /*if (flavor === '.legacy') {
             it('should wait 30 seconds', function (done) {
                 this.timeout(31000);
                 setTimeout(done, 30000);
             });
-        }
+        }*/
 
     });
 
@@ -47,12 +47,12 @@ dom.MethodDoesNotExist("muh");
             `);
         });
 
-        if (flavor === '.legacy') {
+        /*if (flavor === '.legacy') {
             it('should wait 15 seconds', function (done) {
                 this.timeout(16000);
                 setTimeout(done, 15000);
             });
-        }
+        }*/
 
         it('should handle syntax Errors', function (done) {
             this.timeout(60000);
@@ -60,26 +60,32 @@ dom.MethodDoesNotExist("muh");
                 done();
             });
             rega.exec(`
-            
+
 WriteLine(bla");
             `, (err, stdout, objects) => {
                 //console.log(err, stdout, objects);
             });
         });
 
-        if (flavor === '.legacy') {
+        /*if (flavor === '.legacy') {
             it('should wait 15 seconds', function (done) {
                 this.timeout(16000);
                 setTimeout(done, 15000);
             });
-        }
+        }*/
 
         it('should handle illegal method invocation', function (done) {
             this.timeout(60000);
 
-            subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
-                done();
-            });
+            if(flavor !== '.legacy') {
+                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
+                    done();
+                });
+            } else {
+                subscribe('rega', /Error: IseESP::ExecError= Execution failed:/, () => {
+                    done();
+                });
+            }
             rega.exec(`
 var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
@@ -88,12 +94,37 @@ WriteLine(unknown.Name());
             });
         });
 
-        if (flavor === '.legacy') {
+        /*if (flavor === '.legacy') {
             it('should wait 15 seconds', function (done) {
                 this.timeout(16000);
                 setTimeout(done, 15000);
             });
+        }*/
+
+        if(flavor !== '.legacy') {
+            it('should handle invalid method use', function (done) {
+                this.timeout(60000);
+
+                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
+                    done();
+                });
+
+                rega.exec(`
+var a = system.ToFloat();
+var b = system.ToFloat("1.4");
+var c = system.ToFloat("a");
+                `, (err, stdout, objects) => {
+                    //console.log(err, stdout, objects);
+                });
+            });
         }
+
+        /*if (flavor === '.legacy') {
+            it('should wait 15 seconds', function (done) {
+                this.timeout(16000);
+                setTimeout(done, 15000);
+            });
+        }*/
 
         it('should log division by zero', function (done) {
             this.timeout(60000);
@@ -127,7 +158,6 @@ WriteLine(infinite);
             });
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
-
     });
 
 
