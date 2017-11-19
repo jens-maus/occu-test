@@ -155,11 +155,10 @@ integer b = a.Find("\\t");
                     }
                 });
             });
-        }
 
-        it('floating-point accuracy test', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+            it('floating-point accuracy test', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 real lReal1 = 0.7;
 real lReal2 = 0.4;
 real lReal3 = lReal1 - lReal2;
@@ -174,18 +173,33 @@ real lReal7 = lReal2 + lReal6;
 boolean diff3 = (lReal2 == lReal7);
 
 boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.diff1.should.equal('true');
-                    objects.diff2.should.equal('true');
-                    objects.diff3.should.equal('true');
-                    objects.diff4.should.equal('true');
-                    done();
-                }
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.diff1.should.equal('true');
+                        objects.diff2.should.equal('true');
+                        objects.diff3.should.equal('true');
+                        objects.diff4.should.equal('true');
+                        done();
+                    }
+                });
             });
-        });
+
+            it('should allow object names starting with number', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+object obj = dom.GetObject("2Light");
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.obj.should.equal('null');
+                        done();
+                    }
+                });
+            });
+        }
 
         it('operand tests', function (done) {
             this.timeout(30000);
