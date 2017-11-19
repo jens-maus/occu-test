@@ -179,7 +179,7 @@ boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
                     done(err);
                 } else {
                     objects.diff1.should.equal('true');
-                    objects.diff2.should.equal('false');
+                    objects.diff2.should.equal('true');
                     objects.diff3.should.equal('true');
                     objects.diff4.should.equal('true');
                     done();
