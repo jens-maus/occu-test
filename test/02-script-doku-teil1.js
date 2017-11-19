@@ -279,8 +279,6 @@ while (true) { i = i + 1; }
                         objects.i.should.equal('500001');
                     }
                     done();
-                } else {
-                    done(new Error(JSON.stringify(objects)));
                 }
             });
         });
