@@ -27,13 +27,6 @@ flavors.forEach(flavor => {
                 done();
             });
         });
-        /*if (flavor === '.legacy') {
-            it('should wait 30 seconds', function (done) {
-                this.timeout(31000);
-                setTimeout(done, 30000);
-            });
-        }*/
-
     });
 
     describe('test script error handling', () => {
@@ -47,13 +40,6 @@ dom.MethodDoesNotExist("muh");
             `);
         });
 
-        /*if (flavor === '.legacy') {
-            it('should wait 15 seconds', function (done) {
-                this.timeout(16000);
-                setTimeout(done, 15000);
-            });
-        }*/
-
         it('should handle syntax Errors', function (done) {
             this.timeout(60000);
             subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 3 col 39 near/, () => {
@@ -66,13 +52,6 @@ WriteLine(bla");
                 //console.log(err, stdout, objects);
             });
         });
-
-        /*if (flavor === '.legacy') {
-            it('should wait 15 seconds', function (done) {
-                this.timeout(16000);
-                setTimeout(done, 15000);
-            });
-        }*/
 
         it('should handle illegal method invocation', function (done) {
             this.timeout(60000);
@@ -94,14 +73,7 @@ WriteLine(unknown.Name());
             });
         });
 
-        /*if (flavor === '.legacy') {
-            it('should wait 15 seconds', function (done) {
-                this.timeout(16000);
-                setTimeout(done, 15000);
-            });
-        }*/
-
-        if(flavor !== '.legacy') {
+        if(flavor === '.community') {
             it('should handle invalid method use', function (done) {
                 this.timeout(60000);
 
@@ -118,13 +90,6 @@ var c = system.ToFloat("a");
                 });
             });
         }
-
-        /*if (flavor === '.legacy') {
-            it('should wait 15 seconds', function (done) {
-                this.timeout(16000);
-                setTimeout(done, 15000);
-            });
-        }*/
 
         it('should log division by zero', function (done) {
             this.timeout(60000);
@@ -159,6 +124,4 @@ WriteLine(infinite);
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
     });
-
-
 });
