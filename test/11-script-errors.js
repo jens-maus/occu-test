@@ -25,7 +25,7 @@ flavors.forEach(flavor => {
                 done();
             });
         });
-        if (flavor === 'legacy') {
+        if (flavor === '.legacy') {
 
             it('should wait 15 seconds', function (done) {
                 this.timeout(16000);
@@ -61,7 +61,7 @@ WriteLine(bla");
         it('should handle illegal method invocation', function (done) {
             this.timeout(60000);
 
-            if(flavor !== '.legacy') {
+            if (flavor !== '.legacy') {
                 subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
                     done();
                 });
@@ -78,7 +78,7 @@ WriteLine(unknown.Name());
             });
         });
 
-        if(flavor === '.community') {
+        if (flavor === '.community') {
             it('should handle invalid method use', function (done) {
                 this.timeout(60000);
 
