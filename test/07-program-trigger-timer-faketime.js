@@ -105,7 +105,8 @@ flavors.forEach(flavor => {
     test('2020-10-25 02:04:48 CEST', 'Time0205', '1498');
     test('2020-10-25 02:29:48 CEST', 'Time0230', '1510');
     test('2020-10-25 02:54:48 CEST', 'Time0255', '1522');
-    test('2020-10-25 02:59:48 CEST', 'Time0300', '1534');
+    //test('2020-10-25 02:59:48 CEST', 'Time0300', '1534'); // @ 03:00 (CEST) time will be switch to 02:00 (CET) again, thus no Time0300 trigger (which is fine)
+    test('2020-10-25 02:59:48 CET',  'Time0300', '1534');
     test('2020-10-25 03:04:48 CET',  'Time0305', '1546');
     test('2020-10-25 03:29:48 CET',  'Time0330', '1558');
 });
