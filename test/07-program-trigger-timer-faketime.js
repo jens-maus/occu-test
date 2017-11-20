@@ -93,7 +93,7 @@ flavors.forEach(flavor => {
 
     // Long Running test for EveryMinute Timer over DST change
     (function () {
-        const ftime = '2020-10-25 02:58:00 CEST';
+        const ftime = '2020-10-25 02:58:40 CEST';
         describe('Timer test EveryMinute starting @ ' + ftime + '...', () => {
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
@@ -142,7 +142,7 @@ flavors.forEach(flavor => {
             });
 
             describe('perform timer test', () => {
-                it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:58:00 CEST', function (done) {
+                it('should call Program ID = 1302 (program TimeEveryMinute) @ Rega Start', function (done) {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
@@ -194,7 +194,7 @@ flavors.forEach(flavor => {
     })();
 
     (function () {
-        const ftime = '2020-03-29 01:58:00 CET';
+        const ftime = '2020-03-29 01:58:40 CET';
         describe('Timer test EveryMinute starting @ ' + ftime + '...', () => {
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
@@ -243,7 +243,7 @@ flavors.forEach(flavor => {
             });
 
             describe('perform timer test', () => {
-                it('should call Program ID = 1302 (program TimeEveryMinute) @ 01:58:00 CET', function (done) {
+                it('should call Program ID = 1302 (program TimeEveryMinute) @ Rega Start', function (done) {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
