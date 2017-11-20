@@ -146,6 +146,7 @@ flavors.forEach(flavor => {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -155,6 +156,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -164,6 +166,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -173,6 +176,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -247,6 +251,7 @@ flavors.forEach(flavor => {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -256,6 +261,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -265,6 +271,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
@@ -274,6 +281,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
+                            console.log('          ' + stdout);
                             console.log('          ' + output);
                             done();
                         });
