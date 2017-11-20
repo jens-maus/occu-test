@@ -16,50 +16,58 @@ require('should');
 
 flavors.forEach(flavor => {
 
-    describe('test https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', () => {
-        it('should fake datetime', function (done) {
-            this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-            const time = '2017-12-01 12:00:00';
-            cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
-                if(!stdout || stdout.replace('\n', '').length === 0) {
-                    done(new Error('invalid faketime: "' + time + '"'));
-                } else {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
+
+        describe('starting ReGaHss' + flavor, () => {
+            it('should fake datetime', function (done) {
+                this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
+                const time = '2017-12-01 12:00:00 CET';
+                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
+                    if(e) {
+                        done(e);
+                    } else if(!stdout || stdout.replace('\n', '').length === 0) {
+                        done(new Error('invalid faketime: "' + time + '"'));
+                    } else {
+                        done();
+                    }
+                    console.log('      ' + stdout.replace('\n', ''));
+                });
+            });
+            it('should start', () => {
+                startRega(flavor);
+            });
+            it('wait for HTTP server to be ready', function (done) {
+                this.timeout(60000);
+                subscribe('rega', /HTTP server started successfully/, () => {
+                    if (flavor == '.legacy') {
+                        setTimeout(done, 10000);
+                    } else {
+                        done();
+                    }
+                });
+            });
+
+            it('should output DST offset', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /DST offset =/, output => {
                     done();
-                }
-                console.log('      ' + stdout.replace('\n', ''));
+                    console.log('      ' + output);
+                });
+            });
+
+            it('should output reference time', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /GetNextTimer called for reference time/, output => {
+                    done();
+                    console.log('      ' + output);
+                });
             });
         });
 
-        it('should start ReGaHss' + flavor, function (done) {
-            this.timeout(15000);
-            startRega(flavor);
-            done();
-        });
-
-        it('should output DST offset', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /DST offset =/, output => {
-                console.log('      ' + output);
-                done();
-            });
-        });
-
-        it('should output reference time', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /GetNextTimer called for reference time/, output => {
-                console.log('      ' + output);
-                done();
-            });
-        });
-
-        it('should wait 15 seconds', function (done) {
-            this.timeout(16000);
-            setTimeout(done, 15000);
-        });
-
-        it('should run tageszeit-in-abschnitte-unterteilen', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+        describe('testing examples from https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', () => {
+            it('testing "tageszeit-in-abschnitte-unterteilen"', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 ! Tageszeiten
 ! Tagesbeginn - 2 Nacht
 ! Tagesbeginn - 2 Tagesbeginn - 1 frühmorgens
@@ -111,29 +119,30 @@ if (c_zeit < c_tagesbeginn - 2) {
 }
 
 ! dom.GetObject("Tageszeit").State(v_tageszeit);
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.c_zeit.should.equal('12.000000');
-                    objects.c_tagesbeginn.should.equal('7.580000');
-                    objects.c_tagesende.should.equal('15.530000');
-                    objects.c_mittag.should.equal('13.000000');
-                    objects.v_tageszeit.should.equal('4');
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.c_zeit.should.equal('12.000000');
+                        objects.c_tagesbeginn.should.equal('7.580000');
+                        objects.c_tagesende.should.equal('15.530000');
+                        objects.c_mittag.should.equal('13.000000');
+                        objects.v_tageszeit.should.equal('4');
+                        done();
+                    }
+                });
+            });
+        });
+
+        describe('stopping ReGaHss' + flavor, () => {
+            it('should stop', function (done) {
+                this.timeout(60000);
+                procs.rega.on('close', () => {
+                    procs.rega = null;
                     done();
-                }
+                });
+                cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
             });
         });
-
-        it('should stop ReGaHss' + flavor, function (done) {
-            this.timeout(60000);
-            procs.rega.on('close', () => {
-                procs.rega = null;
-                done();
-            });
-            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
-        });
-
     });
-
 });
