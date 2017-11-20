@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, no-template-curly-in-string */
 
 const {
     cp,
@@ -26,7 +26,7 @@ flavors.forEach(flavor => {
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
                 subscribe('rega', /HTTP server started successfully/, () => {
-                    if (flavor == '.legacy') {
+                    if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
                         done();
@@ -153,7 +153,7 @@ integer b = a.Find("\\t");
                 this.timeout(30000);
                 let prg = '';
                 let res = '';
-                for (i = 1; i <= 1000; i++) {
+                for (let i = 1; i <= 1000; i++) {
                     prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
                     res = res + i + '\r\n';
                 }

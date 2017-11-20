@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe  */
 /* eslint-disable no-unused-vars, import/no-unassigned-import */
 
 const {

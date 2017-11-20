@@ -26,7 +26,7 @@ flavors.forEach(flavor => {
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
                 subscribe('rega', /HTTP server started successfully/, () => {
-                    if (flavor == '.legacy') {
+                    if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
                         done();
@@ -64,12 +64,12 @@ WriteLine(bla");
             it('should handle illegal method invocation', function (done) {
                 this.timeout(60000);
 
-                if (flavor !== '.legacy') {
-                    subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
+                if (flavor === '.legacy') {
+                    subscribe('rega', /Error: IseESP::ExecError= Execution failed:/, () => {
                         done();
                     });
                 } else {
-                    subscribe('rega', /Error: IseESP::ExecError= Execution failed:/, () => {
+                    subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
                         done();
                     });
                 }

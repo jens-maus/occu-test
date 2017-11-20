@@ -40,7 +40,7 @@ flavors.forEach(flavor => {
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
                 subscribe('rega', /HTTP server started successfully/, () => {
-                    if (flavor == '.legacy') {
+                    if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
                         done();

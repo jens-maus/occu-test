@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, no-useless-escape */
 
 const {
     cp,
@@ -388,10 +388,10 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
                 } else {
                     objects.i.should.equal('1.234560');
                     objects.s.should.equal('1.235');
-                    if (flavor !== '.legacy') {
-                        objects.r.should.equal('1.2');
-                    } else {
+                    if (flavor === '.legacy') {
                         objects.r.should.equal('1.235');
+                    } else {
+                        objects.r.should.equal('1.2');
                     }
                     done();
                 }
