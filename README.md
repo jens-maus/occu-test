@@ -1,6 +1,8 @@
 # OCCU Test
 
 [![Build Status](https://travis-ci.org/hobbyquaker/occu-test.svg?branch=master)](https://travis-ci.org/hobbyquaker/occu-test)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![License][mit-badge]][mit-url]
 
 > Automated System Tests of ReGaHss - the HomeMatic (O)CCU "Logic Layer"
 
@@ -76,3 +78,7 @@ Help and Feedback highly appreciated, Pull Requests Welcome! :-)
 ## License
 
 MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
+
+
+[mit-badge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat
+[mit-url]: LICENSE
