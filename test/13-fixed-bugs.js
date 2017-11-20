@@ -35,7 +35,7 @@ flavors.forEach(flavor => {
         });
 
         describe('verifying bug fixes', () => {
-            it('correct date/time output at DST boюndaries', function (done) {
+            it('correct date/time output at DST boundaries', function (done) {
                 if (flavor === '.legacy') {
                    return this.skip();
                 }
@@ -315,7 +315,7 @@ foreach(objID, user.UserSharedObjects())
         });
 
         describe('stopping ReGaHss' + flavor, () => {
-            it('wait for stopped ReGa', function (done) {
+            it('should stop', function (done) {
                 this.timeout(60000);
                 procs.rega.on('close', () => {
                     procs.rega = null;
