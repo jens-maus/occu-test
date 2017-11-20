@@ -12,6 +12,8 @@ let {
     flavors
 } = require('../lib/helper.js');
 
+require('should');
+
 flavors.forEach(flavor => {
 
     describe('rfd/hmipserver Simulator', () => {
@@ -50,10 +52,9 @@ string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.MyString === 'Hallo Welt!') {
-                    done();
                 } else {
-                    done(new Error(objects.MyString + ' != "Hallo Welt!"'));
+                    objects.MyString.should.equal('Hallo Welt!');
+                    done();
                 }
             });
         });
@@ -66,10 +67,9 @@ integer j = 1; ! Deklaration mit Initialisierung
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.j === '1') {
-                    done();
                 } else {
-                    done(new Error(objects.j + ' != "1"'));
+                    objects.j.should.equal('1');
+                    done();
                 }
             });
         });
@@ -81,10 +81,9 @@ integer i = "Hallo Welt!"; ! i ist eine Zeichenkette
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.i === 'Hallo Welt!') {
-                    done();
                 } else {
-                    done(objects.i + ' != "Hallo Welt!"');
+                    objects.i.should.equal('Hallo Welt!');
+                    done();
                 }
             });
         });
@@ -115,29 +114,28 @@ integer u = i % 3; ! u=1
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.i === '1' &&
-                           objects.j === '2' &&
-                           objects.k === '0' &&
-                           objects.l === '10' &&
-                           objects.m === '0' &&
-                           objects.b === 'true' &&
-                           objects.c === 'false' &&
-                           objects.d === 'false' &&
-                           objects.e === 'false' &&
-                           objects.f === 'true' &&
-                           objects.g === 'false' &&
-                           objects.h === 'true' &&
-                           objects.n === 'true' &&
-                           objects.o === 'true' &&
-                           objects.p === 'false' &&
-                           objects.q === '1' &&
-                           objects.r === '1' &&
-                           objects.s === 'HalloWelt' &&
-                           objects.t === 'true' &&
-                           objects.u === '1') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.i.should.equal('1');
+                    objects.j.should.equal('2');
+                    objects.k.should.equal('0');
+                    objects.l.should.equal('10');
+                    objects.m.should.equal('0');
+                    objects.b.should.equal('true');
+                    objects.c.should.equal('false');
+                    objects.d.should.equal('false');
+                    objects.e.should.equal('false');
+                    objects.f.should.equal('true');
+                    objects.g.should.equal('false');
+                    objects.h.should.equal('true');
+                    objects.n.should.equal('true');
+                    objects.o.should.equal('true');
+                    objects.p.should.equal('false');
+                    objects.q.should.equal('1');
+                    objects.r.should.equal('1');
+                    objects.s.should.equal('HalloWelt');
+                    objects.t.should.equal('true');
+                    objects.u.should.equal('1');
+                    done();
                 }
             });
         });
@@ -151,10 +149,11 @@ integer k = (3 * 2) + 1; ! k = 1 + (3 * 2) = 7
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.i === '7' && objects.j === '9' && objects.k === '7') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.i.should.equal('7');
+                    objects.j.should.equal('9');
+                    objects.k.should.equal('7');
+                    done();
                 }
             });
         });
@@ -168,12 +167,11 @@ var z = 1.0 + "1.0"; ! z == 2.0
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.x === '0' &&
-                           objects.y === '0.100000' &&
-                           objects.z === '2.000000') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.x.should.equal('0');
+                    objects.y.should.equal('0.100000');
+                    objects.z.should.equal('2.000000');
+                    done();
                 }
             });
         });
@@ -186,14 +184,13 @@ var b = 2.5 * 3; ! b = 7.5; b ist eine Gleitkommazahl
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.a === '6' && objects.b === '7.500000') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.a.should.equal('6');
+                    objects.b.should.equal('7.500000');
+                    done();
                 }
             });
         });
-
 
         it('4.2.2 should cast to left operands type', function (done) {
             this.timeout(30000);
@@ -202,10 +199,9 @@ var c = 0.0 + 3; ! c = 3.0; c ist eine Gleitkommazahl
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.c === '3.000000') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.c.should.equal('3.000000');
+                    done();
                 }
             });
         });
@@ -220,18 +216,19 @@ else { s = "i != 1"; }
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.s === 'i == 1') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.s.should.equal('i == 1');
+                    done();
                 }
             });
         });
 
-        if (flavor !== '.legacy') {
-            it('5.1.1 should be able to handle elseif()', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('5.1.1 should be able to handle elseif()', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 integer i = 2;
 string s;
 if (i == 1) { s = "i == 1"; }
@@ -250,19 +247,17 @@ if (y==1) {
   else { y = 9; }
   x=10;
 }
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.s === 'i == 2' &&
-                               objects.x === '10' &&
-                               objects.y === '4') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.s.should.equal('i == 2');
+                    objects.x.should.equal('10');
+                    objects.y.should.equal('4');
+                    done();
+                }
             });
-        }
+        });
 
         it('5.2 should terminate while(true) after max iterations', function (done) {
             this.timeout(30000);
@@ -297,14 +292,12 @@ foreach (index, liste)
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.ausgabe === 'cba') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.ausgabe.should.equal('cba');
+                    done();
                 }
             });
         });
-
 
         it('5.4 should quit a script', function (done) {
             this.timeout(30000);
@@ -315,18 +308,17 @@ boolean didNotQuit = true;
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.even === '3' && objects.didNotQuit !== 'true') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.even.should.equal('3');
+                    objects.didNotQuit.should.notEqual('true');
+                    done();
                 }
             });
         });
 
-        if (flavor !== '.community') {
-            it('6.1.1 should determine VarType() (legacy/standard)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.1.1 should determine standard VarType()', function (done) {
+            this.timeout(30000);
+            rega.exec(`
 boolean b;
 integer bType = b.VarType(); ! 1;
 
@@ -342,71 +334,46 @@ integer sType = s.VarType(); ! 4;
 time t;
 integer tType = t.VarType(); ! 5
 
-            `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (
-                        objects.bType === '1' &&
-                        objects.iType === '2' &&
-                        objects.rType === '3' &&
-                        objects.sType === '4' &&
-                        objects.tType === '5'
-                    ) {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+        `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.bType.should.equal('1');
+                    objects.iType.should.equal('2');
+                    objects.rType.should.equal('3');
+                    objects.sType.should.equal('4');
+                    objects.tType.should.equal('5');
+                    done();
+                }
             });
+        });
 
-        } else {
-            it('6.1.1 should determine VarType() (community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.1.1 should determine additional VarType() (community)', function (done) {
+            if (flavor !== '.community') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 var v;
 integer vType = v.VarType(); ! 0;                
                 
-boolean b;
-integer bType = b.VarType(); ! 1;
-
-integer i;
-integer iType = i.VarType(); ! 2;
-
-real r;
-integer rType = r.VarType(); ! 3;
-
-string s;
-integer sType = s.VarType(); ! 4;
-
-time t;
-integer tType = t.VarType(); ! 5
-
 object o;
 integer oType = o.VarType(); ! 9
 
 idarray d;
 integer dType = d.VarType(); ! 10
 
-            `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (
-                        objects.vType === '0' &&
-                        objects.bType === '1' &&
-                        objects.iType === '2' &&
-                        objects.rType === '3' &&
-                        objects.sType === '4' &&
-                        objects.tType === '5' &&
-                        objects.oType === '9' &&
-                        objects.dType === '10'
-                    ) {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+        `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.vType.should.equal('0');
+                    objects.oType.should.equal('9');
+                    objects.dType.should.equal('10');
+                    done();
+                }
             });
-        }
+        });
 
         it('6.1.2 should do ToString()', function (done) {
             this.timeout(30000);
@@ -417,12 +384,15 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.i === '1.234560' &&
-                           objects.s === '1.235' &&
-                           objects.r === (flavor !== '.legacy') ? '1.2' : '1.235') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.i.should.equal('1.234560');
+                    objects.s.should.equal('1.235');
+                    if (flavor !== '.legacy') {
+                      objects.r.should.equal('1.2');
+                    } else {
+                      objects.r.should.equal('1.235');
+                    }
+                    done();
                 }
             });
         });
@@ -435,10 +405,9 @@ string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.sDate === '24.12.2008') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.sDate.should.equal('24.12.2008');
+                    done();
                 }
             });
         });
@@ -451,10 +420,9 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.s === '100') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.s.should.equal('100');
+                    done();
                 }
             });
         });
@@ -467,10 +435,9 @@ var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.t === '1970-01-01 01:00:01') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.t.should.equal('1970-01-01 01:00:01');
+                    done();
                 }
             });
         });
@@ -483,11 +450,10 @@ boolean bFALSE = false;
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.bTRUE === 'true' &&
-                           objects.bFALSE === 'false') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.bTRUE.should.equal('true');
+                    objects.bFALSE.should.equal('false');
+                    done();
                 }
             });
         });
@@ -499,10 +465,9 @@ integer i = -123;
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.i === '-123') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.i.should.equal('-123');
+                    done();
                 }
             });
         });
@@ -515,11 +480,10 @@ real s = "-1.0E-1".ToFloat(); ! -0.1
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.r === '1.000000' &&
-                           objects.s === '-0.100000') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.r.should.equal('1.000000');
+                    objects.s.should.equal('-0.100000');
+                    done();
                 }
             });
         });
@@ -542,23 +506,20 @@ integer isDST = t.IsDST(); ! isDST = 0
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (
-                    objects.t === '2008-12-24 18:30:00' &&
-                    objects.year === '2008' &&
-                    objects.month === '12' &&
-                    objects.day === '24' &&
-                    objects.hour === '18' &&
-                    objects.minute === '30' &&
-                    objects.second === '0' &&
-                    objects.week === '51' &&
-                    objects.weekday === '4' &&
-                    objects.yearday === '359' &&
-                    objects.isLocalTime === '1' &&
-                    objects.isDST === '0'
-                ) {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.t.should.equal('2008-12-24 18:30:00');
+                    objects.year.should.equal('2008');
+                    objects.month.should.equal('12');
+                    objects.day.should.equal('24');
+                    objects.hour.should.equal('18');
+                    objects.minute.should.equal('30');
+                    objects.second.should.equal('0');
+                    objects.week.should.equal('51');
+                    objects.weekday.should.equal('4');
+                    objects.yearday.should.equal('359');
+                    objects.isLocalTime.should.equal('1');
+                    objects.isDST.should.equal('0');
+                    done();
                 }
             });
         });
@@ -605,44 +566,43 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.perc === '%' &&
-                           objects.lowerA === 'Wed' &&
-                           objects.upperA === 'Wednesday' &&
-                           objects.lowerB === 'Dec' &&
-                           objects.upperB === 'December' &&
-                           objects.lowerC === 'Wed Dec 24 18:30:00 2008' &&
-                           objects.upperC === '20' &&
-                           objects.lowerD === '24' &&
-                           objects.upperD === '12/24/08' &&
-                           objects.upperF === '2008-12-24' &&
-                           objects.lowerH === 'Dec' &&
-                           objects.upperH === '18' &&
-                           objects.upperI === '06' &&
-                           objects.lowerJ === '359' &&
-                           objects.lowerM === '12' &&
-                           objects.upperM === '30' &&
-                           objects.lowerN === '\n' &&
-                           objects.lowerP === 'PM' &&
-                           objects.lowerR === '06:30:00 PM' &&
-                           objects.upperS === '00' &&
-                           objects.lowerT === '\t' &&
-                           objects.upperT === '18:30:00' &&
-                           objects.lowerU === '3' &&
-                           objects.upperU === '51' &&
-                           objects.upperV === '52' &&
-                           objects.lowerW === '3' &&
-                           objects.upperW === '51' &&
-                           objects.lowerX === '12/24/08' &&
-                           objects.upperX === '18:30:00' &&
-                           objects.lowerY === '08' &&
-                           objects.upperY === '2008' &&
-                           objects.lowerZ === '+0100' &&
-                           objects.upperZ === 'CET' &&
-                           objects.sDate === '24.12.2008' &&
-                           objects.sTime === '18:30:00') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.perc.should.equal('%');
+                    objects.lowerA.should.equal('Wed');
+                    objects.upperA.should.equal('Wednesday');
+                    objects.lowerB.should.equal('Dec');
+                    objects.upperB.should.equal('December');
+                    objects.lowerC.should.equal('Wed Dec 24 18:30:00 2008');
+                    objects.upperC.should.equal('20');
+                    objects.lowerD.should.equal('24');
+                    objects.upperD.should.equal('12/24/08');
+                    objects.upperF.should.equal('2008-12-24');
+                    objects.lowerH.should.equal('Dec');
+                    objects.upperH.should.equal('18');
+                    objects.upperI.should.equal('06');
+                    objects.lowerJ.should.equal('359');
+                    objects.lowerM.should.equal('12');
+                    objects.upperM.should.equal('30');
+                    objects.lowerN.should.equal('\n');
+                    objects.lowerP.should.equal('PM');
+                    objects.lowerR.should.equal('06:30:00 PM');
+                    objects.upperS.should.equal('00');
+                    objects.lowerT.should.equal('\t');
+                    objects.upperT.should.equal('18:30:00');
+                    objects.lowerU.should.equal('3');
+                    objects.upperU.should.equal('51');
+                    objects.upperV.should.equal('52');
+                    objects.lowerW.should.equal('3');
+                    objects.upperW.should.equal('51');
+                    objects.lowerX.should.equal('12/24/08');
+                    objects.upperX.should.equal('18:30:00');
+                    objects.lowerY.should.equal('08');
+                    objects.upperY.should.equal('2008');
+                    objects.lowerZ.should.equal('+0100');
+                    objects.upperZ.should.equal('CET');
+                    objects.sDate.should.equal('24.12.2008');
+                    objects.sTime.should.equal('18:30:00');
+                    done();
                 }
             });
         });
@@ -652,10 +612,9 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
             rega.exec('string x = "Hello";\nWriteLine(x # " World!");', (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === 'Hello World!\r\n') {
-                    done();
                 } else {
-                    done(new Error(output));
+                    output.should.equal('Hello World!\r\n');
+                    done();
                 }
             });
         });
@@ -672,15 +631,14 @@ string f = "xxx\\rxxx";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.a === 'xxx\\\\xxx' && // FIXME: should only be 'xxx\\xxx' ReGa Bug?
-                           objects.b === 'xxx"xxx'    &&
-                           objects.c === 'xxx\'xxx'   &&
-                           objects.d === 'xxx\txxx'   &&
-                           objects.e === 'xxx\nxxx'   &&
-                           objects.f === 'xxx\rxxx') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.a.should.equal('xxx\\\\xxx'); // FIXME: should only be 'xxx\\xxx' ReGa Bug?
+                    objects.b.should.equal('xxx"xxx');
+                    objects.c.should.equal('xxx\'xxx');
+                    objects.d.should.equal('xxx\txxx');
+                    objects.e.should.equal('xxx\nxxx');
+                    objects.f.should.equal('xxx\rxxx');
+                    done();
                 }
             });
         });
@@ -695,18 +653,14 @@ real r3 = "1E-1".ToFloat(); ! r3 = 0.1
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (
-                    objects.r1 === '1.010000' &&
-                    objects.r2 === '0.100000' &&
-                    objects.r3 === '0.100000'
-                ) {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.r1.should.equal('1.010000');
+                    objects.r2.should.equal('0.100000');
+                    objects.r3.should.equal('0.100000');
+                    done();
                 }
             });
         });
-
 
         it('6.6.3 should do Length()', function (done) {
             this.timeout(30000);
@@ -716,14 +670,12 @@ integer length = s.Length(); ! length = 11
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.length === '11') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.length.should.equal('11');
+                    done();
                 }
             });
         });
-
 
         it('6.6.4 should do Substr()', function (done) {
             this.timeout(30000);
@@ -733,10 +685,9 @@ string world = s.Substr(6, 4); ! world = "Welt"
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.world === 'Welt') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.world.should.equal('Welt');
+                    done();
                 }
             });
         });
@@ -750,18 +701,20 @@ integer world = s.Find("welt"); ! world = -1
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.World === '6' && objects.world === '-1') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.World.should.equal('6');
+                    objects.world.should.equal('-1');
+                    done();
                 }
             });
         });
 
-        if(flavor !== '.legacy') {
-            it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 string s = "Hallo Welt";
 boolean bWorld = s.Contains("Welt"); ! bWorld = true
 boolean bStart = s.StartsWith("Hallo"); !bStart = true
@@ -769,16 +722,14 @@ boolean bEnd = s.EndsWith("Welt"); !bEnd = true
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.bWorld === 'true' &&
-                           objects.bStart === 'true' &&
-                           objects.bEnd === 'true') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.bWorld.should.equal('true');
+                    objects.bStart.should.equal('true');
+                    objects.bEnd.should.equal('true');
+                    done();
                 }
-                });
             });
-        }
+        });
 
         it('6.6.6 should do Split() and sum up ToInteger()', function (done) {
             this.timeout(30000);
@@ -793,10 +744,9 @@ foreach(summand, summanden.Split(","))
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.summe === '6') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.summe.should.equal('6');
+                    done();
                 }
             });
         });
@@ -809,112 +759,121 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.ErsteZutat === 'Butter') {
-                    done();
                 } else {
-                    done(new Error(JSON.stringify(objects)));
+                    objects.ErsteZutat.should.equal('Butter');
+                    done();
                 }
             });
         });
 
-
-        if (flavor !== '.legacy') {
-
-            it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 string str = " !\\\"#$%&'()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%27%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.kodiert === '%20%21%22%23%24%25%26%27%28%29' &&
-                               objects.dekodiert === ' !"#$%&\'()') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.kodiert.should.equal('%20%21%22%23%24%25%26%27%28%29');
+                    objects.dekodiert.should.equal(' !"#$%&\'()');
+                    done();
+                }
             });
+        });
 
-            it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 string str = "Übergrößenträger";
 string utf8 = str.ToUTF8(); ! utf8 = "ÃbergrÃ¶ÃentrÃ¤ger“
 string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.utf8 === 'ÃbergrÃ¶ÃentrÃ¤ger' &&
-                               objects.latin === 'Übergrößenträger') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.utf8.should.equal('ÃbergrÃ¶ÃentrÃ¤ger');
+                    objects.latin.should.qual('Übergrößenträger');
+                    done();
+                }
             });
+        });
 
-            it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 string str = "AbCdEfGhI";
 string upper = str.ToUpper(); ! upper = "ABCDEFGHI“
 string lower = str.ToLower(); ! lower = "abcdefghi“
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.upper === 'ABCDEFGHI' &&
-                               objects.lower === 'abcdefghi') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.upper.should.equal('ABCDEFGHI');
+                    objects.lower.should.equal('abcdefghi');
+                    done();
+                }
             });
+        });
 
-            it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
+            if (flavor === '.legacy')
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 string str = " \\tAnfang und Ende \\r\\n";
 string trim = str.Trim();               ! trim = "Anfang und Ende"
 string ltrim = str.LTrim();             ! ltrim = "Anfang und Ende \\r\\n"
 string rtrim = str.RTrim();             ! rtrim = " \\tAnfang und Ende"
 string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.trim === 'Anfang und Ende' &&
-                               objects.ltrim === 'Anfang und Ende \r\n' &&
-                               objects.rtrim === ' \tAnfang und Ende' &&
-                               objects.trimc === 'und Ende \r') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.trim.should.equal('Anfang und Ende');
+                    objects.ltrim.should.equal('Anfang und Ende \r\n');
+                    objects.rtrim.should.equal(' \tAnfang und Ende');
+                    objects.trimc.should.equal('und Ende \r');
+                    done();
+                }
             });
+        });
 
-            it('6.6.12 should use Replace() (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('6.6.12 should use Replace() (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 string str = "John hates Jane";
 string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.replaced === 'John loves Jane') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.replaced.should.equal('John loves Jane');
+                    done();
+                }
             });
+        });
 
-            it('8.1 should use additional math functions (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('8.1 should use additional math functions (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 var a;
 a = -1.5;
 var b = a.Abs();      ! b = 1.5
@@ -955,50 +914,52 @@ var zc = a.Ceil();    ! zc = 1.0
 var zd = a.Floor();   ! zd = 0.0
 var ze = a.Trunc(1);  ! ze = 0.4
 var zf = a.Round(1);  ! zf = 0.5
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.b === '1.500000' &&
-                               objects.c === '2.000000' &&
-                               objects.d === '5.000000' &&
-                               objects.e === '8.000000' &&
-                               objects.f === '7.389056' &&
-                               objects.g === '4.000000' &&
-                               objects.h === '100.000000' &&
-                               objects.i === '6.389056' &&
-                               objects.j === '0.693147' &&
-                               objects.k === '1.000000' &&
-                               objects.l === '0.301030' &&
-                               objects.m === '1.098612' &&
-                               objects.n === '1.414214' &&
-                               objects.o === '1.259921' &&
-                               objects.p === '4.000000' &&
-                               objects.q === '0.909297' &&
-                               objects.r === '-0.416147' &&
-                               objects.s === '-2.185040' &&
-                               objects.t === '1.570796' &&
-                               objects.u === '1.570796' &&
-                               objects.v === '1.107149' &&
-                               objects.w === '3.626860' &&
-                               objects.x === '3.762196' &&
-                               objects.y === '0.964028' &&
-                               objects.z === '1.443635' &&
-                               objects.za === '1.316958' &&
-                               objects.zb === '0.549306' &&
-                               objects.zc === '1.000000' &&
-                               objects.zd === '0.000000' &&
-                               objects.ze === '0.400000' &&
-                               objects.zf === '0.500000') {
-                        done();
-                    } else {
-                        done(new Error(JSON.stringify(objects)));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.b.should.equal('1.500000');
+                    objects.c.should.equal('2.000000');
+                    objects.d.should.equal('5.000000');
+                    objects.e.should.equal('8.000000');
+                    objects.f.should.equal('7.389056');
+                    objects.g.should.equal('4.000000');
+                    objects.h.should.equal('100.000000');
+                    objects.i.should.equal('6.389056');
+                    objects.j.should.equal('0.693147');
+                    objects.k.should.equal('1.000000');
+                    objects.l.should.equal('0.301030');
+                    objects.m.should.equal('1.098612');
+                    objects.n.should.equal('1.414214');
+                    objects.o.should.equal('1.259921');
+                    objects.p.should.equal('4.000000');
+                    objects.q.should.equal('0.909297');
+                    objects.r.should.equal('-0.416147');
+                    objects.s.should.equal('-2.185040');
+                    objects.t.should.equal('1.570796');
+                    objects.u.should.equal('1.570796');
+                    objects.v.should.equal('1.107149');
+                    objects.w.should.equal('3.626860');
+                    objects.x.should.equal('3.762196');
+                    objects.y.should.equal('0.964028');
+                    objects.z.should.equal('1.443635');
+                    objects.za.should.equal('1.316958');
+                    objects.zb.should.equal('0.549306');
+                    objects.zc.should.equal('1.000000');
+                    objects.zd.should.equal('0.000000');
+                    objects.ze.should.equal('0.400000');
+                    objects.zf.should.equal('0.500000');
+                    done();
+                }
             });
+        });
 
-            it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 var one = 1.0;
 var two = 2.0;
 var ten = 10.0;
@@ -1017,78 +978,81 @@ var m_sqrt2 = (two.Sqrt() == M_SQRT2);
 var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
 var r = 4.2; ! Kreisradius in cm
 var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (objects.one === '1.000000' &&
-                               objects.two === '2.000000' &&
-                               objects.ten === '10.000000' &&
-                               objects.m_e === 'true' &&
-                               objects.m_log2e === 'true' &&
-                               objects.m_log10e === 'true' &&
-                               objects.m_ln2 === 'true' &&
-                               objects.m_ln10 === 'true' &&
-                               objects.m_pi === 'true' &&
-                               objects.m_pi_2 === 'true' &&
-                               objects.m_pi_4 === 'true' &&
-                               objects.m_1_pi === 'true' &&
-                               objects.m_2_pi === 'true' &&
-                               objects.m_2_sqrtpi === 'true' &&
-                               objects.m_sqrt2 === 'true' &&
-                               objects.m_sqrt1_2 === 'true' &&
-                               objects.A === '55.420000') {
-                        done();
-                    } else {
-                        done(new Error(output));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    objects.one.should.equal('1.000000');
+                    objects.two.should.equal('2.000000');
+                    objects.ten.should.equal('10.000000');
+                    objects.m_e.should.equal('true');
+                    objects.m_log2e.should.equal('true');
+                    objects.m_log10e.should.equal('true');
+                    objects.m_ln2.should.equal('true');
+                    objects.m_ln10.should.equal('true');
+                    objects.m_pi.should.equal('true');
+                    objects.m_pi_2.should.equal('true');
+                    objects.m_pi_4.should.equal('true');
+                    objects.m_1_pi.should.equal('true');
+                    objects.m_2_pi.should.equal('true');
+                    objects.m_2_sqrtpi.should.equal('true');
+                    objects.m_sqrt2.should.equal('true');
+                    objects.m_sqrt1_2.should.equal('true');
+                    objects.A.should.equal('55.420000');
+                    done();
+                }
             });
+        });
 
-
-            it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec('Write(M_PI);', (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (output === '3.141593') {
-                        done();
-                    } else {
-                        done(new Error(output));
-                    }
-                });
+        it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec('Write(M_PI);', (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    output.should.equal('3.141593');
+                    done();
+                }
             });
+        });
 
-            it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (output === '3.141592653589793') {
-                        done();
-                    } else {
-                        done(new Error(output));
-                    }
-                });
+        it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    output.should.equal('3.141592653589793');
+                    done();
+                }
             });
+        });
 
-            it('9.1 should have working random generator (standard/community)', function (done) {
-                this.timeout(30000);
-                rega.exec(`
+        it('9.1 should have working random generator (standard/community)', function (done) {
+            if (flavor === '.legacy') {
+                return this.skip();
+            }
+            this.timeout(30000);
+            rega.exec(`
 var dice = system.Random(1, 6);
 system.Srandom(12345);
 var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
-                `, (err, output, objects) => {
-                    if (err) {
-                        done(err);
-                    } else if (parseFloat(objects.dice) >= 1 && parseFloat(objects.dice) <= 6 &&
-                               objects.nonrandom === '545') {
-                        done();
-                    } else {
-                        done(new Error(output));
-                    }
-                });
+            `, (err, output, objects) => {
+                if (err) {
+                    done(err);
+                } else {
+                    parseFloat(objects.dice).should.be.within(1, 6);
+                    objects.nonrandom.should.equal('545');
+                    done();
+                }
             });
-        }
+        });
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
@@ -1120,5 +1084,4 @@ var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
             procs.sim.kill();
         });
     });
-
 });

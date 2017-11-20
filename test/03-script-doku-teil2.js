@@ -12,6 +12,8 @@ let {
     flavors
 } = require('../lib/helper.js');
 
+require('should');
+
 flavors.forEach(flavor => {
 
     describe('rfd/hmipserver Simulator', () => {
@@ -50,13 +52,10 @@ string sTime = system.Date("%H:%M:%S"); ! sTime = "18:30:00";
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (
-                    objects.sDate.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{4}/) &&
-                    objects.sTime.match(/[0-9]{2}:[0-9]{2}:[0-9]{2}/)
-                ) {
-                    done();
                 } else {
-                    done(new Error(objects.sDate + ' and/or ' + objects.sTime + ' dont match regex'));
+                    objects.sDate.should.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{4}/);
+                    objects.sTime.should.match(/[0-9]{2}:[0-9]{2}:[0-9]{2}/);
+                    done();
                 }
             });
         });

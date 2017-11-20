@@ -12,6 +12,8 @@ let {
     flavors
 } = require('../lib/helper.js');
 
+require('should');
+
 flavors.forEach(flavor => {
 
     describe('rfd/hmipserver Simulator', () => {
@@ -27,56 +29,56 @@ flavors.forEach(flavor => {
         });
 
         it('should start TimerSchedulerThread', function (done) {
-	        this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /TimerSchedulerThread started/, () => {
                 done();
             })
         });
 
         it('should init XmlRpcMethodListDevices', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodNewDevices', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodDeleteDevices', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodReportValueUsage', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodUpdateDevice', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodReplaceDevice', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, () => {
                 done();
             });
         });
 
         it('should init XmlRpcMethodSetReadyConfig', function (done) {
-			this.timeout(30000);
+            this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, () => {
                 done();
             });
@@ -104,11 +106,10 @@ string build = dom.BuildLabel();
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.build !== 'undefined') {
+                } else {
+                    objects.build.should.notEqual('undefined');
                     done();
                     console.log('      ' + objects.build);
-                } else {
-                    done(new Error('dom.BuildLabel() returned error'));
                 }
             });
         });
@@ -156,12 +157,9 @@ string build = dom.BuildLabel();
         */
     });
 
-
-
     describe('stop simulator', () => {
         it('should stop', function () {
             procs.sim.kill();
         });
     });
-
 });
