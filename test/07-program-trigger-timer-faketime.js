@@ -124,7 +124,7 @@ flavors.forEach(flavor => {
 
         // Long Running test for EveryMinute Timer over DST change
         const time = '2020-10-25 02:57:40 CEST';
-        describe('Timer test @ ' + time + '...', () => {
+        describe('Timer test EveryMinute starting @ ' + time + '...', () => {
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
                     this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
