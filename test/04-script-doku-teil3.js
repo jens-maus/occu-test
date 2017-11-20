@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,10 +18,7 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('test examples from HM_Script_Teil_3_Beispiele_V1.1', () => {
 
-
     });
-
 });

@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,19 +18,16 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('rfd/hmipserver Simulator', () => {
-        it('should start', function () {
+        it('should start', () => {
             startSim();
         });
     });
 
     describe('ReGaHss' + flavor, () => {
-
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
-
     });
 
     describe('timer triggers program', () => {
@@ -40,7 +40,6 @@ flavors.forEach(flavor => {
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
-
         it('should wait 5 seconds', function (done) {
             this.timeout(6000);
             setTimeout(done, 5000);
@@ -56,11 +55,9 @@ flavors.forEach(flavor => {
         });
     });
 
-
     describe('stop simulator', () => {
-        it('should stop', function () {
+        it('should stop', () => {
             procs.sim.kill();
         });
     });
-
 });

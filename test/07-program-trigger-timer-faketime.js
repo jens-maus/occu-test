@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,18 +18,15 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     function test(time, program, id) {
-
         describe('Timer test @ ' + time + '...', () => {
-
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
                     this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                    cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
-                        if(e) {
+                    cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
+                        if (e) {
                             done(e);
-                        } else if(!stdout || stdout.replace('\n', '').length === 0) {
+                        } else if (!stdout || stdout.replace('\n', '').length === 0) {
                             done(new Error('invalid faketime: "' + time + '"'));
                         } else {
                             done();
@@ -65,14 +65,14 @@ flavors.forEach(flavor => {
                 });
             });
 
-            describe('perform timer test', function () {
+            describe('perform timer test', () => {
                 it('should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
                     this.timeout(20000);
                     subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
-                        //console.log('        ' + output);
-                        cp.exec('date', function (e, stdout) {
-                          console.log('          ' + output);
-                          done();
+                        // Console.log('        ' + output);
+                        cp.exec('date', (e, stdout) => {
+                            console.log('          ' + output);
+                            done();
                         });
                     });
                 });
@@ -94,7 +94,7 @@ flavors.forEach(flavor => {
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
         test('2020-01-01 00:59:48 CET', 'Time0100', '1314');
 
-        // leap year, Feb, 29. 2020
+        // Leap year, Feb, 29. 2020
         test('2020-02-29 01:59:48 CET', 'Time0200', '1470');
 
         // -> start of DST (winter->summer) in leap year
@@ -102,10 +102,10 @@ flavors.forEach(flavor => {
         test('2020-03-29 01:29:48 CET', 'Time0130', '1430');
         test('2020-03-29 01:54:48 CET', 'Time0155', '1458');
         test('2020-03-29 01:59:48 CET', 'Time0200', '1470');
-        //test('2020-03-29 02:04:48 CET', 'Time0205', '1498'); // not in DST
-        //test('2020-03-29 02:29:48 CET', 'Time0230', '1510'); // not in DST
-        //test('2020-03-29 02:54:48 CET', 'Time0255', '1522'); // not in DST
-        //test('2020-03-29 02:59:48 CET', 'Time0300', '1534'); // not in DST
+        // Test('2020-03-29 02:04:48 CET', 'Time0205', '1498'); // not in DST
+        // test('2020-03-29 02:29:48 CET', 'Time0230', '1510'); // not in DST
+        // test('2020-03-29 02:54:48 CET', 'Time0255', '1522'); // not in DST
+        // test('2020-03-29 02:59:48 CET', 'Time0300', '1534'); // not in DST
         test('2020-03-29 03:04:48 CEST', 'Time0305', '1546');
         test('2020-03-29 03:29:48 CEST', 'Time0330', '1558');
 
@@ -117,9 +117,9 @@ flavors.forEach(flavor => {
         test('2020-10-25 02:04:48 CEST', 'Time0205', '1498');
         test('2020-10-25 02:29:48 CEST', 'Time0230', '1510');
         test('2020-10-25 02:54:48 CEST', 'Time0255', '1522');
-        //test('2020-10-25 02:59:48 CEST', 'Time0300', '1534'); // @ 03:00 (CEST) time will be switch to 02:00 (CET) again, thus no Time0300 trigger (which is fine)
-        test('2020-10-25 02:59:48 CET',  'Time0300', '1534');
-        test('2020-10-25 03:04:48 CET',  'Time0305', '1546');
-        test('2020-10-25 03:29:48 CET',  'Time0330', '1558');
+        // Test('2020-10-25 02:59:48 CEST', 'Time0300', '1534'); // @ 03:00 (CEST) time will be switch to 02:00 (CET) again, thus no Time0300 trigger (which is fine)
+        test('2020-10-25 02:59:48 CET', 'Time0300', '1534');
+        test('2020-10-25 03:04:48 CET', 'Time0305', '1546');
+        test('2020-10-25 03:29:48 CET', 'Time0330', '1558');
     });
 });

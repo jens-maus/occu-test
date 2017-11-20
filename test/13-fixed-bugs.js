@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,9 +18,7 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-
         describe('starting ReGaHss' + flavor, () => {
             it('should start', () => {
                 startRega(flavor);
@@ -37,7 +38,7 @@ flavors.forEach(flavor => {
         describe('verifying bug fixes', () => {
             it('correct date/time output at DST boundaries', function (done) {
                 if (flavor === '.legacy') {
-                   return this.skip();
+                    return this.skip();
                 }
                 this.timeout(30000);
                 rega.exec(`
@@ -89,43 +90,43 @@ while (j<3)
                     }
                 });
             });
-    
-           it('empty line comment', function (done) {
-               if (flavor === '.legacy') {
-                   return this.skip();
-               }
-               this.timeout(30000);
-               rega.exec(`
+
+            it('empty line comment', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 ! Die nächste Zeile ist ein leerer Kommentar (erzeugt Fehler in Legacy version)
 !
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
                `, (err, output, objects) => {
-                   if (err) {
-                       done(err);
-                   } else {
-                       objects.MyString.should.equal('Hallo Welt!');
-                       done();
-                   }
-               });
-           });
-    
-           it('can deal with unclosed <html tags', function (done) {
-               if (flavor === '.legacy') {
-                   return this.skip();
-               }
-               this.timeout(30000);
-               rega.exec(`
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.MyString.should.equal('Hallo Welt!');
+                        done();
+                    }
+                });
+            });
+
+            it('can deal with unclosed <html tags', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string a = "Das ist ein <html & Test";
                `, (err, output, objects) => {
-                   if (err) {
-                       done(err);
-                   } else {
-                       objects.a.should.equal('Das ist ein <html & Test');
-                       done();
-                   }
-               });
-           });
-    
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('Das ist ein <html & Test');
+                        done();
+                    }
+                });
+            });
+
             it('should handle special chars in method call', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -144,17 +145,17 @@ integer b = a.Find("\\t");
                     }
                 });
             });
-    
+
             it('should be able to handle more than 200 variables', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
                 }
                 this.timeout(30000);
-                var prg = "";
-                var res = "";
-                for(i=1; i <= 1000; i++) {
-                  prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
-                  res = res + i + '\r\n';
+                let prg = '';
+                let res = '';
+                for (i = 1; i <= 1000; i++) {
+                    prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
+                    res = res + i + '\r\n';
                 }
                 rega.exec(prg, (err, output, objects) => {
                     if (err) {
@@ -166,7 +167,7 @@ integer b = a.Find("\\t");
                     }
                 });
             });
-    
+
             it('floating-point accuracy test', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -199,7 +200,7 @@ boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
                     }
                 });
             });
-    
+
             it('should allow object names starting with number', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -216,7 +217,7 @@ object obj = dom.GetObject("2Light");
                     }
                 });
             });
-    
+
             it('operand tests', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -285,7 +286,7 @@ dom.DeleteObject(sysvar3);
                     }
                 });
             });
-    
+
             it('check that removed DP was removed from UserSharedObjects', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();

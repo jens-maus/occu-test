@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,15 +18,13 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('rfd/hmipserver Simulator', () => {
-        it('should start', function () {
+        it('should start', () => {
             startSim();
         });
     });
 
     describe('ReGaHss' + flavor, () => {
-
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
@@ -32,7 +33,7 @@ flavors.forEach(flavor => {
             this.timeout(30000);
             subscribe('rega', /TimerSchedulerThread started/, () => {
                 done();
-            })
+            });
         });
 
         it('should init XmlRpcMethodListDevices', function (done) {
@@ -91,7 +92,6 @@ flavors.forEach(flavor => {
             });
         });
 
-
         it('should start HTTP server', function (done) {
             this.timeout(30000);
             subscribe('rega', /HTTP server started successfully/, () => {
@@ -114,7 +114,6 @@ string build = dom.BuildLabel();
             });
         });
 
-
         it('should execute /bin/hm_startup', function (done) {
             if (flavor === '.legacy') {
                 return this.skip();
@@ -131,7 +130,6 @@ string build = dom.BuildLabel();
                 done();
             });
         });
-
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
@@ -150,7 +148,7 @@ string build = dom.BuildLabel();
         });
 
         /*
-        it('should wait 5 seconds', function (done) {
+        It('should wait 5 seconds', function (done) {
             this.timeout(6000);
             setTimeout(done, 5000);
         });
@@ -158,7 +156,7 @@ string build = dom.BuildLabel();
     });
 
     describe('stop simulator', () => {
-        it('should stop', function () {
+        it('should stop', () => {
             procs.sim.kill();
         });
     });

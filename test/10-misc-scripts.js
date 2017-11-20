@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,17 +18,15 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-
         describe('starting ReGaHss' + flavor, () => {
             it('should fake datetime', function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 const time = '2017-12-01 12:00:00 CET';
-                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
-                    if(e) {
+                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
+                    if (e) {
                         done(e);
-                    } else if(!stdout || stdout.replace('\n', '').length === 0) {
+                    } else if (!stdout || stdout.replace('\n', '').length === 0) {
                         done(new Error('invalid faketime: "' + time + '"'));
                     } else {
                         done();

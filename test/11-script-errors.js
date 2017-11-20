@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,9 +18,7 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-
         describe('starting ReGaHss' + flavor, () => {
             it('should start', () => {
                 startRega(flavor);
@@ -43,10 +44,10 @@ flavors.forEach(flavor => {
                 rega.exec(`
 dom.MethodDoesNotExist("muh");
                 `, (err, stdout, objects) => {
-                    //console.log(err, stdout, objects);
+                    // Console.log(err, stdout, objects);
                 });
             });
-    
+
             it('should handle syntax Errors', function (done) {
                 this.timeout(60000);
                 subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 3 col 43 near/, () => {
@@ -56,13 +57,13 @@ dom.MethodDoesNotExist("muh");
 
 WriteLine(bla");
                 `, (err, stdout, objects) => {
-                    //console.log(err, stdout, objects);
+                    // Console.log(err, stdout, objects);
                 });
             });
-    
+
             it('should handle illegal method invocation', function (done) {
                 this.timeout(60000);
-    
+
                 if (flavor !== '.legacy') {
                     subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
                         done();
@@ -76,7 +77,7 @@ WriteLine(bla");
 var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
                 `, (err, stdout, objects) => {
-                    //console.log(err, stdout, objects);
+                    // Console.log(err, stdout, objects);
                 });
             });
 
@@ -85,20 +86,20 @@ WriteLine(unknown.Name());
                     return this.skip();
                 }
                 this.timeout(60000);
-    
+
                 subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
                     done();
                 });
-    
+
                 rega.exec(`
 var a = system.ToFloat();
 var b = system.ToFloat("1.4");
 var c = system.ToFloat("a");
                 `, (err, stdout, objects) => {
-                    //console.log(err, stdout, objects);
+                    // Console.log(err, stdout, objects);
                 });
             });
-    
+
             it('should log division by zero', function (done) {
                 this.timeout(60000);
                 subscribe('rega', /Error: IseVar::Div - division by 0!/, () => {
@@ -110,7 +111,7 @@ var zero = 0;
 var infinite  = one / zero;
 WriteLine(infinite);
                 `, (err, stdout, objects) => {
-                    //console.log(err, stdout, objects);
+                    // Console.log(err, stdout, objects);
                 });
             });
         });

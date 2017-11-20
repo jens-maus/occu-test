@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,15 +18,13 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('rfd/hmipserver Simulator', () => {
-        it('should start', function () {
+        it('should start', () => {
             startSim();
         });
     });
 
     describe('ReGaHss' + flavor, () => {
-
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
@@ -388,9 +389,9 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
                     objects.i.should.equal('1.234560');
                     objects.s.should.equal('1.235');
                     if (flavor !== '.legacy') {
-                      objects.r.should.equal('1.2');
+                        objects.r.should.equal('1.2');
                     } else {
-                      objects.r.should.equal('1.235');
+                        objects.r.should.equal('1.235');
                     }
                     done();
                 }
@@ -1056,7 +1057,6 @@ var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
-
         it('should wait 5 seconds', function (done) {
             this.timeout(6000);
             setTimeout(done, 5000);
@@ -1071,16 +1071,15 @@ var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
         /*
-        it('should wait 2 seconds', function (done) {
+        It('should wait 2 seconds', function (done) {
             this.timeout(3000);
             setTimeout(done, 2000);
         });
         */
     });
 
-
     describe('stop simulator', () => {
-        it('should stop', function () {
+        it('should stop', () => {
             procs.sim.kill();
         });
     });

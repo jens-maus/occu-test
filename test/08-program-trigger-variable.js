@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,11 +18,9 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-
         describe('rfd/hmipserver Simulator', () => {
-            it('should start', function () {
+            it('should start', () => {
                 startSim();
             });
         });
@@ -41,7 +42,6 @@ flavors.forEach(flavor => {
         });
 
         describe('variable change triggers program', () => {
-
             it('should PRESS_LONG BidCoS-RF:12 when VarBool1 changes to true (program Bool1OnTrue)', function (done) {
                 this.timeout(7000);
                 subscribe('sim', /setValue rfd BidCoS-RF:12 PRESS_LONG true/, () => {
@@ -70,9 +70,9 @@ flavors.forEach(flavor => {
         });
 
         describe('stop simulator', () => {
-            it('should stop', function () {
+            it('should stop', () => {
                 procs.sim.kill();
-           });
+            });
         });
     });
 });

@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,9 +18,7 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-
         describe('starting ReGaHss' + flavor, () => {
             it('should start', () => {
                 startRega(flavor);
@@ -211,7 +212,7 @@ Write(']');
                     }
                 });
             });
-    
+
             it('should run programs.rega', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -273,7 +274,7 @@ Write(']');
                                 name: 'Bool1OnTrueUpdate',
                                 active: true
                             },
-                            { id: '1337', name: 'Key1', active: true },
+                            {id: '1337', name: 'Key1', active: true},
                             {
                                 id: '1326',
                                 name: 'Key16Key17',
@@ -387,8 +388,8 @@ Write(']');
                         done(err);
                     } else {
                         const data = JSON.parse(output);
-                        data.should.deepEqual( [
-                            { id: '1010', address: 'BidCoS-RF', name: 'HM-RCV-50 BidCoS-RF' },
+                        data.should.deepEqual([
+                            {id: '1010', address: 'BidCoS-RF', name: 'HM-RCV-50 BidCoS-RF'},
                             {
                                 id: '1011',
                                 address: 'BidCoS-RF:0',
@@ -700,71 +701,71 @@ Write(']');
                     } else {
                         const data = JSON.parse(output);
                         data.should.deepEqual([
-                            { id: '1220', name: 'funcButton', channels: [] },
+                            {id: '1220', name: 'funcButton', channels: []},
                             {
                                 id: '1221',
                                 name: 'funcCentral',
                                 channels: [
                                     1013,
-                                        1049,
-                                        1053,
-                                        1057,
-                                        1061,
-                                        1065,
-                                        1069,
-                                        1073,
-                                        1077,
-                                        1081,
-                                        1085,
-                                        1017,
-                                        1089,
-                                        1093,
-                                        1097,
-                                        1101,
-                                        1105,
-                                        1109,
-                                        1113,
-                                        1117,
-                                        1121,
-                                        1125,
-                                        1021,
-                                        1129,
-                                        1133,
-                                        1137,
-                                        1141,
-                                        1145,
-                                        1149,
-                                        1153,
-                                        1157,
-                                        1161,
-                                        1165,
-                                        1025,
-                                        1169,
-                                        1173,
-                                        1177,
-                                        1181,
-                                        1185,
-                                        1189,
-                                        1193,
-                                        1197,
-                                        1201,
-                                        1205,
-                                        1029,
-                                        1209,
-                                        1033,
-                                        1037,
-                                        1041,
-                                        1045
-                                    ]
+                                    1049,
+                                    1053,
+                                    1057,
+                                    1061,
+                                    1065,
+                                    1069,
+                                    1073,
+                                    1077,
+                                    1081,
+                                    1085,
+                                    1017,
+                                    1089,
+                                    1093,
+                                    1097,
+                                    1101,
+                                    1105,
+                                    1109,
+                                    1113,
+                                    1117,
+                                    1121,
+                                    1125,
+                                    1021,
+                                    1129,
+                                    1133,
+                                    1137,
+                                    1141,
+                                    1145,
+                                    1149,
+                                    1153,
+                                    1157,
+                                    1161,
+                                    1165,
+                                    1025,
+                                    1169,
+                                    1173,
+                                    1177,
+                                    1181,
+                                    1185,
+                                    1189,
+                                    1193,
+                                    1197,
+                                    1201,
+                                    1205,
+                                    1029,
+                                    1209,
+                                    1033,
+                                    1037,
+                                    1041,
+                                    1045
+                                ]
                             },
-                            { id: '1215', name: 'funcClimateControl', channels: [] },
-                            { id: '1222', name: 'funcEnergy', channels: [] },
-                            { id: '1217', name: 'funcEnvironment', channels: [] },
-                            { id: '1214', name: 'funcHeating', channels: [] },
-                            { id: '1213', name: 'funcLight', channels: [] },
-                            { id: '1219', name: 'funcLock', channels: [] },
-                            { id: '1218', name: 'funcSecurity', channels: [] },
-                            { id: '1216', name: 'funcWeather', channels: [] }
+                            {id: '1215', name: 'funcClimateControl', channels: []},
+                            {id: '1222', name: 'funcEnergy', channels: []},
+                            {id: '1217', name: 'funcEnvironment', channels: []},
+                            {id: '1214', name: 'funcHeating', channels: []},
+                            {id: '1213', name: 'funcLight', channels: []},
+                            {id: '1219', name: 'funcLock', channels: []},
+                            {id: '1218', name: 'funcSecurity', channels: []},
+                            {id: '1216', name: 'funcWeather', channels: []}
                         ]);
                         done();
                     }
@@ -821,23 +822,22 @@ Write(']');
                     } else {
                         const data = JSON.parse(output);
                         data.should.deepEqual([
-                            { id: '1229', name: 'roomBathroom', channels: [] },
-                            { id: '1225', name: 'roomBedroom', channels: [] },
-                            { id: '1226', name: 'roomChildrensRoom1', channels: [] },
-                            { id: '1227', name: 'roomChildrensRoom2', channels: [] },
-                            { id: '1230', name: 'roomGarage', channels: [] },
-                            { id: '1232', name: 'roomGarden', channels: [] },
-                            { id: '1231', name: 'roomHWR', channels: [] },
-                            { id: '1224', name: 'roomKitchen', channels: [] },
-                            { id: '1223', name: 'roomLivingRoom', channels: [] },
-                            { id: '1228', name: 'roomOffice', channels: [] },
-                            { id: '1233', name: 'roomTerrace', channels: [] }
+                            {id: '1229', name: 'roomBathroom', channels: []},
+                            {id: '1225', name: 'roomBedroom', channels: []},
+                            {id: '1226', name: 'roomChildrensRoom1', channels: []},
+                            {id: '1227', name: 'roomChildrensRoom2', channels: []},
+                            {id: '1230', name: 'roomGarage', channels: []},
+                            {id: '1232', name: 'roomGarden', channels: []},
+                            {id: '1231', name: 'roomHWR', channels: []},
+                            {id: '1224', name: 'roomKitchen', channels: []},
+                            {id: '1223', name: 'roomLivingRoom', channels: []},
+                            {id: '1228', name: 'roomOffice', channels: []},
+                            {id: '1233', name: 'roomTerrace', channels: []}
                         ]);
                         done();
                     }
                 });
             });
-    
         });
 
         describe('stopping ReGaHss' + flavor, () => {

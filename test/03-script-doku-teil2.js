@@ -1,4 +1,7 @@
-let {
+/* global describe, it */
+/* eslint-disable no-unused-vars, import/no-unassigned-import */
+
+const {
     cp,
     rega,
     subscribe,
@@ -15,15 +18,13 @@ let {
 require('should');
 
 flavors.forEach(flavor => {
-
     describe('rfd/hmipserver Simulator', () => {
-        it('should start', function () {
+        it('should start', () => {
             startSim();
         });
     });
 
     describe('ReGaHss' + flavor, () => {
-
         it('should start ReGaHss' + flavor, () => {
             startRega(flavor);
         });
@@ -188,12 +189,11 @@ if (myObject.IsTypeOf(OT_VARDP))
                 }
             });
         });
-
     });
 
     describe('stop ReGaHss' + flavor + ' process', () => {
         /*
-        it('should wait 2 seconds', function (done) {
+        It('should wait 2 seconds', function (done) {
             this.timeout(3000);
             setTimeout(done, 2000);
         });
@@ -207,18 +207,16 @@ if (myObject.IsTypeOf(OT_VARDP))
             cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
         });
         /*
-        it('should wait 2 seconds', function (done) {
+        It('should wait 2 seconds', function (done) {
             this.timeout(3000);
             setTimeout(done, 2000);
         });
         */
     });
 
-
     describe('stop simulator', () => {
-        it('should stop', function () {
+        it('should stop', () => {
             procs.sim.kill();
         });
     });
-
 });
