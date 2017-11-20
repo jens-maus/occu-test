@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, no-useless-escape */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, no-useless-escape, camelcase */
 
 const {
     cp,
@@ -508,18 +508,20 @@ integer isDST = t.IsDST(); ! isDST = 0
                 if (err) {
                     done(err);
                 } else {
-                    objects.t.should.equal('2008-12-24 18:30:00');
-                    objects.year.should.equal('2008');
-                    objects.month.should.equal('12');
-                    objects.day.should.equal('24');
-                    objects.hour.should.equal('18');
-                    objects.minute.should.equal('30');
-                    objects.second.should.equal('0');
-                    objects.week.should.equal('51');
-                    objects.weekday.should.equal('4');
-                    objects.yearday.should.equal('359');
-                    objects.isLocalTime.should.equal('1');
-                    objects.isDST.should.equal('0');
+                    objects.should.containEql({
+                        t: '2008-12-24 18:30:00',
+                        year: '2008',
+                        month: '12',
+                        day: '24',
+                        hour: '18',
+                        minute: '30',
+                        second: '0',
+                        week: '51',
+                        weekday: '4',
+                        yearday: '359',
+                        isLocalTime: '1',
+                        isDST: '0'
+                    });
                     done();
                 }
             });
@@ -568,41 +570,43 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
                 if (err) {
                     done(err);
                 } else {
-                    objects.perc.should.equal('%');
-                    objects.lowerA.should.equal('Wed');
-                    objects.upperA.should.equal('Wednesday');
-                    objects.lowerB.should.equal('Dec');
-                    objects.upperB.should.equal('December');
-                    objects.lowerC.should.equal('Wed Dec 24 18:30:00 2008');
-                    objects.upperC.should.equal('20');
-                    objects.lowerD.should.equal('24');
-                    objects.upperD.should.equal('12/24/08');
-                    objects.upperF.should.equal('2008-12-24');
-                    objects.lowerH.should.equal('Dec');
-                    objects.upperH.should.equal('18');
-                    objects.upperI.should.equal('06');
-                    objects.lowerJ.should.equal('359');
-                    objects.lowerM.should.equal('12');
-                    objects.upperM.should.equal('30');
-                    objects.lowerN.should.equal('\n');
-                    objects.lowerP.should.equal('PM');
-                    objects.lowerR.should.equal('06:30:00 PM');
-                    objects.upperS.should.equal('00');
-                    objects.lowerT.should.equal('\t');
-                    objects.upperT.should.equal('18:30:00');
-                    objects.lowerU.should.equal('3');
-                    objects.upperU.should.equal('51');
-                    objects.upperV.should.equal('52');
-                    objects.lowerW.should.equal('3');
-                    objects.upperW.should.equal('51');
-                    objects.lowerX.should.equal('12/24/08');
-                    objects.upperX.should.equal('18:30:00');
-                    objects.lowerY.should.equal('08');
-                    objects.upperY.should.equal('2008');
-                    objects.lowerZ.should.equal('+0100');
-                    objects.upperZ.should.equal('CET');
-                    objects.sDate.should.equal('24.12.2008');
-                    objects.sTime.should.equal('18:30:00');
+                    objects.should.containEql({
+                        perc: '%',
+                        lowerA: 'Wed',
+                        upperA: 'Wednesday',
+                        lowerB: 'Dec',
+                        upperB: 'December',
+                        lowerC: 'Wed Dec 24 18:30:00 2008',
+                        upperC: '20',
+                        lowerD: '24',
+                        upperD: '12/24/08',
+                        upperF: '2008-12-24',
+                        lowerH: 'Dec',
+                        upperH: '18',
+                        upperI: '06',
+                        lowerJ: '359',
+                        lowerM: '12',
+                        upperM: '30',
+                        lowerN: '\n',
+                        lowerP: 'PM',
+                        lowerR: '06:30:00 PM',
+                        upperS: '00',
+                        lowerT: '\t',
+                        upperT: '18:30:00',
+                        lowerU: '3',
+                        upperU: '51',
+                        upperV: '52',
+                        lowerW: '3',
+                        upperW: '51',
+                        lowerX: '12/24/08',
+                        upperX: '18:30:00',
+                        lowerY: '08',
+                        upperY: '2008',
+                        lowerZ: '+0100',
+                        upperZ: 'CET',
+                        sDate: '24.12.2008',
+                        sTime: '18:30:00'
+                    });
                     done();
                 }
             });
@@ -919,37 +923,39 @@ var zf = a.Round(1);  ! zf = 0.5
                 if (err) {
                     done(err);
                 } else {
-                    objects.b.should.equal('1.500000');
-                    objects.c.should.equal('2.000000');
-                    objects.d.should.equal('5.000000');
-                    objects.e.should.equal('8.000000');
-                    objects.f.should.equal('7.389056');
-                    objects.g.should.equal('4.000000');
-                    objects.h.should.equal('100.000000');
-                    objects.i.should.equal('6.389056');
-                    objects.j.should.equal('0.693147');
-                    objects.k.should.equal('1.000000');
-                    objects.l.should.equal('0.301030');
-                    objects.m.should.equal('1.098612');
-                    objects.n.should.equal('1.414214');
-                    objects.o.should.equal('1.259921');
-                    objects.p.should.equal('4.000000');
-                    objects.q.should.equal('0.909297');
-                    objects.r.should.equal('-0.416147');
-                    objects.s.should.equal('-2.185040');
-                    objects.t.should.equal('1.570796');
-                    objects.u.should.equal('1.570796');
-                    objects.v.should.equal('1.107149');
-                    objects.w.should.equal('3.626860');
-                    objects.x.should.equal('3.762196');
-                    objects.y.should.equal('0.964028');
-                    objects.z.should.equal('1.443635');
-                    objects.za.should.equal('1.316958');
-                    objects.zb.should.equal('0.549306');
-                    objects.zc.should.equal('1.000000');
-                    objects.zd.should.equal('0.000000');
-                    objects.ze.should.equal('0.400000');
-                    objects.zf.should.equal('0.500000');
+                    objects.should.containEql({
+                        b: '1.500000',
+                        c: '2.000000',
+                        d: '5.000000',
+                        e: '8.000000',
+                        f: '7.389056',
+                        g: '4.000000',
+                        h: '100.000000',
+                        i: '6.389056',
+                        j: '0.693147',
+                        k: '1.000000',
+                        l: '0.301030',
+                        m: '1.098612',
+                        n: '1.414214',
+                        o: '1.259921',
+                        p: '4.000000',
+                        q: '0.909297',
+                        r: '-0.416147',
+                        s: '-2.185040',
+                        t: '1.570796',
+                        u: '1.570796',
+                        v: '1.107149',
+                        w: '3.626860',
+                        x: '3.762196',
+                        y: '0.964028',
+                        z: '1.443635',
+                        za: '1.316958',
+                        zb: '0.549306',
+                        zc: '1.000000',
+                        zd: '0.000000',
+                        ze: '0.400000',
+                        zf: '0.500000'
+                    });
                     done();
                 }
             });
@@ -983,23 +989,25 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
                 if (err) {
                     done(err);
                 } else {
-                    objects.one.should.equal('1.000000');
-                    objects.two.should.equal('2.000000');
-                    objects.ten.should.equal('10.000000');
-                    objects.m_e.should.equal('true');
-                    objects.m_log2e.should.equal('true');
-                    objects.m_log10e.should.equal('true');
-                    objects.m_ln2.should.equal('true');
-                    objects.m_ln10.should.equal('true');
-                    objects.m_pi.should.equal('true');
-                    objects.m_pi_2.should.equal('true');
-                    objects.m_pi_4.should.equal('true');
-                    objects.m_1_pi.should.equal('true');
-                    objects.m_2_pi.should.equal('true');
-                    objects.m_2_sqrtpi.should.equal('true');
-                    objects.m_sqrt2.should.equal('true');
-                    objects.m_sqrt1_2.should.equal('true');
-                    objects.A.should.equal('55.420000');
+                    objects.should.containEql({
+                        one: '1.000000',
+                        two: '2.000000',
+                        ten: '10.000000',
+                        m_e: 'true',
+                        m_log2e: 'true',
+                        m_log10e: 'true',
+                        m_ln2: 'true',
+                        m_ln10: 'true',
+                        m_pi: 'true',
+                        m_pi_2: 'true',
+                        m_pi_4: 'true',
+                        m_1_pi: 'true',
+                        m_2_pi: 'true',
+                        m_2_sqrtpi: 'true',
+                        m_sqrt2: 'true',
+                        m_sqrt1_2: 'true',
+                        A: '55.420000'
+                    });
                     done();
                 }
             });

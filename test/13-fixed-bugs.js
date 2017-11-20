@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, no-template-curly-in-string */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, no-template-curly-in-string, camelcase */
 
 const {
     cp,
@@ -278,10 +278,12 @@ dom.DeleteObject(sysvar3);
                     if (err) {
                         done(err);
                     } else {
-                        objects.sysvar1.should.equal('Real-SysVarDP');
-                        objects.sysvar2.should.equal('Real-AlarmDP');
-                        objects.sysvar3.should.equal('null');
-                        objects.user.should.equal('Admin');
+                        objects.containEql({
+                            sysvar1: 'Real-SysVarDP',
+                            sysvar2: 'Real-AlarmDP',
+                            sysvar3: 'null',
+                            user: 'Admin'
+                        });
                         done();
                     }
                 });

@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, camelcase */
 
 const {
     cp,
@@ -124,11 +124,13 @@ if (c_zeit < c_tagesbeginn - 2) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.c_zeit.should.equal('12.000000');
-                        objects.c_tagesbeginn.should.equal('7.580000');
-                        objects.c_tagesende.should.equal('15.530000');
-                        objects.c_mittag.should.equal('13.000000');
-                        objects.v_tageszeit.should.equal('4');
+                        objects.should.containEql({
+                            c_zeit: '12.000000',
+                            c_tagesbeginn: '7.580000',
+                            c_tagesende: '15.530000',
+                            c_mittag: '13.000000',
+                            v_tageszeit: '4'
+                        });
                         done();
                     }
                 });
