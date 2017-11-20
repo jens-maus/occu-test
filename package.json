@@ -36,9 +36,11 @@
     "stream-splitter": "latest"
   },
   "devDependencies": {
+    "pre-commit": "^1.2.2",
     "xo": "^0.18.2"
   },
   "xo": {
     "space": 4
-  }
+  },
+  "pre-commit": ["lint"]
 }
