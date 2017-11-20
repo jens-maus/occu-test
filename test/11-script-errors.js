@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks */
 
 const {
     cp,
@@ -44,7 +44,9 @@ flavors.forEach(flavor => {
                 rega.exec(`
 dom.MethodDoesNotExist("muh");
                 `, (err, stdout, objects) => {
-                    // Console.log(err, stdout, objects);
+                    if (err) {
+                        console.error('      ' + err);
+                    }
                 });
             });
 
@@ -57,7 +59,9 @@ dom.MethodDoesNotExist("muh");
 
 WriteLine(bla");
                 `, (err, stdout, objects) => {
-                    // Console.log(err, stdout, objects);
+                    if (err) {
+                        console.error('      ' + err);
+                    }
                 });
             });
 
@@ -77,7 +81,9 @@ WriteLine(bla");
 var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
                 `, (err, stdout, objects) => {
-                    // Console.log(err, stdout, objects);
+                    if (err) {
+                        console.error('      ' + err);
+                    }
                 });
             });
 
@@ -96,7 +102,9 @@ var a = system.ToFloat();
 var b = system.ToFloat("1.4");
 var c = system.ToFloat("a");
                 `, (err, stdout, objects) => {
-                    // Console.log(err, stdout, objects);
+                    if (err) {
+                        console.error('      ' + err);
+                    }
                 });
             });
 
@@ -111,7 +119,9 @@ var zero = 0;
 var infinite  = one / zero;
 WriteLine(infinite);
                 `, (err, stdout, objects) => {
-                    // Console.log(err, stdout, objects);
+                    if (err) {
+                        console.error('      ' + err);
+                    }
                 });
             });
         });
