@@ -21,7 +21,7 @@ flavors.forEach(flavor => {
         describe('ReGaHss' + flavor + ': fake time test start (' + time + ')', function () {
             it('should fake datetime', function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                cp.exec('sudo /bin/date -s "' + time + '"', function (e, stdout) {
+                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
                     if(!stdout || stdout.replace('\n', '').length === 0) {
                       done(new Error('invalid faketime: "' + time + '"'));
                     } else {
@@ -80,32 +80,32 @@ flavors.forEach(flavor => {
     }
 
 
-    test('2018-01-01 00:59:48', 'Time0100', '1314');
+    test('2020-01-01 00:59:48 CET', 'Time0100', '1314');
 
     // leap year, Feb, 29. 2020
-    test('2020-02-29 01:59:48', 'Time0200', '1470');
+    test('2020-02-29 01:59:48 CET', 'Time0200', '1470');
 
-    // -> start of DST in leap year
-    test('2020-03-29 00:59:48', 'Time0100', '1314');
-    test('2020-03-29 01:29:48', 'Time0130', '1430');
-    test('2020-03-29 01:54:48', 'Time0155', '1458');
-    test('2020-03-29 01:59:48', 'Time0200', '1470');
-    //test('2020-03-29 02:04:48', 'Time0205', '1498'); // not in DST
-    //test('2020-03-29 02:29:48', 'Time0230', '1510'); // not in DST
-    //test('2020-03-29 02:54:48', 'Time0255', '1522'); // not in DST
-    //test('2020-03-29 02:59:48', 'Time0300', '1534'); // not in DST
-    test('2020-03-29 03:04:48', 'Time0305', '1546');
-    test('2020-03-29 03:29:48', 'Time0330', '1558');
+    // -> start of DST (winter->summer) in leap year
+    test('2020-03-29 00:59:48 CET', 'Time0100', '1314');
+    test('2020-03-29 01:29:48 CET', 'Time0130', '1430');
+    test('2020-03-29 01:54:48 CET', 'Time0155', '1458');
+    test('2020-03-29 01:59:48 CET', 'Time0200', '1470');
+    //test('2020-03-29 02:04:48 CET', 'Time0205', '1498'); // not in DST
+    //test('2020-03-29 02:29:48 CET', 'Time0230', '1510'); // not in DST
+    //test('2020-03-29 02:54:48 CET', 'Time0255', '1522'); // not in DST
+    //test('2020-03-29 02:59:48 CET', 'Time0300', '1534'); // not in DST
+    test('2020-03-29 03:04:48 CEST', 'Time0305', '1546');
+    test('2020-03-29 03:29:48 CEST', 'Time0330', '1558');
 
-    // -> end of DST in leap year
-    test('2020-10-25 00:59:48', 'Time0100', '1314');
-    test('2020-10-25 01:29:48', 'Time0130', '1430');
-    test('2020-10-25 01:54:48', 'Time0155', '1458');
-    test('2020-10-25 01:59:48', 'Time0200', '1470');
-    test('2020-10-25 02:04:48', 'Time0205', '1498');
-    test('2020-10-25 02:29:48', 'Time0230', '1510');
-    test('2020-10-25 02:54:48', 'Time0255', '1522');
-    test('2020-10-25 02:59:48', 'Time0300', '1534');
-    test('2020-10-25 03:04:48', 'Time0305', '1546');
-    test('2020-10-25 03:29:48', 'Time0330', '1558');
+    // -> end of DST (summer->winter) in leap year
+    test('2020-10-25 00:59:48 CEST', 'Time0100', '1314');
+    test('2020-10-25 01:29:48 CEST', 'Time0130', '1430');
+    test('2020-10-25 01:54:48 CEST', 'Time0155', '1458');
+    test('2020-10-25 01:59:48 CEST', 'Time0200', '1470');
+    test('2020-10-25 02:04:48 CEST', 'Time0205', '1498');
+    test('2020-10-25 02:29:48 CEST', 'Time0230', '1510');
+    test('2020-10-25 02:54:48 CEST', 'Time0255', '1522');
+    test('2020-10-25 02:59:48 CEST', 'Time0300', '1534');
+    test('2020-10-25 03:04:48 CET',  'Time0305', '1546');
+    test('2020-10-25 03:29:48 CET',  'Time0330', '1558');
 });
