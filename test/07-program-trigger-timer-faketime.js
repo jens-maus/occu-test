@@ -123,16 +123,16 @@ flavors.forEach(flavor => {
         test('2020-10-25 03:29:48 CET', 'Time0330', '1558');
 
         // Long Running test for EveryMinute Timer over DST change
-        let ttime = '2020-10-25 02:58:00 CEST';
-        describe('Timer test EveryMinute starting @ ' + ttime + '...', () => {
+        let time = '2020-10-25 02:58:00 CEST';
+        describe('Timer test EveryMinute starting @ ' + time + '...', () => {
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
                     this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                    cp.exec('sudo /bin/date -s "' + ttime + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
+                    cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
                         if (e) {
                             done(e);
                         } else if (!stdout || stdout.replace('\n', '').length === 0) {
-                            done(new Error('invalid faketime: "' + ttime + '"'));
+                            done(new Error('invalid faketime: "' + time + '"'));
                         } else {
                             done();
                         }
@@ -221,16 +221,16 @@ flavors.forEach(flavor => {
             });
         });
 
-        ttime = '2020-03-29 01:58:00 CEST';
-        describe('Timer test EveryMinute starting @ ' + ttime + '...', () => {
+        time = '2020-03-29 01:58:00 CEST';
+        describe('Timer test EveryMinute starting @ ' + time + '...', () => {
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
                     this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                    cp.exec('sudo /bin/date -s "' + ttime + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
+                    cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
                         if (e) {
                             done(e);
                         } else if (!stdout || stdout.replace('\n', '').length === 0) {
-                            done(new Error('invalid faketime: "' + ttime + '"'));
+                            done(new Error('invalid faketime: "' + time + '"'));
                         } else {
                             done();
                         }
