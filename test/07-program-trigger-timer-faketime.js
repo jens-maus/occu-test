@@ -121,5 +121,105 @@ flavors.forEach(flavor => {
         test('2020-10-25 02:59:48 CET', 'Time0300', '1534');
         test('2020-10-25 03:04:48 CET', 'Time0305', '1546');
         test('2020-10-25 03:29:48 CET', 'Time0330', '1558');
+
+
+        // Long Running test for EveryMinute Timer over DST change
+        let time = '2020-10-25 02:57:40 CEST';
+        describe('Timer test @ ' + time + '...', () => {
+            describe('starting ReGaHss' + flavor, () => {
+                it('should fake datetime', function (done) {
+                    this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
+                    cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
+                        if (e) {
+                            done(e);
+                        } else if (!stdout || stdout.replace('\n', '').length === 0) {
+                            done(new Error('invalid faketime: "' + time + '"'));
+                        } else {
+                            done();
+                        }
+                        console.log('          ' + stdout.replace('\n', ''));
+                    });
+                });
+                it('should start', () => {
+                    startRega(flavor);
+                });
+                it('wait for HTTP server to be ready', function (done) {
+                    this.timeout(60000);
+                    subscribe('rega', /HTTP server started successfully/, () => {
+                        if (flavor === '.legacy') {
+                            setTimeout(done, 10000);
+                        } else {
+                            done();
+                        }
+                    });
+                });
+
+                it('should output DST offset', function (done) {
+                    this.timeout(30000);
+                    subscribe('rega', /DST offset =/, output => {
+                        done();
+                        console.log('          ' + output);
+                    });
+                });
+
+                it('should output reference time', function (done) {
+                    this.timeout(30000);
+                    subscribe('rega', /GetNextTimer called for reference time/, output => {
+                        done();
+                        console.log('          ' + output);
+                    });
+                });
+            });
+
+            describe('perform timer test', () => {
+                it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:58:00 CEST', function (done) {
+                    this.timeout(25000);
+                    subscribe('rega', /execute Program ID = 1302/, output => {
+                        cp.exec('date', (e, stdout) => {
+                            console.log('          ' + output);
+                            done();
+                        });
+                    });
+                });
+                it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:59:00 CEST', function (done) {
+                    this.timeout(65000);
+                    subscribe('rega', /execute Program ID = 1302/, output => {
+                        cp.exec('date', (e, stdout) => {
+                            console.log('          ' + output);
+                            done();
+                        });
+                    });
+                });
+                it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:00:00 CET', function (done) {
+                    this.timeout(65000);
+                    subscribe('rega', /execute Program ID = 1302/, output => {
+                        cp.exec('date', (e, stdout) => {
+                            console.log('          ' + output);
+                            done();
+                        });
+                    });
+                });
+                it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:01:00 CET', function (done) {
+                    this.timeout(65000);
+                    subscribe('rega', /execute Program ID = 1302/, output => {
+                        cp.exec('date', (e, stdout) => {
+                            console.log('          ' + output);
+                            done();
+                        });
+                    });
+                });
+            });
+
+            describe('stopping ReGaHss' + flavor, () => {
+                it('should stop', function (done) {
+                    this.timeout(60000);
+                    procs.rega.on('close', () => {
+                        procs.rega = null;
+                        done();
+                    });
+                    cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
+                });
+            });
+        });
     });
 });
