@@ -107,7 +107,7 @@ string build = dom.BuildLabel();
                 if (err) {
                     done(err);
                 } else {
-                    objects.build.should.notEqual('undefined');
+                    objects.build.should.not.equal('undefined');
                     done();
                     console.log('      ' + objects.build);
                 }

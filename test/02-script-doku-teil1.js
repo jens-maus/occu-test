@@ -310,7 +310,7 @@ boolean didNotQuit = true;
                     done(err);
                 } else {
                     objects.even.should.equal('3');
-                    objects.didNotQuit.should.notEqual('true');
+                    objects.didNotQuit.should.not.equal('true');
                     done();
                 }
             });
@@ -800,7 +800,7 @@ string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
                     done(err);
                 } else {
                     objects.utf8.should.equal('ÃbergrÃ¶ÃentrÃ¤ger');
-                    objects.latin.should.qual('Übergrößenträger');
+                    objects.latin.should.equal('Übergrößenträger');
                     done();
                 }
             });
