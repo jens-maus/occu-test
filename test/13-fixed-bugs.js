@@ -278,7 +278,7 @@ dom.DeleteObject(sysvar3);
                     if (err) {
                         done(err);
                     } else {
-                        objects.containEql({
+                        objects.should.containEql({
                             sysvar1: 'Real-SysVarDP',
                             sysvar2: 'Real-AlarmDP',
                             sysvar3: 'null',
