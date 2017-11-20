@@ -16,33 +16,31 @@ require('should');
 
 flavors.forEach(flavor => {
 
-    describe('ReGaHss' + flavor, () => {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
 
-        it('should start ReGaHss' + flavor, () => {
-            startRega(flavor);
-        });
-        it('should start HTTP server', function (done) {
-            this.timeout(60000);
-            subscribe('rega', /HTTP server started successfully/, () => {
-                done();
+        describe('starting ReGaHss' + flavor, () => {
+            it('should start', () => {
+                startRega(flavor);
+            });
+            it('wait for HTTP server to be ready', function (done) {
+                this.timeout(60000);
+                subscribe('rega', /HTTP server started successfully/, () => {
+                    if (flavor == '.legacy') {
+                        setTimeout(done, 10000);
+                    } else {
+                        done();
+                    }
+                });
             });
         });
-        it('should wait 10 seconds', function (done) {
-            if (flavor !== '.legacy') {
-                return this.skip();
-            }
-            this.timeout(11000);
-            setTimeout(done, 10000);
-        });
-    });
 
-    describe('ReGaHss' + flavor + ': verifying bug fixes', () => {
-        it('correct date/time output at DST boюndaries', function (done) {
-            if (flavor === '.legacy') {
-               return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+        describe('verifying bug fixes', () => {
+            it('correct date/time output at DST boюndaries', function (done) {
+                if (flavor === '.legacy') {
+                   return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 var t0=@2016-10-30 01:59:57@;
 var x0=t0.ToInteger();
 var j=0;
@@ -63,11 +61,11 @@ while (j<3)
   }
   j=j+1;
 }
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal(`\r
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal(`\r
 1477785597 1 1 2016-10-30 01:59:57 +0200 CEST\r
 1477785598 1 1 2016-10-30 01:59:58 +0200 CEST\r
 1477785599 1 1 2016-10-30 01:59:59 +0200 CEST\r
@@ -87,94 +85,94 @@ while (j<3)
 1477792801 1 0 2016-10-30 03:00:01 +0100 CET\r
 1477792802 1 0 2016-10-30 03:00:02 +0100 CET\r
 `);
-                    done();
-                }
+                        done();
+                    }
+                });
             });
-        });
-
-       it('empty line comment', function (done) {
-           if (flavor === '.legacy') {
-               return this.skip();
-           }
-           this.timeout(30000);
-           rega.exec(`
+    
+           it('empty line comment', function (done) {
+               if (flavor === '.legacy') {
+                   return this.skip();
+               }
+               this.timeout(30000);
+               rega.exec(`
 ! Die nächste Zeile ist ein leerer Kommentar (erzeugt Fehler in Legacy version)
 !
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
-           `, (err, output, objects) => {
-               if (err) {
-                   done(err);
-               } else {
-                   objects.MyString.should.equal('Hallo Welt!');
-                   done();
-               }
+               `, (err, output, objects) => {
+                   if (err) {
+                       done(err);
+                   } else {
+                       objects.MyString.should.equal('Hallo Welt!');
+                       done();
+                   }
+               });
            });
-       });
-
-       it('can deal with unclosed <html tags', function (done) {
-           if (flavor === '.legacy') {
-               return this.skip();
-           }
-           this.timeout(30000);
-           rega.exec(`
+    
+           it('can deal with unclosed <html tags', function (done) {
+               if (flavor === '.legacy') {
+                   return this.skip();
+               }
+               this.timeout(30000);
+               rega.exec(`
 string a = "Das ist ein <html & Test";
-           `, (err, output, objects) => {
-               if (err) {
-                   done(err);
-               } else {
-                   objects.a.should.equal('Das ist ein <html & Test');
-                   done();
-               }
+               `, (err, output, objects) => {
+                   if (err) {
+                       done(err);
+                   } else {
+                       objects.a.should.equal('Das ist ein <html & Test');
+                       done();
+                   }
+               });
            });
-       });
-
-        it('should handle special chars in method call', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('should handle special chars in method call', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string a = "Hallo\\tWelt";
 integer b = a.Find("\\t");
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.a.should.equal('Hallo\tWelt');
-                    objects.b.should.equal('5');
-                    done();
-                }
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('Hallo\tWelt');
+                        objects.b.should.equal('5');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('should be able to handle more than 200 variables', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            var prg = "";
-            var res = "";
-            for(i=1; i <= 1000; i++) {
-              prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
-              res = res + i + '\r\n';
-            }
-            rega.exec(prg, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.i876.should.equal('876');
-                    output.should.equal(res);
-                    done();
+    
+            it('should be able to handle more than 200 variables', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
                 }
+                this.timeout(30000);
+                var prg = "";
+                var res = "";
+                for(i=1; i <= 1000; i++) {
+                  prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
+                  res = res + i + '\r\n';
+                }
+                rega.exec(prg, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i876.should.equal('876');
+                        output.should.equal(res);
+                        done();
+                    }
+                });
             });
-        });
-
-        it('floating-point accuracy test', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('floating-point accuracy test', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 real lReal1 = 0.7;
 real lReal2 = 0.4;
 real lReal3 = lReal1 - lReal2;
@@ -189,39 +187,39 @@ real lReal7 = lReal2 + lReal6;
 boolean diff3 = (lReal2 == lReal7);
 
 boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.diff1.should.equal('true');
-                    objects.diff2.should.equal('true');
-                    objects.diff3.should.equal('true');
-                    objects.diff4.should.equal('true');
-                    done();
-                }
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.diff1.should.equal('true');
+                        objects.diff2.should.equal('true');
+                        objects.diff3.should.equal('true');
+                        objects.diff4.should.equal('true');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('should allow object names starting with number', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('should allow object names starting with number', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 object obj = dom.GetObject("2Light");
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.obj.should.equal('null');
-                    done();
-                }
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.obj.should.equal('null');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('operand tests', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('operand tests', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 WriteLine("");
 Write("01: ");WriteLine("1" + 2);
 Write("02: ");WriteLine(1 + 2);
@@ -233,11 +231,11 @@ Write("07: ");WriteLine("1" + 2 + 3);
 Write("08: ");WriteLine("1" + 2 + "3");
 Write("09: ");WriteLine("1" + "2" + 3);
 Write("10: ");WriteLine("1" + "2" + "3");
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal(`\r
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal(`\r
 01: 12\r
 02: 3\r
 03: 3\r
@@ -249,23 +247,17 @@ Write("10: ");WriteLine("1" + "2" + "3");
 09: 123\r
 10: 123\r
 `);
-                    done();
-                }
+                        done();
+                    }
+                });
             });
-        });
-    });
 
-    describe('ReGaHss' + flavor + ': checking UserSharedObjects clearance', () => {
-
-        before(function() {
-            if (flavor === '.legacy') {
-                this.skip();
-            }
-        });
-
-        it('adding fake objects to UserSharedObjects()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+            it('adding fake objects to UserSharedObjects()', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 object sysvar1 = dom.CreateObject(OT_VARDP, "Real-SysVarDP");
 object sysvar2 = dom.CreateObject(OT_ALARMDP, "Real-AlarmDP");
 object sysvar3 = dom.CreateObject(OT_DP, "Removed-DP");
@@ -281,22 +273,25 @@ user.UserSharedObjects().Add("33334");
 user.UserSharedObjects().Add("33335");
 user.UserSharedObjects().Add("33336");
 dom.DeleteObject(sysvar3);
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.sysvar1.should.equal('Real-SysVarDP');
-                    objects.sysvar2.should.equal('Real-AlarmDP');
-                    objects.sysvar3.should.equal('null');
-                    objects.user.should.equal('Admin');
-                    done();
-                }
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.sysvar1.should.equal('Real-SysVarDP');
+                        objects.sysvar2.should.equal('Real-AlarmDP');
+                        objects.sysvar3.should.equal('null');
+                        objects.user.should.equal('Admin');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('check that removed DP was removed from UserSharedObjects', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('check that removed DP was removed from UserSharedObjects', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 object user = dom.GetObject('Admin');
 string objID;
 foreach(objID, user.UserSharedObjects())
@@ -308,37 +303,26 @@ foreach(objID, user.UserSharedObjects())
     WriteLine(objID);
   }
 }
-            `, (err, output, objects) => {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal('33333\r\n33334\r\n33335\r\n33336\r\n');
+                `, (err, output, objects) => {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('33333\r\n33334\r\n33335\r\n33336\r\n');
+                        done();
+                    }
+                });
+            });
+        });
+
+        describe('stopping ReGaHss' + flavor, () => {
+            it('wait for stopped ReGa', function (done) {
+                this.timeout(60000);
+                procs.rega.on('close', () => {
+                    procs.rega = null;
                     done();
-                }
+                });
+                cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
             });
         });
-    });
-
-    describe('stop ReGaHss' + flavor + ' process', () => {
-
-        it('should wait 5 seconds', function (done) {
-            this.timeout(6000);
-            setTimeout(done, 5000);
-        });
-
-        it('should stop', function (done) {
-            this.timeout(60000);
-            procs.rega.on('close', () => {
-                procs.rega = null;
-                done();
-            });
-            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
-        });
-        /*
-        it('should wait 2 seconds', function (done) {
-            this.timeout(3000);
-            setTimeout(done, 2000);
-        });
-        */
     });
 });
