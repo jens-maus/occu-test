@@ -1,10 +1,12 @@
 {
   "name": "occu-test",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {
-    "test": "camo-purge; mocha"
+    "test": "camo-purge; mocha",
+    "lint": "xo",
+    "lintfix": "xo --fix"
   },
   "repository": {
     "type": "git",
@@ -32,5 +34,11 @@
     "mocha-clean": "latest",
     "should": "latest",
     "stream-splitter": "latest"
+  },
+  "devDependencies": {
+    "xo": "^0.18.2"
+  },
+  "xo": {
+    "space": 4
   }
 }
