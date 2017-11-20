@@ -12,6 +12,8 @@ let {
     flavors,
 } = require('../lib/helper.js');
 
+require('should');
+
 flavors.forEach(flavor => {
 
     describe('rfd/hmipserver Simulator', () => {

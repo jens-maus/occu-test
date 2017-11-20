@@ -71,10 +71,9 @@ if (system.IsVar("MY_DEFINE"))
 }             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === 'OK') {
-                    done();
                 } else {
-                    done(new Error(output + ' != "OK"'));
+                    output.should.equal('OK');
+                    done();
                 }
             });
         });
@@ -95,10 +94,10 @@ if (system.IsVar("myVar"))
             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (objects.myVar === '1' && objects.x === '2') {
-                    done();
                 } else {
-                    done(new Error(objects.myVar + ' != 1 and/or ' + objects.x + ' != 2'));
+                    objects.myVar.should.equal('1');
+                    objects.x.should.equal('2');
+                    done();
                 }
             });
         });
@@ -113,10 +112,9 @@ if (myObject)
 }             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === 'OK') {
-                    done();
                 } else {
-                    done(new Error(output + ' != "OK"'));
+                    output.should.equal('OK');
+                    done();
                 }
             });
         });
@@ -131,10 +129,9 @@ if (myObject)
 }             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === '1237') {
-                    done();
                 } else {
-                    done(new Error(output + ' != 1237'));
+                    output.should.equal('1237');
+                    done();
                 }
             });
         });
@@ -149,10 +146,9 @@ if (myObject)
 }             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === 'VarBool1') {
-                    done();
                 } else {
-                    done(new Error(output + ' != "VarBool1"'));
+                    output.should.equal('VarBool1');
+                    done();
                 }
             });
         });
@@ -169,10 +165,9 @@ if (myObject)
 }             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === 'VARDP') {
-                    done();
                 } else {
-                    done(new Error(output + ' != "VARDP"'));
+                    output.should.equal('VARDP');
+                    done();
                 }
             });
         });
@@ -187,10 +182,9 @@ if (myObject.IsTypeOf(OT_VARDP))
 }             `, (err, output, objects) => {
                 if (err) {
                     done(err);
-                } else if (output === 'OK') {
-                    done();
                 } else {
-                    done(new Error(output + ' != "OK"'));
+                    output.should.equal('OK');
+                    done();
                 }
             });
         });
