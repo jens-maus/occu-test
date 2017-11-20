@@ -827,7 +827,7 @@ string lower = str.ToLower(); ! lower = "abcdefghi“
         });
 
         it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
-            if (flavor === '.legacy')
+            if (flavor === '.legacy') {
                 return this.skip();
             }
             this.timeout(30000);
