@@ -122,9 +122,8 @@ flavors.forEach(flavor => {
         test('2020-10-25 03:04:48 CET', 'Time0305', '1546');
         test('2020-10-25 03:29:48 CET', 'Time0330', '1558');
 
-
         // Long Running test for EveryMinute Timer over DST change
-        let time = '2020-10-25 02:57:40 CEST';
+        const time = '2020-10-25 02:57:40 CEST';
         describe('Timer test @ ' + time + '...', () => {
             describe('starting ReGaHss' + flavor, () => {
                 it('should fake datetime', function (done) {
