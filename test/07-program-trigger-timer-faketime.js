@@ -191,7 +191,7 @@ flavors.forEach(flavor => {
         });
     });
 
-    time = '2020-03-29 01:58:00 CEST';
+    time = '2020-03-29 01:58:00 CET';
     describe('Timer test EveryMinute starting @ ' + time + '...', () => {
         describe('starting ReGaHss' + flavor, () => {
             it('should fake datetime', function (done) {
