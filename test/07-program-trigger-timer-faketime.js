@@ -70,7 +70,7 @@ flavors.forEach(flavor => {
                     this.timeout(20000);
                     subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
                         // Console.log('        ' + output);
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -145,7 +145,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:58:00 CEST', function (done) {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -154,7 +154,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:59:00 CEST', function (done) {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -163,7 +163,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:00:00 CET', function (done) {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -172,7 +172,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 02:01:00 CET', function (done) {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -191,7 +191,6 @@ flavors.forEach(flavor => {
                 });
             });
         });
-
     })();
 
     (function () {
@@ -247,7 +246,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 01:58:00 CET', function (done) {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -256,7 +255,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 01:59:00 CET', function (done) {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -265,7 +264,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 03:00:00 CEST', function (done) {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
@@ -274,7 +273,7 @@ flavors.forEach(flavor => {
                 it('should call Program ID = 1302 (program TimeEveryMinute) @ 03:01:00 CEST', function (done) {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
-                        cp.exec('date', (e, stdout) => {
+                        cp.exec('/bin/date', (e, stdout) => {
                             console.log('          ' + output);
                             done();
                         });
