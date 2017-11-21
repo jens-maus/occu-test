@@ -83,7 +83,7 @@ var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
                 `, (err, stdout, objects) => {
                     if (err) {
-                        console.error(indent(err, 6));
+                        console.error(indent(err, 6);
                     }
                 });
             });
