@@ -37,6 +37,13 @@ flavors.forEach(flavor => {
             });
         });
 
+        it('should start IseRTPrgThread', function (done) {
+            this.timeout(30000);
+            subscribe('rega', /Info: IseRTPrgThread thread function started/, () => {
+                done();
+            });
+        });
+
         it('should init XmlRpcMethodListDevices', function (done) {
             this.timeout(30000);
             subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, () => {
@@ -116,11 +123,8 @@ string build = dom.BuildLabel();
         });
 
         it('should execute /bin/hm_startup', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
             this.timeout(30000);
-            subscribe('rega', /Executing \/bin\/hm_startup/, () => {
+            subscribe('rega', /\/bin\/hm_startup executed/, () => {
                 done();
             });
         });
