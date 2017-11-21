@@ -50,6 +50,10 @@ The Rega is started with a prebuilt homematic.regadom:
 * add more devices to rfd and hmipserver simulator and add them to regadom
 * test device interactions (add/delete/readyconfig, test programs, ...) **wip**
 * trigger travis builds on commits in occu repository
+* test variable creation/deletion via script
+* test room/function creation/deletion via script
+* test room/function assignment creation/deletion
+* test program creation via script
 * WebUI tests?
 * ...
 
