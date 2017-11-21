@@ -27,14 +27,16 @@
   },
   "homepage": "https://github.com/hobbyquaker/occu-test#readme",
   "dependencies": {
+    "binrpc": "^3.1.0",
     "camo-purge": "latest",
     "hm-simulator": "latest",
     "homematic-rega": "latest",
+    "homematic-xmlrpc": "^1.0.2",
+    "indent-string": "latest",
     "mocha": "latest",
     "mocha-clean": "latest",
     "should": "latest",
-    "stream-splitter": "latest",
-    "indent-string": "latest"
+    "stream-splitter": "latest"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2",
@@ -43,5 +45,7 @@
   "xo": {
     "space": 4
   },
-  "pre-commit": ["lintfix"]
+  "pre-commit": [
+    "lintfix"
+  ]
 }
