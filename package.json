@@ -33,7 +33,8 @@
     "mocha": "latest",
     "mocha-clean": "latest",
     "should": "latest",
-    "stream-splitter": "latest"
+    "stream-splitter": "latest",
+    "indent-string": "latest"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2",

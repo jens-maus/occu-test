@@ -12,7 +12,8 @@ const {
     simBuffer,
     regaSubscriptions,
     regaBuffer,
-    flavors
+    flavors,
+    indent
 } = require('../lib/helper.js');
 
 require('should');

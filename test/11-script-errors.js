@@ -12,7 +12,8 @@ const {
     simBuffer,
     regaSubscriptions,
     regaBuffer,
-    flavors
+    flavors,
+    indent
 } = require('../lib/helper.js');
 
 require('should');
@@ -45,7 +46,7 @@ flavors.forEach(flavor => {
 dom.MethodDoesNotExist("muh");
                 `, (err, stdout, objects) => {
                     if (err) {
-                        console.error('      ' + err);
+                        console.error(indent(err, 6));
                     }
                 });
             });
@@ -60,7 +61,7 @@ dom.MethodDoesNotExist("muh");
 WriteLine(bla");
                 `, (err, stdout, objects) => {
                     if (err) {
-                        console.error('      ' + err);
+                        console.error(indent(err, 6));
                     }
                 });
             });
@@ -82,7 +83,7 @@ var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
                 `, (err, stdout, objects) => {
                     if (err) {
-                        console.error('      ' + err);
+                        console.error(indent(err, 6);
                     }
                 });
             });
@@ -103,7 +104,7 @@ var b = system.ToFloat("1.4");
 var c = system.ToFloat("a");
                 `, (err, stdout, objects) => {
                     if (err) {
-                        console.error('      ' + err);
+                        console.error(indent(err, 6));
                     }
                 });
             });
@@ -120,7 +121,7 @@ var infinite  = one / zero;
 WriteLine(infinite);
                 `, (err, stdout, objects) => {
                     if (err) {
-                        console.error('      ' + err);
+                        console.error(indent(err, 6));
                     }
                 });
             });

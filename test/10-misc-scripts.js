@@ -12,7 +12,8 @@ const {
     simBuffer,
     regaSubscriptions,
     regaBuffer,
-    flavors
+    flavors,
+    indent
 } = require('../lib/helper.js');
 
 require('should');
@@ -31,7 +32,7 @@ flavors.forEach(flavor => {
                     } else {
                         done();
                     }
-                    console.log('      ' + stdout.replace('\n', ''));
+                    console.log(indent(stdout.replace('\n', ''), 8));
                 });
             });
             it('should start', () => {
@@ -52,7 +53,7 @@ flavors.forEach(flavor => {
                 this.timeout(30000);
                 subscribe('rega', /DST offset =/, output => {
                     done();
-                    console.log('      ' + output);
+                    console.log(indent(output, 8));
                 });
             });
 
@@ -60,7 +61,7 @@ flavors.forEach(flavor => {
                 this.timeout(30000);
                 subscribe('rega', /GetNextTimer called for reference time/, output => {
                     done();
-                    console.log('      ' + output);
+                    console.log(indent(output, 8));
                 });
             });
         });

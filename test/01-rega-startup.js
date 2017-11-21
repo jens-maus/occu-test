@@ -12,7 +12,8 @@ const {
     simBuffer,
     regaSubscriptions,
     regaBuffer,
-    flavors
+    flavors,
+    indent
 } = require('../lib/helper.js');
 
 require('should');
@@ -109,7 +110,7 @@ string build = dom.BuildLabel();
                 } else {
                     objects.build.should.not.equal('undefined');
                     done();
-                    console.log('      ' + objects.build);
+                    console.log(indent(objects.build, 6));
                 }
             });
         });

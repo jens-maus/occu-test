@@ -12,7 +12,8 @@ const {
     simBuffer,
     regaSubscriptions,
     regaBuffer,
-    flavors
+    flavors,
+    indent
 } = require('../lib/helper.js');
 
 require('should');
@@ -31,7 +32,7 @@ flavors.forEach(flavor => {
                         } else {
                             done();
                         }
-                        console.log('          ' + stdout.replace('\n', ''));
+                        console.log(indent(stdout.replace('\n', ''), 8));
                     });
                 });
                 it('should start', () => {
@@ -52,7 +53,7 @@ flavors.forEach(flavor => {
                     this.timeout(30000);
                     subscribe('rega', /DST offset =/, output => {
                         done();
-                        console.log('          ' + output);
+                        console.log(indent(output, 8));
                     });
                 });
 
@@ -60,7 +61,7 @@ flavors.forEach(flavor => {
                     this.timeout(30000);
                     subscribe('rega', /GetNextTimer called for reference time/, output => {
                         done();
-                        console.log('          ' + output);
+                        console.log(indent(output, 8));
                     });
                 });
             });
@@ -71,7 +72,7 @@ flavors.forEach(flavor => {
                     subscribe('rega', new RegExp('execute Program ID = ' + id), output => {
                         // Console.log('        ' + output);
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -102,12 +103,12 @@ flavors.forEach(flavor => {
                         if (e) {
                             done(e);
                         } else if (!stdout || stdout.replace('\n', '').length === 0) {
-                            console.error(stderr);
+                            console.error(indent(stderr, 8));
                             done(new Error('invalid faketime: "' + ftime + '"'));
                         } else {
                             done();
                         }
-                        console.log('          ' + stdout.replace('\n', ''));
+                        console.log(indent(stdout.replace('\n', ''), 8));
                     });
                 });
                 it('should start', () => {
@@ -128,7 +129,7 @@ flavors.forEach(flavor => {
                     this.timeout(30000);
                     subscribe('rega', /DST offset =/, output => {
                         done();
-                        console.log('          ' + output);
+                        console.log(indent(output, 8));
                     });
                 });
 
@@ -136,7 +137,7 @@ flavors.forEach(flavor => {
                     this.timeout(30000);
                     subscribe('rega', /GetNextTimer called for reference time/, output => {
                         done();
-                        console.log('          ' + output);
+                        console.log(indent(output, 8));
                     });
                 });
             });
@@ -146,7 +147,7 @@ flavors.forEach(flavor => {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -155,7 +156,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -164,7 +165,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -173,7 +174,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -203,12 +204,12 @@ flavors.forEach(flavor => {
                         if (e) {
                             done(e);
                         } else if (!stdout || stdout.replace('\n', '').length === 0) {
-                            console.error(stderr);
+                            console.error(indent(stderr, 8));
                             done(new Error('invalid faketime: "' + ftime + '"'));
                         } else {
                             done();
                         }
-                        console.log('          ' + stdout.replace('\n', ''));
+                        console.log(indent(stdout.replace('\n', ''), 8));
                     });
                 });
                 it('should start', () => {
@@ -229,7 +230,7 @@ flavors.forEach(flavor => {
                     this.timeout(30000);
                     subscribe('rega', /DST offset =/, output => {
                         done();
-                        console.log('          ' + output);
+                        console.log(indent(output, 8));
                     });
                 });
 
@@ -237,7 +238,7 @@ flavors.forEach(flavor => {
                     this.timeout(30000);
                     subscribe('rega', /GetNextTimer called for reference time/, output => {
                         done();
-                        console.log('          ' + output);
+                        console.log(indent(output, 8));
                     });
                 });
             });
@@ -247,7 +248,7 @@ flavors.forEach(flavor => {
                     this.timeout(25000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -256,7 +257,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -265,7 +266,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
@@ -274,7 +275,7 @@ flavors.forEach(flavor => {
                     this.timeout(65000);
                     subscribe('rega', /execute Program ID = 1302/, output => {
                         cp.exec('/bin/date', (e, stdout) => {
-                            console.log('         ', stdout.replace('\n', ''), output);
+                            console.log(indent(stdout.replace('\n', ''), 8), output);
                             done();
                         });
                     });
