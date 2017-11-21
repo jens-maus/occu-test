@@ -19,9 +19,7 @@ const {
 require('should');
 
 flavors.forEach(function (flavor) {
-
     function test(time, program, id, repetition = 1, waittime = 20000) {
-
         describe('Testing for ' + repetition + ' executions of ' + program + ' (' + id + ') @ ' + time, function () {
             describe('starting ReGaHss' + flavor, function () {
                 it('should fake datetime', function (done) {
@@ -105,7 +103,6 @@ flavors.forEach(function (flavor) {
     }
 
     describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
-
         // Perform normal timer test for single execution
         test('2020-01-01 00:59:48 CET', 'Time0100', '1314');
 
@@ -141,5 +138,4 @@ flavors.forEach(function (flavor) {
         test('2020-10-25 03:04:48 CET', 'Time0305', '1546');
         test('2020-10-25 03:29:48 CET', 'Time0330', '1558');
     });
-
 });
