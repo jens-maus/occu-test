@@ -18,20 +18,20 @@ const {
 
 require('should');
 
-flavors.forEach(flavor => {
-    describe('rfd/hmipserver Simulator', () => {
-        it('should start', () => {
+flavors.forEach(function (flavor) {
+    describe('rfd/hmipserver Simulator', function () {
+        it('should start', function () {
             startSim();
         });
     });
 
-    describe('ReGaHss' + flavor, () => {
-        it('should start ReGaHss' + flavor, () => {
+    describe('ReGaHss' + flavor, function () {
+        it('should start ReGaHss' + flavor, function () {
             startRega(flavor);
         });
         it('should start HTTP server', function (done) {
             this.timeout(60000);
-            subscribe('rega', /HTTP server started successfully/, () => {
+            subscribe('rega', /HTTP server started successfully/, function () {
                 done();
             });
         });
@@ -45,13 +45,13 @@ flavors.forEach(flavor => {
         });
     });
 
-    describe('test examples from HM_Script_Teil_2_Objektmodell_V1.2.pdf', () => {
+    describe('test examples from HM_Script_Teil_2_Objektmodell_V1.2.pdf', function () {
         it('3.1.3 should return date and time', function (done) {
             this.timeout(30000);
             rega.exec(`
 string sDate = system.Date("%d.%m.%Y"); ! sDate = "24.12.2008";
 string sTime = system.Date("%H:%M:%S"); ! sTime = "18:30:00";
-            `, (err, output, objects) => {
+            `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -70,7 +70,7 @@ var MY_DEFINE = 1;
 if (system.IsVar("MY_DEFINE"))
 {
     Write('OK');
-}             `, (err, output, objects) => {
+}             `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -93,7 +93,7 @@ if (system.IsVar("myVar"))
 
 ! myVar = 1
 ! x = 2          
-            `, (err, output, objects) => {
+            `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -111,7 +111,7 @@ var myObject = dom.GetObject("VarBool1");
 if (myObject)
 {
     Write("OK");
-}             `, (err, output, objects) => {
+}             `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -128,7 +128,7 @@ var myObject = dom.GetObject("VarBool1");
 if (myObject)
 {
     Write(myObject.ID());
-}             `, (err, output, objects) => {
+}             `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -145,7 +145,7 @@ var myObject = dom.GetObject("VarBool1");
 if (myObject)
 {
     Write(myObject.Name());
-}             `, (err, output, objects) => {
+}             `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -164,7 +164,7 @@ var myObject = dom.GetObject("VarBool1");
 if (myObject)
 {
     Write(myObject.TypeName());
-}             `, (err, output, objects) => {
+}             `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -181,7 +181,7 @@ var myObject = dom.GetObject("VarBool1");
 if (myObject.IsTypeOf(OT_VARDP))
 {
     Write("OK");
-}             `, (err, output, objects) => {
+}             `, function (err, output, objects) {
                 if (err) {
                     done(err);
                 } else {
@@ -192,7 +192,7 @@ if (myObject.IsTypeOf(OT_VARDP))
         });
     });
 
-    describe('stop ReGaHss' + flavor + ' process', () => {
+    describe('stop ReGaHss' + flavor + ' process', function () {
         /*
         It('should wait 2 seconds', function (done) {
             this.timeout(3000);
@@ -201,7 +201,7 @@ if (myObject.IsTypeOf(OT_VARDP))
         */
         it('should stop', function (done) {
             this.timeout(60000);
-            procs.rega.on('close', () => {
+            procs.rega.on('close', function () {
                 procs.rega = null;
                 done();
             });
@@ -215,8 +215,8 @@ if (myObject.IsTypeOf(OT_VARDP))
         */
     });
 
-    describe('stop simulator', () => {
-        it('should stop', () => {
+    describe('stop simulator', function () {
+        it('should stop', function () {
             procs.sim.kill();
         });
     });

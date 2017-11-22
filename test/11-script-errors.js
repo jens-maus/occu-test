@@ -18,15 +18,15 @@ const {
 
 require('should');
 
-flavors.forEach(flavor => {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-        describe('starting ReGaHss' + flavor, () => {
-            it('should start', () => {
+flavors.forEach(function (flavor) {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+        describe('starting ReGaHss' + flavor, function () {
+            it('should start', function () {
                 startRega(flavor);
             });
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, () => {
+                subscribe('rega', /HTTP server started successfully/, function () {
                     if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
@@ -36,15 +36,15 @@ flavors.forEach(flavor => {
             });
         });
 
-        describe('verify script error handling', () => {
+        describe('verify script error handling', function () {
             it('should handle unknown methods', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 2 col 27 near \^\("muh"\);/, () => {
+                subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 2 col 27 near \^\("muh"\);/, function () {
                     done();
                 });
                 rega.exec(`
 dom.MethodDoesNotExist("muh");
-                `, (err, stdout, objects) => {
+                `, function (err, stdout, objects) {
                     if (err) {
                         console.error(indent(err, 6));
                     }
@@ -53,13 +53,13 @@ dom.MethodDoesNotExist("muh");
 
             it('should handle syntax Errors', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 3 col 43 near/, () => {
+                subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 3 col 43 near/, function () {
                     done();
                 });
                 rega.exec(`
 
 WriteLine(bla");
-                `, (err, stdout, objects) => {
+                `, function (err, stdout, objects) {
                     if (err) {
                         console.error(indent(err, 6));
                     }
@@ -70,18 +70,18 @@ WriteLine(bla");
                 this.timeout(60000);
 
                 if (flavor === '.legacy') {
-                    subscribe('rega', /Error: IseESP::ExecError= Execution failed:/, () => {
+                    subscribe('rega', /Error: IseESP::ExecError= Execution failed:/, function () {
                         done();
                     });
                 } else {
-                    subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
+                    subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, function () {
                         done();
                     });
                 }
                 rega.exec(`
 var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
-                `, (err, stdout, objects) => {
+                `, function (err, stdout, objects) {
                     if (err) {
                         console.error(indent(err, 6));
                     }
@@ -94,7 +94,7 @@ WriteLine(unknown.Name());
                 }
                 this.timeout(60000);
 
-                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, () => {
+                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, function () {
                     done();
                 });
 
@@ -102,7 +102,7 @@ WriteLine(unknown.Name());
 var a = system.ToFloat();
 var b = system.ToFloat("1.4");
 var c = system.ToFloat("a");
-                `, (err, stdout, objects) => {
+                `, function (err, stdout, objects) {
                     if (err) {
                         console.error(indent(err, 6));
                     }
@@ -111,7 +111,7 @@ var c = system.ToFloat("a");
 
             it('should log division by zero', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /Error: IseVar::Div - division by 0!/, () => {
+                subscribe('rega', /Error: IseVar::Div - division by 0!/, function () {
                     done();
                 });
                 rega.exec(`
@@ -119,7 +119,7 @@ var one = 1;
 var zero = 0;
 var infinite  = one / zero;
 WriteLine(infinite);
-                `, (err, stdout, objects) => {
+                `, function (err, stdout, objects) {
                     if (err) {
                         console.error(indent(err, 6));
                     }
@@ -127,10 +127,10 @@ WriteLine(infinite);
             });
         });
 
-        describe('stopping ReGaHss' + flavor, () => {
+        describe('stopping ReGaHss' + flavor, function () {
             it('should stop', function (done) {
                 this.timeout(60000);
-                procs.rega.on('close', () => {
+                procs.rega.on('close', function () {
                     procs.rega = null;
                     done();
                 });

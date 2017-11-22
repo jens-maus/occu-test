@@ -18,13 +18,13 @@ const {
 
 require('should');
 
-flavors.forEach(flavor => {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-        describe('starting ReGaHss' + flavor, () => {
+flavors.forEach(function (flavor) {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+        describe('starting ReGaHss' + flavor, function () {
             it('should fake datetime', function (done) {
                 this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
                 const time = '2017-12-01 12:00:00 CET';
-                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', (e, stdout) => {
+                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
                     if (e) {
                         done(e);
                     } else if (!stdout || stdout.replace('\n', '').length === 0) {
@@ -35,12 +35,12 @@ flavors.forEach(flavor => {
                     console.log(indent(stdout.replace('\n', ''), 8));
                 });
             });
-            it('should start', () => {
+            it('should start', function () {
                 startRega(flavor);
             });
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, () => {
+                subscribe('rega', /HTTP server started successfully/, function () {
                     if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
@@ -51,7 +51,7 @@ flavors.forEach(flavor => {
 
             it('should output DST offset', function (done) {
                 this.timeout(30000);
-                subscribe('rega', /DST offset =/, output => {
+                subscribe('rega', /DST offset =/, function (output) {
                     done();
                     console.log(indent(output, 8));
                 });
@@ -59,14 +59,14 @@ flavors.forEach(flavor => {
 
             it('should output reference time', function (done) {
                 this.timeout(30000);
-                subscribe('rega', /GetNextTimer called for reference time/, output => {
+                subscribe('rega', /GetNextTimer called for reference time/, function (output) {
                     done();
                     console.log(indent(output, 8));
                 });
             });
         });
 
-        describe('testing examples from https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', () => {
+        describe('testing examples from https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', function () {
             it('testing "tageszeit-in-abschnitte-unterteilen"', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -121,7 +121,7 @@ if (c_zeit < c_tagesbeginn - 2) {
 }
 
 ! dom.GetObject("Tageszeit").State(v_tageszeit);
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -138,10 +138,10 @@ if (c_zeit < c_tagesbeginn - 2) {
             });
         });
 
-        describe('stopping ReGaHss' + flavor, () => {
+        describe('stopping ReGaHss' + flavor, function () {
             it('should stop', function (done) {
                 this.timeout(60000);
-                procs.rega.on('close', () => {
+                procs.rega.on('close', function () {
                     procs.rega = null;
                     done();
                 });

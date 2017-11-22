@@ -18,15 +18,15 @@ const {
 
 require('should');
 
-flavors.forEach(flavor => {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-        describe('starting ReGaHss' + flavor, () => {
-            it('should start', () => {
+flavors.forEach(function (flavor) {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+        describe('starting ReGaHss' + flavor, function () {
+            it('should start', function () {
                 startRega(flavor);
             });
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, () => {
+                subscribe('rega', /HTTP server started successfully/, function () {
                     if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
@@ -36,7 +36,7 @@ flavors.forEach(flavor => {
             });
         });
 
-        describe('testing examples from https://github.com/hobbyquaker/homematic-rega/tree/master/scripts', () => {
+        describe('testing examples from https://github.com/hobbyquaker/homematic-rega/tree/master/scripts', function () {
             it('should run variables.rega', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -109,7 +109,7 @@ foreach (sSysVarId, dom.GetObject(ID_SYSTEM_VARIABLES).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -246,7 +246,7 @@ foreach (oPrgID, dom.GetObject(ID_PROGRAMS).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -384,7 +384,7 @@ foreach (sDevId, root.Devices().EnumUsedIDs()) {
 }
 
 Write(']');
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -696,7 +696,7 @@ foreach (sFunctionId, dom.GetObject(ID_FUNCTIONS).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -817,7 +817,7 @@ foreach (sRoomId, dom.GetObject(ID_ROOMS).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -841,10 +841,10 @@ Write(']');
             });
         });
 
-        describe('stopping ReGaHss' + flavor, () => {
+        describe('stopping ReGaHss' + flavor, function () {
             it('should stop', function (done) {
                 this.timeout(60000);
-                procs.rega.on('close', () => {
+                procs.rega.on('close', function () {
                     procs.rega = null;
                     done();
                 });

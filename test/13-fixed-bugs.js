@@ -18,15 +18,15 @@ const {
 
 require('should');
 
-flavors.forEach(flavor => {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', () => {
-        describe('starting ReGaHss' + flavor, () => {
-            it('should start', () => {
+flavors.forEach(function (flavor) {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+        describe('starting ReGaHss' + flavor, function () {
+            it('should start', function () {
                 startRega(flavor);
             });
             it('wait for HTTP server to be ready', function (done) {
                 this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, () => {
+                subscribe('rega', /HTTP server started successfully/, function () {
                     if (flavor === '.legacy') {
                         setTimeout(done, 10000);
                     } else {
@@ -36,7 +36,7 @@ flavors.forEach(flavor => {
             });
         });
 
-        describe('verifying bug fixes', () => {
+        describe('verifying bug fixes', function () {
             it('correct date/time output at DST boundaries', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -63,7 +63,7 @@ while (j<3)
   }
   j=j+1;
 }
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -101,7 +101,7 @@ while (j<3)
 ! Die nächste Zeile ist ein leerer Kommentar (erzeugt Fehler in Legacy version)
 !
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
-               `, (err, output, objects) => {
+               `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -118,7 +118,7 @@ string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
                 this.timeout(30000);
                 rega.exec(`
 string a = "Das ist ein <html & Test";
-               `, (err, output, objects) => {
+               `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -136,7 +136,7 @@ string a = "Das ist ein <html & Test";
                 rega.exec(`
 string a = "Hallo\\tWelt";
 integer b = a.Find("\\t");
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -158,7 +158,7 @@ integer b = a.Find("\\t");
                     prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
                     res = res + i + '\r\n';
                 }
-                rega.exec(prg, (err, output, objects) => {
+                rega.exec(prg, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -189,7 +189,7 @@ real lReal7 = lReal2 + lReal6;
 boolean diff3 = (lReal2 == lReal7);
 
 boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -209,7 +209,7 @@ boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
                 this.timeout(30000);
                 rega.exec(`
 object obj = dom.GetObject("2Light");
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -233,7 +233,7 @@ Write("07: ");WriteLine("1" + 2 + 3);
 Write("08: ");WriteLine("1" + 2 + "3");
 Write("09: ");WriteLine("1" + "2" + 3);
 Write("10: ");WriteLine("1" + "2" + "3");
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -275,7 +275,7 @@ user.UserSharedObjects().Add("33334");
 user.UserSharedObjects().Add("33335");
 user.UserSharedObjects().Add("33336");
 dom.DeleteObject(sysvar3);
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -307,7 +307,7 @@ foreach(objID, user.UserSharedObjects())
     WriteLine(objID);
   }
 }
-                `, (err, output, objects) => {
+                `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
@@ -318,10 +318,10 @@ foreach(objID, user.UserSharedObjects())
             });
         });
 
-        describe('stopping ReGaHss' + flavor, () => {
+        describe('stopping ReGaHss' + flavor, function () {
             it('should stop', function (done) {
                 this.timeout(60000);
-                procs.rega.on('close', () => {
+                procs.rega.on('close', function () {
                     procs.rega = null;
                     done();
                 });

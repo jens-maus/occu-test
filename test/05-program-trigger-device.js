@@ -18,37 +18,37 @@ const {
 
 require('should');
 
-flavors.forEach(flavor => {
-    describe('rfd/hmipserver Simulator', () => {
-        it('should start', () => {
+flavors.forEach(function (flavor) {
+    describe('rfd/hmipserver Simulator', function () {
+        it('should start', function () {
             startSim();
         });
     });
 
-    describe('ReGaHss' + flavor, () => {
-        it('should start ReGaHss' + flavor, () => {
+    describe('ReGaHss' + flavor, function () {
+        it('should start ReGaHss' + flavor, function () {
             startRega(flavor);
         });
 
         it('should do init on simulated rfd', function (done) {
             this.timeout(60000);
-            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, () => {
+            subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, function () {
                 done();
             });
         });
     });
 
-    describe('virtual key triggers program', () => {
+    describe('virtual key triggers program', function () {
         it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1 (program Key1)', function (done) {
             // BidCoS-RF:1 PRESS_SHORT is pressed by the simulator every 5 seconds
             this.timeout(90000);
-            subscribe('sim', /setValue rfd BidCoS-RF:2 PRESS_LONG true/, () => {
+            subscribe('sim', /setValue rfd BidCoS-RF:2 PRESS_LONG true/, function () {
                 done();
             });
         });
     });
 
-    describe('stop ReGaHss' + flavor + ' process', () => {
+    describe('stop ReGaHss' + flavor + ' process', function () {
         it('should wait 10 seconds', function (done) {
             this.timeout(11000);
             setTimeout(done, 10000);
@@ -56,7 +56,7 @@ flavors.forEach(flavor => {
 
         it('should stop', function (done) {
             this.timeout(60000);
-            procs.rega.on('close', () => {
+            procs.rega.on('close', function () {
                 procs.rega = null;
                 done();
             });
@@ -71,8 +71,8 @@ flavors.forEach(flavor => {
         */
     });
 
-    describe('stop simulator', () => {
-        it('should stop', () => {
+    describe('stop simulator', function () {
+        it('should stop', function () {
             procs.sim.kill();
         });
     });
