@@ -46,7 +46,7 @@ flavors.forEach(function (flavor) {
 
         it('should init XmlRpcMethodListDevices', function (done) {
             this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, function() {
+            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, function () {
                 done();
             });
         });
