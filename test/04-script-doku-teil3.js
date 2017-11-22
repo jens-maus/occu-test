@@ -19,7 +19,9 @@ const {
 require('should');
 
 flavors.forEach(function (flavor) {
-    describe('test examples from HM_Script_Teil_3_Beispiele_V1.1', function () {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+        describe('test examples from HM_Script_Teil_3_Beispiele_V1.1', function () {
 
+        });
     });
 });

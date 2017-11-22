@@ -19,80 +19,79 @@ const {
 require('should');
 
 flavors.forEach(function (flavor) {
-    describe('rfd/hmipserver Simulator', function () {
-        it('should start', function () {
-            startSim();
-        });
-    });
-
-    describe('ReGaHss' + flavor, function () {
-        it('should start ReGaHss' + flavor, function () {
-            startRega(flavor);
-        });
-        it('should start HTTP server', function (done) {
-            this.timeout(60000);
-            subscribe('rega', /HTTP server started successfully/, function () {
-                done();
+    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+        describe('rfd/hmipserver Simulator', function () {
+            it('should start', function () {
+                startSim();
             });
         });
-        // Prevent problem that rega didn't stop after the tests...?!
-        it('should wait 10 seconds', function (done) {
-            if (flavor !== '.legacy') {
-                return this.skip();
-            }
-            this.timeout(11000);
-            setTimeout(done, 10000);
-        });
-    });
 
-    describe('test examples from HM-Skript_Teil_1_Sprachbeschreibung_V2.0', function () {
-        it('2.2 should handle comments', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+        describe('starting ReGaHss' + flavor, function () {
+            it('should start', function () {
+                startRega(flavor);
+            });
+            it('wait for HTTP server to be ready', function (done) {
+                this.timeout(60000);
+                subscribe('rega', /HTTP server started successfully/, function () {
+                    done();
+                });
+            });
+            it('should do init on simulated rfd', function (done) {
+                this.timeout(60000);
+                subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, function () {
+                    done();
+                });
+            });
+        });
+
+        describe('test examples from HM-Skript_Teil_1_Sprachbeschreibung_V2.0', function () {
+            it('2.2 should handle comments', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 ! Dies ist ein Kommentar.
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.MyString.should.equal('Hallo Welt!');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.MyString.should.equal('Hallo Welt!');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('3.2 should declare and initialize variables', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('3.2 should declare and initialize variables', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer i; ! Deklaration ohne Initialisierung
 integer j = 1; ! Deklaration mit Initialisierung
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.j.should.equal('1');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.j.should.equal('1');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('3.3 should dynamically change type', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('3.3 should dynamically change type', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer i = "Hallo Welt!"; ! i ist eine Zeichenkette
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.i.should.equal('Hallo Welt!');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i.should.equal('Hallo Welt!');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('4.0 should handle operators correctly', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('4.0 should handle operators correctly', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var i = 1; ! i=1
 var j = i + 1;  ! j=2
 var k = i - 1;  ! k=0
@@ -113,124 +112,124 @@ integer r = i | 1; ! r=1
 string s = "Hallo" # "Welt"; ! s="HalloWelt"
 boolean t = system.IsVar("i"); ! t=true
 integer u = i % 3; ! u=1
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.i.should.equal('1');
-                    objects.j.should.equal('2');
-                    objects.k.should.equal('0');
-                    objects.l.should.equal('10');
-                    objects.m.should.equal('0');
-                    objects.b.should.equal('true');
-                    objects.c.should.equal('false');
-                    objects.d.should.equal('false');
-                    objects.e.should.equal('false');
-                    objects.f.should.equal('true');
-                    objects.g.should.equal('false');
-                    objects.h.should.equal('true');
-                    objects.n.should.equal('true');
-                    objects.o.should.equal('true');
-                    objects.p.should.equal('false');
-                    objects.q.should.equal('1');
-                    objects.r.should.equal('1');
-                    objects.s.should.equal('HalloWelt');
-                    objects.t.should.equal('true');
-                    objects.u.should.equal('1');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i.should.equal('1');
+                        objects.j.should.equal('2');
+                        objects.k.should.equal('0');
+                        objects.l.should.equal('10');
+                        objects.m.should.equal('0');
+                        objects.b.should.equal('true');
+                        objects.c.should.equal('false');
+                        objects.d.should.equal('false');
+                        objects.e.should.equal('false');
+                        objects.f.should.equal('true');
+                        objects.g.should.equal('false');
+                        objects.h.should.equal('true');
+                        objects.n.should.equal('true');
+                        objects.o.should.equal('true');
+                        objects.p.should.equal('false');
+                        objects.q.should.equal('1');
+                        objects.r.should.equal('1');
+                        objects.s.should.equal('HalloWelt');
+                        objects.t.should.equal('true');
+                        objects.u.should.equal('1');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('4.1 should do right to left interpretation', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('4.1 should do right to left interpretation', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer i = 1 + 2 * 3; ! i = (3 * 2) + 1 = 7
 integer j = 3 * 2 + 1; ! j = (1 + 2) * 3 = 9
 integer k = (3 * 2) + 1; ! k = 1 + (3 * 2) = 7
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.i.should.equal('7');
-                    objects.j.should.equal('9');
-                    objects.k.should.equal('7');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i.should.equal('7');
+                        objects.j.should.equal('9');
+                        objects.k.should.equal('7');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('4.2.0 should cast to left operands type', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('4.2.0 should cast to left operands type', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var x = 1 / 10.0; ! x = 0; x ist eine Ganzzahl
 var y = 1.0 / 10; ! y = 0.1; y ist eine Gleitkommazahl
 var z = 1.0 + "1.0"; ! z == 2.0
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.x.should.equal('0');
-                    objects.y.should.equal('0.100000');
-                    objects.z.should.equal('2.000000');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.x.should.equal('0');
+                        objects.y.should.equal('0.100000');
+                        objects.z.should.equal('2.000000');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('4.2.1 should cast to left operands type', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('4.2.1 should cast to left operands type', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var a = 3 * 2.5; ! a = 6; a ist eine Ganzzahl
 var b = 2.5 * 3; ! b = 7.5; b ist eine Gleitkommazahl
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.a.should.equal('6');
-                    objects.b.should.equal('7.500000');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('6');
+                        objects.b.should.equal('7.500000');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('4.2.2 should cast to left operands type', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('4.2.2 should cast to left operands type', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var c = 0.0 + 3; ! c = 3.0; c ist eine Gleitkommazahl
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.c.should.equal('3.000000');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.c.should.equal('3.000000');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('5.1 should do if else', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('5.1 should do if else', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer i = 1;
 string s;
 if (i == 1) { s = "i == 1"; }
 else { s = "i != 1"; }
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.s.should.equal('i == 1');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.s.should.equal('i == 1');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('5.1.1 should be able to handle elseif()', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('5.1.1 should be able to handle elseif()', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 integer i = 2;
 string s;
 if (i == 1) { s = "i == 1"; }
@@ -249,40 +248,40 @@ if (y==1) {
   else { y = 9; }
   x=10;
 }
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.s.should.equal('i == 2');
-                    objects.x.should.equal('10');
-                    objects.y.should.equal('4');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.s.should.equal('i == 2');
+                        objects.x.should.equal('10');
+                        objects.y.should.equal('4');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('5.2 should terminate while(true) after max iterations', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('5.2 should terminate while(true) after max iterations', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer i = 0;
 while (true) { i = i + 1; }
-        `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    if (flavor === '.legacy') {
-                        objects.i.should.equal('5001');
+            `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
                     } else {
-                        objects.i.should.equal('500001');
+                        if (flavor === '.legacy') {
+                            objects.i.should.equal('5001');
+                        } else {
+                            objects.i.should.equal('500001');
+                        }
+                        done();
                     }
-                    done();
-                }
+                });
             });
-        });
-
-        it('5.3 should do foreach', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('5.3 should do foreach', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string liste = "a\\tb\\tc"; ! Liste { "a", "b", "c" }
 string ausgabe = ""; ! Ausgabe
 string index; ! Indexvariable 
@@ -291,36 +290,36 @@ foreach (index, liste)
     ausgabe = index # ausgabe;
 }
 ! ausgabe = "cba";
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.ausgabe.should.equal('cba');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.ausgabe.should.equal('cba');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('5.4 should quit a script', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('5.4 should quit a script', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer even = 3;
 if (even & 1) { quit; } ! "even" ist nicht gerade -> Abbruch
 boolean didNotQuit = true;
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.even.should.equal('3');
-                    objects.didNotQuit.should.not.equal('true');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.even.should.equal('3');
+                        objects.didNotQuit.should.not.equal('true');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.1.1 should determine standard VarType()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.1.1 should determine standard VarType()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 boolean b;
 integer bType = b.VarType(); ! 1;
 
@@ -336,26 +335,26 @@ integer sType = s.VarType(); ! 4;
 time t;
 integer tType = t.VarType(); ! 5
 
-        `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.bType.should.equal('1');
-                    objects.iType.should.equal('2');
-                    objects.rType.should.equal('3');
-                    objects.sType.should.equal('4');
-                    objects.tType.should.equal('5');
-                    done();
-                }
+            `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.bType.should.equal('1');
+                        objects.iType.should.equal('2');
+                        objects.rType.should.equal('3');
+                        objects.sType.should.equal('4');
+                        objects.tType.should.equal('5');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.1.1 should determine additional VarType() (community)', function (done) {
-            if (flavor !== '.community') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.1.1 should determine additional VarType() (community)', function (done) {
+                if (flavor !== '.community') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 var v;
 integer vType = v.VarType(); ! 0;                
                 
@@ -365,134 +364,134 @@ integer oType = o.VarType(); ! 9
 idarray d;
 integer dType = d.VarType(); ! 10
 
-        `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.vType.should.equal('0');
-                    objects.oType.should.equal('9');
-                    objects.dType.should.equal('10');
-                    done();
-                }
+            `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.vType.should.equal('0');
+                        objects.oType.should.equal('9');
+                        objects.dType.should.equal('10');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.1.2 should do ToString()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.1.2 should do ToString()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var i = 1.23456;
 var s = i.ToString(3); ! s = "1.235"; s ist eine Zeichenkette
 var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.i.should.equal('1.234560');
-                    objects.s.should.equal('1.235');
-                    if (flavor === '.legacy') {
-                        objects.r.should.equal('1.235');
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
                     } else {
-                        objects.r.should.equal('1.2');
+                        objects.i.should.equal('1.234560');
+                        objects.s.should.equal('1.235');
+                        if (flavor === '.legacy') {
+                            objects.r.should.equal('1.235');
+                        } else {
+                            objects.r.should.equal('1.2');
+                        }
+                        done();
                     }
-                    done();
-                }
+                });
             });
-        });
-
-        it('6.1.2.1 should do ToString() on time', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.1.2.1 should do ToString() on time', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 time t = @2008-12-24 18:30:00@;
 string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.sDate.should.equal('24.12.2008');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.sDate.should.equal('24.12.2008');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.1.3 should do ToInteger()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.1.3 should do ToInteger()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var s = "100";
 var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.s.should.equal('100');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.s.should.equal('100');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.1.4 should do ToTime()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.1.4 should do ToTime()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 var i = 1;
 var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.t.should.equal('1970-01-01 01:00:01');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.t.should.equal('1970-01-01 01:00:01');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.2 should handle boolean values', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.2 should handle boolean values', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 boolean bTRUE = true;
 boolean bFALSE = false;
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.bTRUE.should.equal('true');
-                    objects.bFALSE.should.equal('false');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.bTRUE.should.equal('true');
+                        objects.bFALSE.should.equal('false');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.3 should handle negative integers', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.3 should handle negative integers', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 integer i = -123;
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.i.should.equal('-123');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i.should.equal('-123');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.4 should handle real values', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.4 should handle real values', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 real r = 1.0;
 real s = "-1.0E-1".ToFloat(); ! -0.1
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.r.should.equal('1.000000');
-                    objects.s.should.equal('-0.100000');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.r.should.equal('1.000000');
+                        objects.s.should.equal('-0.100000');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.5.1 should do Year(), Month(), Day(), ...', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.5.1 should do Year(), Month(), Day(), ...', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 time t = @2008-12-24 18:30:00@;
 integer year = t.Year(); ! year = 2008
 integer month = t.Month(); ! month = 12
@@ -505,32 +504,32 @@ integer weekday = t.Weekday(); ! weekday = 4
 integer yearday = t.Yearday(); ! yearday = 359
 integer isLocalTime = t.IsLocalTime(); ! isLocalTime = 1
 integer isDST = t.IsDST(); ! isDST = 0
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.should.containEql({
-                        t: '2008-12-24 18:30:00',
-                        year: '2008',
-                        month: '12',
-                        day: '24',
-                        hour: '18',
-                        minute: '30',
-                        second: '0',
-                        week: '51',
-                        weekday: '4',
-                        yearday: '359',
-                        isLocalTime: '1',
-                        isDST: '0'
-                    });
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.should.containEql({
+                            t: '2008-12-24 18:30:00',
+                            year: '2008',
+                            month: '12',
+                            day: '24',
+                            hour: '18',
+                            minute: '30',
+                            second: '0',
+                            week: '51',
+                            weekday: '4',
+                            yearday: '359',
+                            isLocalTime: '1',
+                            isDST: '0'
+                        });
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.5.2 should do date/time Format()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.5.2 should do date/time Format()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 time t = @2008-12-24 18:30:00@;
 string perc = t.Format("%%");   ! perc = "%"
 string lowerA = t.Format("%a"); ! lowerA = "Wed"
@@ -567,179 +566,179 @@ string lowerZ = t.Format("%z"); ! lowerZ = "+0100"
 string upperZ = t.Format("%Z"); ! upperZ = "CET"
 string sDate = t.Format("%d.%m.%Y"); ! sDate = "24.12.2008"
 string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.should.containEql({
-                        perc: '%',
-                        lowerA: 'Wed',
-                        upperA: 'Wednesday',
-                        lowerB: 'Dec',
-                        upperB: 'December',
-                        lowerC: 'Wed Dec 24 18:30:00 2008',
-                        upperC: '20',
-                        lowerD: '24',
-                        upperD: '12/24/08',
-                        upperF: '2008-12-24',
-                        lowerH: 'Dec',
-                        upperH: '18',
-                        upperI: '06',
-                        lowerJ: '359',
-                        lowerM: '12',
-                        upperM: '30',
-                        lowerN: '\n',
-                        lowerP: 'PM',
-                        lowerR: '06:30:00 PM',
-                        upperS: '00',
-                        lowerT: '\t',
-                        upperT: '18:30:00',
-                        lowerU: '3',
-                        upperU: '51',
-                        upperV: '52',
-                        lowerW: '3',
-                        upperW: '51',
-                        lowerX: '12/24/08',
-                        upperX: '18:30:00',
-                        lowerY: '08',
-                        upperY: '2008',
-                        lowerZ: '+0100',
-                        upperZ: 'CET',
-                        sDate: '24.12.2008',
-                        sTime: '18:30:00'
-                    });
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.should.containEql({
+                            perc: '%',
+                            lowerA: 'Wed',
+                            upperA: 'Wednesday',
+                            lowerB: 'Dec',
+                            upperB: 'December',
+                            lowerC: 'Wed Dec 24 18:30:00 2008',
+                            upperC: '20',
+                            lowerD: '24',
+                            upperD: '12/24/08',
+                            upperF: '2008-12-24',
+                            lowerH: 'Dec',
+                            upperH: '18',
+                            upperI: '06',
+                            lowerJ: '359',
+                            lowerM: '12',
+                            upperM: '30',
+                            lowerN: '\n',
+                            lowerP: 'PM',
+                            lowerR: '06:30:00 PM',
+                            upperS: '00',
+                            lowerT: '\t',
+                            upperT: '18:30:00',
+                            lowerU: '3',
+                            upperU: '51',
+                            upperV: '52',
+                            lowerW: '3',
+                            upperW: '51',
+                            lowerX: '12/24/08',
+                            upperX: '18:30:00',
+                            lowerY: '08',
+                            upperY: '2008',
+                            lowerZ: '+0100',
+                            upperZ: 'CET',
+                            sDate: '24.12.2008',
+                            sTime: '18:30:00'
+                        });
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6 should output Hello World', function (done) {
-            this.timeout(30000);
-            rega.exec('string x = "Hello";\nWriteLine(x # " World!");', function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal('Hello World!\r\n');
-                    done();
-                }
+    
+            it('6.6 should output Hello World', function (done) {
+                this.timeout(30000);
+                rega.exec('string x = "Hello";\nWriteLine(x # " World!");', function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('Hello World!\r\n');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.1 should correctly deal with escape chars', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.1 should correctly deal with escape chars', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string a = "xxx\\\\xxx";
 string b = "xxx\\\"xxx";
 string c = "xxx\\\'xxx";
 string d = "xxx\\txxx";
 string e = "xxx\\nxxx";
 string f = "xxx\\rxxx";
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.a.should.equal('xxx\\\\xxx'); // FIXME: should only be 'xxx\\xxx' ReGa Bug?
-                    objects.b.should.equal('xxx"xxx');
-                    objects.c.should.equal('xxx\'xxx');
-                    objects.d.should.equal('xxx\txxx');
-                    objects.e.should.equal('xxx\nxxx');
-                    objects.f.should.equal('xxx\rxxx');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('xxx\\\\xxx'); // FIXME: should only be 'xxx\\xxx' ReGa Bug?
+                        objects.b.should.equal('xxx"xxx');
+                        objects.c.should.equal('xxx\'xxx');
+                        objects.d.should.equal('xxx\txxx');
+                        objects.e.should.equal('xxx\nxxx');
+                        objects.f.should.equal('xxx\rxxx');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.2 should do ToFloat()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.2 should do ToFloat()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string s = "1.01";
 real r1 = s.ToFloat(); ! r1 = 1.01;
 real r2 = "0.1".ToFloat(); ! r2 = 0.1;
 real r3 = "1E-1".ToFloat(); ! r3 = 0.1       
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.r1.should.equal('1.010000');
-                    objects.r2.should.equal('0.100000');
-                    objects.r3.should.equal('0.100000');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.r1.should.equal('1.010000');
+                        objects.r2.should.equal('0.100000');
+                        objects.r3.should.equal('0.100000');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.3 should do Length()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.3 should do Length()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string s = "Hallo\\tWelt!";
 integer length = s.Length(); ! length = 11
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.length.should.equal('11');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.length.should.equal('11');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.4 should do Substr()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.4 should do Substr()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string s = "Hallo Welt!";
 string world = s.Substr(6, 4); ! world = "Welt"
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.world.should.equal('Welt');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.world.should.equal('Welt');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.5 should Find() string positions', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.5 should Find() string positions', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string s = "Hallo Welt";
 integer World = s.Find("Welt"); ! World = 6
 integer world = s.Find("welt"); ! world = -1
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.World.should.equal('6');
-                    objects.world.should.equal('-1');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.World.should.equal('6');
+                        objects.world.should.equal('-1');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string s = "Hallo Welt";
 boolean bWorld = s.Contains("Welt"); ! bWorld = true
 boolean bStart = s.StartsWith("Hallo"); !bStart = true
 boolean bEnd = s.EndsWith("Welt"); !bEnd = true
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.bWorld.should.equal('true');
-                    objects.bStart.should.equal('true');
-                    objects.bEnd.should.equal('true');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.bWorld.should.equal('true');
+                        objects.bStart.should.equal('true');
+                        objects.bEnd.should.equal('true');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.6 should do Split() and sum up ToInteger()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.6 should do Split() and sum up ToInteger()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string summanden = "1,2,3";
 integer summe = 0;
 string summand;
@@ -747,139 +746,139 @@ foreach(summand, summanden.Split(","))
 {
     summe = summe + summand.ToInteger();
 }
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.summe.should.equal('6');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.summe.should.equal('6');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.7 should do StrValueByIndex(()', function (done) {
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.7 should do StrValueByIndex(()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
 string Rezept = "Butter,Eier,Mehl,Milch,Zucker";
 string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.ErsteZutat.should.equal('Butter');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.ErsteZutat.should.equal('Butter');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string str = " !\\\"#$%&'()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%27%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.kodiert.should.equal('%20%21%22%23%24%25%26%27%28%29');
-                    objects.dekodiert.should.equal(' !"#$%&\'()');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.kodiert.should.equal('%20%21%22%23%24%25%26%27%28%29');
+                        objects.dekodiert.should.equal(' !"#$%&\'()');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string str = "Übergrößenträger";
 string utf8 = str.ToUTF8(); ! utf8 = "ÃbergrÃ¶ÃentrÃ¤ger“
 string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.utf8.should.equal('ÃbergrÃ¶ÃentrÃ¤ger');
-                    objects.latin.should.equal('Übergrößenträger');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.utf8.should.equal('ÃbergrÃ¶ÃentrÃ¤ger');
+                        objects.latin.should.equal('Übergrößenträger');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string str = "AbCdEfGhI";
 string upper = str.ToUpper(); ! upper = "ABCDEFGHI“
 string lower = str.ToLower(); ! lower = "abcdefghi“
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.upper.should.equal('ABCDEFGHI');
-                    objects.lower.should.equal('abcdefghi');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.upper.should.equal('ABCDEFGHI');
+                        objects.lower.should.equal('abcdefghi');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string str = " \\tAnfang und Ende \\r\\n";
 string trim = str.Trim();               ! trim = "Anfang und Ende"
 string ltrim = str.LTrim();             ! ltrim = "Anfang und Ende \\r\\n"
 string rtrim = str.RTrim();             ! rtrim = " \\tAnfang und Ende"
 string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.trim.should.equal('Anfang und Ende');
-                    objects.ltrim.should.equal('Anfang und Ende \r\n');
-                    objects.rtrim.should.equal(' \tAnfang und Ende');
-                    objects.trimc.should.equal('und Ende \r');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.trim.should.equal('Anfang und Ende');
+                        objects.ltrim.should.equal('Anfang und Ende \r\n');
+                        objects.rtrim.should.equal(' \tAnfang und Ende');
+                        objects.trimc.should.equal('und Ende \r');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('6.6.12 should use Replace() (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('6.6.12 should use Replace() (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 string str = "John hates Jane";
 string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.replaced.should.equal('John loves Jane');
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.replaced.should.equal('John loves Jane');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('8.1 should use additional math functions (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('8.1 should use additional math functions (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 var a;
 a = -1.5;
 var b = a.Abs();      ! b = 1.5
@@ -920,54 +919,54 @@ var zc = a.Ceil();    ! zc = 1.0
 var zd = a.Floor();   ! zd = 0.0
 var ze = a.Trunc(1);  ! ze = 0.4
 var zf = a.Round(1);  ! zf = 0.5
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.should.containEql({
-                        b: '1.500000',
-                        c: '2.000000',
-                        d: '5.000000',
-                        e: '8.000000',
-                        f: '7.389056',
-                        g: '4.000000',
-                        h: '100.000000',
-                        i: '6.389056',
-                        j: '0.693147',
-                        k: '1.000000',
-                        l: '0.301030',
-                        m: '1.098612',
-                        n: '1.414214',
-                        o: '1.259921',
-                        p: '4.000000',
-                        q: '0.909297',
-                        r: '-0.416147',
-                        s: '-2.185040',
-                        t: '1.570796',
-                        u: '1.570796',
-                        v: '1.107149',
-                        w: '3.626860',
-                        x: '3.762196',
-                        y: '0.964028',
-                        z: '1.443635',
-                        za: '1.316958',
-                        zb: '0.549306',
-                        zc: '1.000000',
-                        zd: '0.000000',
-                        ze: '0.400000',
-                        zf: '0.500000'
-                    });
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.should.containEql({
+                            b: '1.500000',
+                            c: '2.000000',
+                            d: '5.000000',
+                            e: '8.000000',
+                            f: '7.389056',
+                            g: '4.000000',
+                            h: '100.000000',
+                            i: '6.389056',
+                            j: '0.693147',
+                            k: '1.000000',
+                            l: '0.301030',
+                            m: '1.098612',
+                            n: '1.414214',
+                            o: '1.259921',
+                            p: '4.000000',
+                            q: '0.909297',
+                            r: '-0.416147',
+                            s: '-2.185040',
+                            t: '1.570796',
+                            u: '1.570796',
+                            v: '1.107149',
+                            w: '3.626860',
+                            x: '3.762196',
+                            y: '0.964028',
+                            z: '1.443635',
+                            za: '1.316958',
+                            zb: '0.549306',
+                            zc: '1.000000',
+                            zd: '0.000000',
+                            ze: '0.400000',
+                            zf: '0.500000'
+                        });
+                        done();
+                    }
+                });
             });
-        });
-
-        it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 var one = 1.0;
 var two = 2.0;
 var ten = 10.0;
@@ -986,110 +985,100 @@ var m_sqrt2 = (two.Sqrt() == M_SQRT2);
 var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
 var r = 4.2; ! Kreisradius in cm
 var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.should.containEql({
-                        one: '1.000000',
-                        two: '2.000000',
-                        ten: '10.000000',
-                        m_e: 'true',
-                        m_log2e: 'true',
-                        m_log10e: 'true',
-                        m_ln2: 'true',
-                        m_ln10: 'true',
-                        m_pi: 'true',
-                        m_pi_2: 'true',
-                        m_pi_4: 'true',
-                        m_1_pi: 'true',
-                        m_2_pi: 'true',
-                        m_2_sqrtpi: 'true',
-                        m_sqrt2: 'true',
-                        m_sqrt1_2: 'true',
-                        A: '55.420000'
-                    });
-                    done();
-                }
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.should.containEql({
+                            one: '1.000000',
+                            two: '2.000000',
+                            ten: '10.000000',
+                            m_e: 'true',
+                            m_log2e: 'true',
+                            m_log10e: 'true',
+                            m_ln2: 'true',
+                            m_ln10: 'true',
+                            m_pi: 'true',
+                            m_pi_2: 'true',
+                            m_pi_4: 'true',
+                            m_1_pi: 'true',
+                            m_2_pi: 'true',
+                            m_2_sqrtpi: 'true',
+                            m_sqrt2: 'true',
+                            m_sqrt1_2: 'true',
+                            A: '55.420000'
+                        });
+                        done();
+                    }
+                });
             });
-        });
-
-        it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec('Write(M_PI);', function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal('3.141593');
-                    done();
+    
+            it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
                 }
+                this.timeout(30000);
+                rega.exec('Write(M_PI);', function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('3.141593');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    output.should.equal('3.141592653589793');
-                    done();
+    
+            it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
                 }
+                this.timeout(30000);
+                rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('3.141592653589793');
+                        done();
+                    }
+                });
             });
-        });
-
-        it('9.1 should have working random generator (standard/community)', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            rega.exec(`
+    
+            it('9.1 should have working random generator (standard/community)', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                rega.exec(`
 var dice = system.Random(1, 6);
 system.Srandom(12345);
 var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    parseFloat(objects.dice).should.be.within(1, 6);
-                    objects.nonrandom.should.equal('545');
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        parseFloat(objects.dice).should.be.within(1, 6);
+                        objects.nonrandom.should.equal('545');
+                        done();
+                    }
+                });
+            });
+        });
+
+        describe('stopping ReGaHss' + flavor, function () {
+            it('should stop', function (done) {
+                this.timeout(60000);
+                procs.rega.on('close', function () {
+                    procs.rega = null;
                     done();
-                }
+                });
+                cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
             });
         });
-    });
 
-    describe('stop ReGaHss' + flavor + ' process', function () {
-        it('should wait 5 seconds', function (done) {
-            this.timeout(6000);
-            setTimeout(done, 5000);
-        });
-
-        it('should stop', function (done) {
-            this.timeout(60000);
-            procs.rega.on('close', function () {
-                procs.rega = null;
-                done();
+        describe('stop simulator', function () {
+            it('should stop', function () {
+                procs.sim.kill();
             });
-            cp.spawnSync('killall', ['-s', 'SIGINT', 'ReGaHss' + flavor]);
-        });
-        /*
-        It('should wait 2 seconds', function (done) {
-            this.timeout(3000);
-            setTimeout(done, 2000);
-        });
-        */
-    });
-
-    describe('stop simulator', function () {
-        it('should stop', function () {
-            procs.sim.kill();
         });
     });
 });
