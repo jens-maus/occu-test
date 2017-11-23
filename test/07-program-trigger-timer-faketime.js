@@ -5,15 +5,15 @@ const {
     cp,
     rega,
     subscribe,
-    startRega,
-    startSim,
     procs,
     simSubscriptions,
     simBuffer,
     regaSubscriptions,
     regaBuffer,
     flavors,
-    indent
+    indent,
+    initTest,
+    cleanupTest
 } = require('../lib/helper.js');
 
 require('should');
@@ -21,88 +21,34 @@ require('should');
 flavors.forEach(function (flavor) {
     function test(time, program, id, repetition = 1, waittime = 20000) {
         describe('Testing for ' + repetition + ' executions of ' + program + ' (' + id + ') @ ' + time, function () {
-            describe('starting ReGaHss' + flavor, function () {
-                it('should fake datetime', function (done) {
-                    this.slow(5 * 365 * 24 * 60 * 60 * 1000);
-                    this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                    cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
-                        if (e) {
-                            done(e);
-                        } else {
-                            if (!stdout || stdout.replace('\n', '').length === 0) {
-                                done(new Error('invalid faketime: "' + time + '"'));
-                            } else {
-                                done();
-                            }
-                            console.log(indent(stdout.replace('\n', ''), 10));
-                        }
-                    });
-                });
+            // initialize test environment
+            initTest(flavor, sim = false, time);
 
-                it('should start', function () {
-                    startRega(flavor);
-                });
-
-                it('wait for HTTP server to be ready', function (done) {
-                    this.slow(10000);
-                    this.timeout(60000);
-                    subscribe('rega', /HTTP server started successfully/, function () {
-                        if (flavor === '.legacy') {
-                            setTimeout(done, 10000);
-                        } else {
-                            done();
-                        }
-                    });
-                });
-
-                it('should output DST offset', function (done) {
-                    this.slow(10000);
-                    this.timeout(30000);
-                    subscribe('rega', /DST offset =/, function (output) {
-                        done();
-                        console.log(indent(output, 10));
-                    });
-                });
-
-                it('should output reference time', function (done) {
-                    this.slow(10000);
-                    this.timeout(30000);
-                    subscribe('rega', /GetNextTimer called for reference time/, function (output) {
-                        done();
-                        console.log(indent(output, 10));
-                    });
-                });
-            });
-
-            describe('perform timer test', function () {
+            // perform the timer test
+            describe('runnig timer test...', function () {
                 for (let i = 0; i < repetition; i++) {
                     it('[' + (i + 1) + '/' + repetition + '] should call Program ID = ' + id + ' (program ' + program + ')', function (done) {
+                        if (!procs.rega) {
+                            return this.skip();
+                        }
                         this.slow(waittime);
                         this.timeout(waittime);
                         subscribe('rega', new RegExp('execute Program ID = ' + id), function (output) {
                             cp.exec('/bin/date', function (e, stdout) {
                                 done();
-                                console.log(indent(stdout.replace('\n', ''), 10), output);
+                                console.log(indent(stdout.replace('\n', ''), 8), output);
                             });
                         });
                     });
                 }
             });
 
-            describe('stopping ReGaHss' + flavor, function () {
-                it('should stop', function (done) {
-                    this.timeout(60000);
-                    procs.rega.on('close', function () {
-                        procs.rega = null;
-                        done();
-                    });
-                    cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
-                });
-            });
-        });
+            // cleanup test environment
+            cleanupTest(flavor);
+       });
     }
 
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // Perform normal timer test for single execution
         test('2020-01-01 00:59:48 CET', 'Time0100', '1314');
 

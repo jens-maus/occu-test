@@ -5,46 +5,26 @@ const {
     cp,
     rega,
     subscribe,
-    startRega,
-    startSim,
     procs,
     simSubscriptions,
     simBuffer,
     regaSubscriptions,
     regaBuffer,
     flavors,
-    indent
+    indent,
+    initTest,
+    cleanupTest
 } = require('../lib/helper.js');
 
 require('should');
 
 flavors.forEach(function (flavor) {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
-        describe('rfd/hmipserver Simulator', function () {
-            it('should start', function () {
-                startSim();
-            });
-        });
+    describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
+        // initialize test environment
+        initTest(flavor);
 
-        describe('starting ReGaHss' + flavor, function () {
-            it('should start', function () {
-                startRega(flavor);
-            });
-            it('wait for HTTP server to be ready', function (done) {
-                this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, function () {
-                    done();
-                });
-            });
-            it('should do init on simulated rfd', function (done) {
-                this.timeout(60000);
-                subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, function () {
-                    done();
-                });
-            });
-        });
-
-        describe('test examples from HM_Script_Teil_2_Objektmodell_V1.2.pdf', function () {
+        // run tests 
+        describe('running examples from HM_Script_Teil_2_Objektmodell...', function () {
             it('3.1.3 should return date and time', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -196,22 +176,8 @@ if (myObject.IsTypeOf(OT_VARDP))
                 });
             });
         });
-
-        describe('stopping ReGaHss' + flavor, function () {
-            it('should stop', function (done) {
-                this.timeout(60000);
-                procs.rega.on('close', function () {
-                    procs.rega = null;
-                    done();
-                });
-                cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
-            });
-        });
-
-        describe('stop simulator', function () {
-            it('should stop', function () {
-                procs.sim.kill();
-            });
-        });
+        
+        // cleanup test environment
+        cleanupTest(flavor);
     });
 });

@@ -5,44 +5,25 @@ const {
     cp,
     rega,
     subscribe,
-    startRega,
-    startSim,
     procs,
     simSubscriptions,
     simBuffer,
     regaSubscriptions,
     regaBuffer,
     flavors,
-    indent
+    indent,
+    initTest,
+    cleanupTest
 } = require('../lib/helper.js');
 
 require('should');
 
 flavors.forEach(function (flavor) {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
-        describe('rfd/hmipserver Simulator', function () {
-            it('should start', function () {
-                startSim();
-            });
-        });
+    describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
+        // initialize test environment
+        initTest(flavor);
 
-        describe('starting ReGaHss' + flavor, function () {
-            it('should start', function () {
-                startRega(flavor);
-            });
-            it('wait for HTTP server to be ready', function (done) {
-                this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, function () {
-                    done();
-                });
-            });
-            it('should wait 10 seconds', function (done) {
-                this.timeout(11000);
-                setTimeout(done, 10000);
-            });
-        });
-
-        describe('variable change triggers program', function () {
+        describe('running variable change triggers program test...', function () {
             it('should PRESS_LONG BidCoS-RF:12 when VarBool1 changes to true (program Bool1OnTrue)', function (done) {
                 this.timeout(7000);
                 subscribe('sim', /setValue rfd BidCoS-RF:12 PRESS_LONG true/, function () {
@@ -59,21 +40,7 @@ flavors.forEach(function (flavor) {
             });
         });
 
-        describe('stopping ReGaHss' + flavor, function () {
-            it('should stop', function (done) {
-                this.timeout(60000);
-                procs.rega.on('close', function () {
-                    procs.rega = null;
-                    done();
-                });
-                cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
-            });
-        });
-
-        describe('stop simulator', function () {
-            it('should stop', function () {
-                procs.sim.kill();
-            });
-        });
+        // cleanup test environment
+        cleanupTest(flavor);
     });
 });

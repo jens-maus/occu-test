@@ -5,23 +5,25 @@ const {
     cp,
     rega,
     subscribe,
-    startRega,
-    startSim,
     procs,
     simSubscriptions,
     simBuffer,
     regaSubscriptions,
     regaBuffer,
     flavors,
-    indent
+    indent,
+    initTest,
+    cleanupTest
 } = require('../lib/helper.js');
 
 require('should');
 
 flavors.forEach(function (flavor) {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
-        describe('test examples from HM_Script_Teil_3_Beispiele_V1.1', function () {
+    describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
+        // initialize test environment
+        initTest(flavor);
 
-        });
+        // cleanup test environment
+        cleanupTest(flavor);
     });
 });

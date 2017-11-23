@@ -5,69 +5,29 @@ const {
     cp,
     rega,
     subscribe,
-    startRega,
-    startSim,
     procs,
     simSubscriptions,
     simBuffer,
     regaSubscriptions,
     regaBuffer,
     flavors,
-    indent
+    indent,
+    initTest,
+    cleanupTest
 } = require('../lib/helper.js');
 
 require('should');
 
 flavors.forEach(function (flavor) {
-    describe('Running ' + __filename.split('/').reverse()[0] + ' test...', function () {
-        describe('starting ReGaHss' + flavor, function () {
-            it('should fake datetime', function (done) {
-                this.timeout(5 * 365 * 24 * 60 * 60 * 1000);
-                const time = '2017-12-01 12:00:00 CET';
-                cp.exec('sudo /bin/date -s "' + time + '" +"%Y-%m-%d %H:%M:%S %z (%Z) : %s"', function (e, stdout) {
-                    if (e) {
-                        done(e);
-                    } else if (!stdout || stdout.replace('\n', '').length === 0) {
-                        done(new Error('invalid faketime: "' + time + '"'));
-                    } else {
-                        done();
-                    }
-                    console.log(indent(stdout.replace('\n', ''), 8));
-                });
-            });
-            it('should start', function () {
-                startRega(flavor);
-            });
-            it('wait for HTTP server to be ready', function (done) {
-                this.timeout(60000);
-                subscribe('rega', /HTTP server started successfully/, function () {
-                    if (flavor === '.legacy') {
-                        setTimeout(done, 10000);
-                    } else {
-                        done();
-                    }
-                });
-            });
+    describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
+        // initialize test environment
+        initTest(flavor, sim = false, time = '2017-12-01 12:00:00 CET');
 
-            it('should output DST offset', function (done) {
-                this.timeout(30000);
-                subscribe('rega', /DST offset =/, function (output) {
-                    done();
-                    console.log(indent(output, 8));
-                });
-            });
-
-            it('should output reference time', function (done) {
-                this.timeout(30000);
-                subscribe('rega', /GetNextTimer called for reference time/, function (output) {
-                    done();
-                    console.log(indent(output, 8));
-                });
-            });
-        });
-
-        describe('testing examples from https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', function () {
+        describe('running examples from https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', function () {
             it('testing "tageszeit-in-abschnitte-unterteilen"', function (done) {
+                if (!procs.rega) {
+                    return this.skip();
+                }
                 this.timeout(30000);
                 rega.exec(`
 ! Tageszeiten
@@ -138,15 +98,7 @@ if (c_zeit < c_tagesbeginn - 2) {
             });
         });
 
-        describe('stopping ReGaHss' + flavor, function () {
-            it('should stop', function (done) {
-                this.timeout(60000);
-                procs.rega.on('close', function () {
-                    procs.rega = null;
-                    done();
-                });
-                cp.spawnSync('killall', ['-9', 'ReGaHss' + flavor]);
-            });
-        });
+        // cleanup test environment
+        cleanupTest(flavor);
     });
 });
