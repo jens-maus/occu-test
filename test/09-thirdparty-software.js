@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, no-template-curly-in-string, max-nested-callbacks, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, no-template-curly-in-string, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,
@@ -21,7 +21,7 @@ require('should');
 flavors.forEach(function (flavor) {
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // initialize test environment
-        initTest(flavor, sim = false);
+        initTest(flavor, false);
 
         describe('running examples from https://github.com/hobbyquaker/homematic-rega/tree/master/scripts', function () {
             it('should run variables.rega', function (done) {

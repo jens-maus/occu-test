@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback, max-nested-callbacks */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback, max-nested-callbacks, capitalized-comments */
 
 const {
     cp,
@@ -23,10 +23,10 @@ require('should');
 flavors.forEach(function (flavor) {
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // initialize test environment
-        initTest(flavor, sim = false, time = null, rpc = true);
+        initTest(flavor, false, null, true);
 
         describe('running rega rpc server error handling test...', function () {
-           it('should respond to unknown Method', function (done) {
+            it('should respond to unknown Method', function (done) {
                 if (!procs.rega) {
                     return this.skip();
                 }

@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, max-params */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, max-params, capitalized-comments */
 
 const {
     cp,
@@ -22,7 +22,7 @@ flavors.forEach(function (flavor) {
     function test(time, program, id, repetition = 1, waittime = 20000) {
         describe('Testing for ' + repetition + ' executions of ' + program + ' (' + id + ') @ ' + time, function () {
             // initialize test environment
-            initTest(flavor, sim = false, time);
+            initTest(flavor, false, time);
 
             // perform the timer test
             describe('runnig timer test...', function () {
@@ -45,7 +45,7 @@ flavors.forEach(function (flavor) {
 
             // cleanup test environment
             cleanupTest(flavor);
-       });
+        });
     }
 
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {

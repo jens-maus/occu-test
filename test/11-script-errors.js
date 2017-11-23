@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,
@@ -21,7 +21,7 @@ require('should');
 flavors.forEach(function (flavor) {
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // initialize test environment
-        initTest(flavor, sim = false);
+        initTest(flavor, false);
 
         describe('verify script error handling...', function () {
             it('should handle unknown methods', function (done) {
@@ -85,7 +85,7 @@ WriteLine(unknown.Name());
             });
 
             it('should handle invalid method use', function (done) {
-                if (flavor !== '.community' || !procs.rega ) {
+                if (flavor !== '.community' || !procs.rega) {
                     return this.skip();
                 }
                 this.timeout(60000);

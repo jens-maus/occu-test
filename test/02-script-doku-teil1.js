@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, no-useless-escape, camelcase, max-nested-callbacks, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, no-useless-escape, camelcase, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,
@@ -23,7 +23,7 @@ flavors.forEach(function (flavor) {
         // initialize test environment
         initTest(flavor);
 
-        // run tests 
+        // run tests
         describe('running examples from HM-Skript_Teil_1_Sprachbeschreibung...', function () {
             it('2.2 should handle comments', function (done) {
                 this.timeout(30000);

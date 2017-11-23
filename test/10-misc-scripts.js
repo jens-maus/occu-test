@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, camelcase, max-nested-callbacks, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, camelcase, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,
@@ -21,7 +21,7 @@ require('should');
 flavors.forEach(function (flavor) {
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // initialize test environment
-        initTest(flavor, sim = false, time = '2017-12-01 12:00:00 CET');
+        initTest(flavor, false, '2017-12-01 12:00:00 CET');
 
         describe('running examples from https://www.homematic-inside.de/tecbase/homematic/scriptlibrary', function () {
             it('testing "tageszeit-in-abschnitte-unterteilen"', function (done) {

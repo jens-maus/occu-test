@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,
@@ -23,7 +23,7 @@ flavors.forEach(function (flavor) {
         // initialize test environment
         initTest(flavor);
 
-        // run tests 
+        // run tests
         describe('running examples from HM_Script_Teil_2_Objektmodell...', function () {
             it('3.1.3 should return date and time', function (done) {
                 this.timeout(30000);
@@ -176,7 +176,7 @@ if (myObject.IsTypeOf(OT_VARDP))
                 });
             });
         });
-        
+
         // cleanup test environment
         cleanupTest(flavor);
     });

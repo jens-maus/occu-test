@@ -1,5 +1,5 @@
 /* global describe  */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,

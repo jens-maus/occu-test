@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback, max-nested-callbacks, capitalized-comments */
 
 const {
     cp,
@@ -23,7 +23,7 @@ flavors.forEach(function (flavor) {
         // initialize test environment
         initTest(flavor);
 
-        // run tests 
+        // run tests
         describe('running virtual key triggers program test...', function () {
             it('should PRESS_LONG BidCoS-RF:2 when PRESS_SHORT BidCoS-RF:1 (program Key1)', function (done) {
                 // BidCoS-RF:1 PRESS_SHORT is pressed by the simulator every 5 seconds

@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback, max-nested-callbacks */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, prefer-arrow-callback, max-nested-callbacks, capitalized-comments */
 
 const {
     cp,
@@ -24,101 +24,101 @@ flavors.forEach(function (flavor) {
         initTest(flavor);
 
         describe('running tests', function () {
-        // run tests
-        it('should start TimerSchedulerThread', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /TimerSchedulerThread started/, function () {
-                done();
-            });
-        });
-
-        it('should start IseRTPrgThread', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: IseRTPrgThread thread function started/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodListDevices', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodNewDevices', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodDeleteDevices', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodReportValueUsage', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodUpdateDevice', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodReplaceDevice', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, function () {
-                done();
-            });
-        });
-
-        it('should init XmlRpcMethodSetReadyConfig', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, function () {
-                done();
-            });
-        });
-
-        it('should load /etc/config/homematic.regadom', function (done) {
-            this.timeout(30000);
-            subscribe('rega', /successfully loaded "\/etc\/config\/homematic\.regadom"/, function () {
-                done();
-            });
-        });
-
-        it('should output build label', function (done) {
-            this.timeout(30000);
-            rega.exec(`
-string build = dom.BuildLabel();
-            `, function (err, output, objects) {
-                if (err) {
-                    done(err);
-                } else {
-                    objects.build.should.not.equal('undefined');
+            // run tests
+            it('should start TimerSchedulerThread', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /TimerSchedulerThread started/, function () {
                     done();
-                    console.log(indent(objects.build, 6));
-                }
+                });
             });
-        });
 
-        it('should execute /bin/hm_startup', function (done) {
-            if (flavor === '.legacy') {
-                return this.skip();
-            }
-            this.timeout(30000);
-            subscribe('rega', /Executing \/bin\/hm_startup/, function () {
-                done();
+            it('should start IseRTPrgThread', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: IseRTPrgThread thread function started/, function () {
+                    done();
+                });
             });
-        });
+
+            it('should init XmlRpcMethodListDevices', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodListDevices/, function () {
+                    done();
+                });
+            });
+
+            it('should init XmlRpcMethodNewDevices', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodNewDevices/, function () {
+                    done();
+                });
+            });
+
+            it('should init XmlRpcMethodDeleteDevices', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodDeleteDevices/, function () {
+                    done();
+                });
+            });
+
+            it('should init XmlRpcMethodReportValueUsage', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReportValueUsage/, function () {
+                    done();
+                });
+            });
+
+            it('should init XmlRpcMethodUpdateDevice', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodUpdateDevice/, function () {
+                    done();
+                });
+            });
+
+            it('should init XmlRpcMethodReplaceDevice', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodReplaceDevice/, function () {
+                    done();
+                });
+            });
+
+            it('should init XmlRpcMethodSetReadyConfig', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /Info: InitXmlRpcMethods: XmlRpcMethodSetReadyConfig/, function () {
+                    done();
+                });
+            });
+
+            it('should load /etc/config/homematic.regadom', function (done) {
+                this.timeout(30000);
+                subscribe('rega', /successfully loaded "\/etc\/config\/homematic\.regadom"/, function () {
+                    done();
+                });
+            });
+
+            it('should output build label', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string build = dom.BuildLabel();
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.build.should.not.equal('undefined');
+                        done();
+                        console.log(indent(objects.build, 6));
+                    }
+                });
+            });
+
+            it('should execute /bin/hm_startup', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
+                this.timeout(30000);
+                subscribe('rega', /Executing \/bin\/hm_startup/, function () {
+                    done();
+                });
+            });
         });
 
         // cleanup Test environment
