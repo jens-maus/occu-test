@@ -118,14 +118,17 @@ string build = dom.BuildLabel();
                     } else {
                         objects.build.should.not.equal('undefined');
                         done();
-                        console.log(indent(objects.build, 6));
+                        console.log(indent(objects.build, 8));
                     }
                 });
             });
 
             it('should execute /bin/hm_startup', function (done) {
+                if (flavor === '.legacy') {
+                    return this.skip();
+                }
                 this.timeout(30000);
-                subscribe('rega', /\/bin\/hm_startup executed/, function () {
+                subscribe('rega', /Executing \/bin\/hm_startup/, function () {
                     done();
                 });
             });

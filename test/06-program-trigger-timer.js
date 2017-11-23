@@ -36,9 +36,11 @@ flavors.forEach(function (flavor) {
                     done();
                 });
             });
-            it('should wait 10 seconds', function (done) {
-                this.timeout(11000);
-                setTimeout(done, 10000);
+            it('should do init on simulated rfd', function (done) {
+                this.timeout(60000);
+                subscribe('sim', /rpc rfd < init \["xmlrpc_bin:\/\/127\.0\.0\.1:1999","[0-9]+"]/, function () {
+                    done();
+                });
             });
         });
 

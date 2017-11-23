@@ -681,7 +681,7 @@ integer length = s.Length(); ! length = 11
                     }
                 });
             });
-    
+
             it('6.6.4 should do Substr()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -696,7 +696,7 @@ string world = s.Substr(6, 4); ! world = "Welt"
                     }
                 });
             });
-    
+
             it('6.6.5 should Find() string positions', function (done) {
                 this.timeout(30000);
                 rega.exec(`

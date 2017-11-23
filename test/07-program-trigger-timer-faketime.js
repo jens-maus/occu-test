@@ -106,6 +106,9 @@ flavors.forEach(function (flavor) {
         // Perform normal timer test for single execution
         test('2020-01-01 00:59:48 CET', 'Time0100', '1314');
 
+        // Perform long running timer test for normal datetime
+        test('2019-12-31 23:58:48 CET', 'TimeEveryMinute', '1302', 3, 65000);
+
         // Perform long running timer test at DST boundaries
         test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', '1302', 3, 65000);
         test('2020-03-29 01:58:40 CET', 'TimeEveryMinute', '1302', 3, 65000);
