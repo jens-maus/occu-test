@@ -59,7 +59,7 @@ string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
                     }
                 });
             });
-    
+
             it('3.2 should declare and initialize variables', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -74,7 +74,7 @@ integer j = 1; ! Deklaration mit Initialisierung
                     }
                 });
             });
-    
+
             it('3.3 should dynamically change type', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -88,7 +88,7 @@ integer i = "Hallo Welt!"; ! i ist eine Zeichenkette
                     }
                 });
             });
-    
+
             it('4.0 should handle operators correctly', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -140,7 +140,7 @@ integer u = i % 3; ! u=1
                     }
                 });
             });
-    
+
             it('4.1 should do right to left interpretation', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -158,7 +158,7 @@ integer k = (3 * 2) + 1; ! k = 1 + (3 * 2) = 7
                     }
                 });
             });
-    
+
             it('4.2.0 should cast to left operands type', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -176,7 +176,7 @@ var z = 1.0 + "1.0"; ! z == 2.0
                     }
                 });
             });
-    
+
             it('4.2.1 should cast to left operands type', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -192,7 +192,7 @@ var b = 2.5 * 3; ! b = 7.5; b ist eine Gleitkommazahl
                     }
                 });
             });
-    
+
             it('4.2.2 should cast to left operands type', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -206,7 +206,7 @@ var c = 0.0 + 3; ! c = 3.0; c ist eine Gleitkommazahl
                     }
                 });
             });
-    
+
             it('5.1 should do if else', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -223,7 +223,7 @@ else { s = "i != 1"; }
                     }
                 });
             });
-    
+
             it('5.1.1 should be able to handle elseif()', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -259,7 +259,7 @@ if (y==1) {
                     }
                 });
             });
-    
+
             it('5.2 should terminate while(true) after max iterations', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -278,7 +278,7 @@ while (true) { i = i + 1; }
                     }
                 });
             });
-    
+
             it('5.3 should do foreach', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -299,7 +299,7 @@ foreach (index, liste)
                     }
                 });
             });
-    
+
             it('5.4 should quit a script', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -316,7 +316,7 @@ boolean didNotQuit = true;
                     }
                 });
             });
-    
+
             it('6.1.1 should determine standard VarType()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -348,7 +348,7 @@ integer tType = t.VarType(); ! 5
                     }
                 });
             });
-    
+
             it('6.1.1 should determine additional VarType() (community)', function (done) {
                 if (flavor !== '.community') {
                     return this.skip();
@@ -375,7 +375,7 @@ integer dType = d.VarType(); ! 10
                     }
                 });
             });
-    
+
             it('6.1.2 should do ToString()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -397,7 +397,7 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
                     }
                 });
             });
-    
+
             it('6.1.2.1 should do ToString() on time', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -412,7 +412,7 @@ string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
                     }
                 });
             });
-    
+
             it('6.1.3 should do ToInteger()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -427,7 +427,7 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
                     }
                 });
             });
-    
+
             it('6.1.4 should do ToTime()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -442,7 +442,7 @@ var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
                     }
                 });
             });
-    
+
             it('6.2 should handle boolean values', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -458,7 +458,7 @@ boolean bFALSE = false;
                     }
                 });
             });
-    
+
             it('6.3 should handle negative integers', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -472,7 +472,7 @@ integer i = -123;
                     }
                 });
             });
-    
+
             it('6.4 should handle real values', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -488,7 +488,7 @@ real s = "-1.0E-1".ToFloat(); ! -0.1
                     }
                 });
             });
-    
+
             it('6.5.1 should do Year(), Month(), Day(), ...', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -526,7 +526,7 @@ integer isDST = t.IsDST(); ! isDST = 0
                     }
                 });
             });
-    
+
             it('6.5.2 should do date/time Format()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -611,7 +611,7 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
                     }
                 });
             });
-    
+
             it('6.6 should output Hello World', function (done) {
                 this.timeout(30000);
                 rega.exec('string x = "Hello";\nWriteLine(x # " World!");', function (err, output, objects) {
@@ -623,7 +623,7 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
                     }
                 });
             });
-    
+
             it('6.6.1 should correctly deal with escape chars', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -647,7 +647,7 @@ string f = "xxx\\rxxx";
                     }
                 });
             });
-    
+
             it('6.6.2 should do ToFloat()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -666,7 +666,7 @@ real r3 = "1E-1".ToFloat(); ! r3 = 0.1
                     }
                 });
             });
-    
+
             it('6.6.3 should do Length()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -713,7 +713,7 @@ integer world = s.Find("welt"); ! world = -1
                     }
                 });
             });
-    
+
             it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -735,7 +735,7 @@ boolean bEnd = s.EndsWith("Welt"); !bEnd = true
                     }
                 });
             });
-    
+
             it('6.6.6 should do Split() and sum up ToInteger()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -755,7 +755,7 @@ foreach(summand, summanden.Split(","))
                     }
                 });
             });
-    
+
             it('6.6.7 should do StrValueByIndex(()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -770,7 +770,7 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
                     }
                 });
             });
-    
+
             it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -790,7 +790,7 @@ string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
                     }
                 });
             });
-    
+
             it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -810,7 +810,7 @@ string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
                     }
                 });
             });
-    
+
             it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -830,7 +830,7 @@ string lower = str.ToLower(); ! lower = "abcdefghi“
                     }
                 });
             });
-    
+
             it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -854,7 +854,7 @@ string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
                     }
                 });
             });
-    
+
             it('6.6.12 should use Replace() (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -872,7 +872,7 @@ string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
                     }
                 });
             });
-    
+
             it('8.1 should use additional math functions (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -960,7 +960,7 @@ var zf = a.Round(1);  ! zf = 0.5
                     }
                 });
             });
-    
+
             it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -1012,7 +1012,7 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
                     }
                 });
             });
-    
+
             it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -1027,7 +1027,7 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
                     }
                 });
             });
-    
+
             it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();
@@ -1042,7 +1042,7 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
                     }
                 });
             });
-    
+
             it('9.1 should have working random generator (standard/community)', function (done) {
                 if (flavor === '.legacy') {
                     return this.skip();

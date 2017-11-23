@@ -60,7 +60,7 @@ string sTime = system.Date("%H:%M:%S"); ! sTime = "18:30:00";
                     }
                 });
             });
-    
+
             it('3.2.3 should return true on system.IsVar()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -103,7 +103,7 @@ if (system.IsVar("myVar"))
                     }
                 });
             });
-    
+
             it('4.2 (VarBool1) should do dom.GetObject()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -157,9 +157,9 @@ if (myObject)
                     }
                 });
             });
-    
+
             // TODO 4.5 .Type()
-    
+
             it('4.6 (VarBool1) should do .TypeName()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
@@ -177,7 +177,7 @@ if (myObject)
                     }
                 });
             });
-    
+
             it('4.7 (VarBool1) should do .IsTypeOf()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
