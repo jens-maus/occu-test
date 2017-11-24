@@ -21,7 +21,7 @@ require('should');
 flavors.forEach(function (flavor) {
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // initialize test environment
-        initTest(flavor);
+        initTest(flavor, false);
 
         describe('running bug fix tests...', function () {
             it('correct date/time output at DST boundaries', function (done) {
@@ -241,12 +241,14 @@ Write("10: ");WriteLine("1" + "2" + "3");
                 });
             });
 
-            it('adding fake objects to UserSharedObjects()', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
-                this.timeout(30000);
-                rega.exec(`
+            describe('UserSharedObjects() tests', function (done) {
+
+                it('should add fake objects', function (done) {
+                    if (flavor === '.legacy') {
+                        return this.skip();
+                    }
+                    this.timeout(30000);
+                    rega.exec(`
 object sysvar1 = dom.CreateObject(OT_VARDP, "Real-SysVarDP");
 object sysvar2 = dom.CreateObject(OT_ALARMDP, "Real-AlarmDP");
 object sysvar3 = dom.CreateObject(OT_DP, "Removed-DP");
@@ -262,27 +264,27 @@ user.UserSharedObjects().Add("33334");
 user.UserSharedObjects().Add("33335");
 user.UserSharedObjects().Add("33336");
 dom.DeleteObject(sysvar3);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
-                    } else {
-                        objects.should.containEql({
-                            sysvar1: 'Real-SysVarDP',
-                            sysvar2: 'Real-AlarmDP',
-                            sysvar3: 'null',
-                            user: 'Admin'
-                        });
-                        done();
-                    }
+                    `, function (err, output, objects) {
+                        if (err) {
+                            done(err);
+                        } else {
+                            objects.should.containEql({
+                                sysvar1: 'Real-SysVarDP',
+                                sysvar2: 'Real-AlarmDP',
+                                sysvar3: 'null',
+                                user: 'Admin'
+                            });
+                            done();
+                        }
+                    });
                 });
-            });
 
-            it('check that removed DP was removed from UserSharedObjects', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
-                this.timeout(30000);
-                rega.exec(`
+                it('should have removed DP cleared immediately', function (done) {
+                    if (flavor === '.legacy') {
+                        return this.skip();
+                    }
+                    this.timeout(30000);
+                    rega.exec(`
 object user = dom.GetObject('Admin');
 string objID;
 foreach(objID, user.UserSharedObjects())
@@ -294,13 +296,68 @@ foreach(objID, user.UserSharedObjects())
     WriteLine(objID);
   }
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
-                    } else {
-                        output.should.equal('33333\r\n33334\r\n33335\r\n33336\r\n');
-                        done();
-                    }
+                    `, function (err, output, objects) {
+                        if (err) {
+                            done(err);
+                        } else {
+                            output.should.equal('33333\r\n33334\r\n33335\r\n33336\r\n');
+                            done();
+                        }
+                    });
+                });
+
+                describe('should have invalid DP cleared upon ReGa start', function (done) {
+                    it('saving regadom', function (done) {
+                        if (flavor === '.legacy') {
+                            return this.skip();
+                        }
+                        this.timeout(30000);
+
+                        // save regadom as is.
+                        rega.exec('system.Save();', function (err, output, objects) {
+                            if (err) {
+                                done(err);
+                            } else {
+                                done();
+                            }
+                        });
+                    });
+
+                    // cleanup test environment (stop ReGaHss)
+                    cleanupTest(flavor);
+
+                    // init test environment (start ReGa)
+                    initTest(flavor, false, null, null, true);
+
+                    describe('running test', function (done) {
+                        it('should have cleared invalid DP', function (done) {
+                           if (flavor === '.legacy') {
+                               return this.skip();
+                           }
+                           this.timeout(30000);
+                           rega.exec(`
+object user = dom.GetObject('Admin');
+string objID;
+foreach(objID, user.UserSharedObjects())
+{
+  object obj = dom.GetObject(objID);
+  object sysVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get(objID);
+  if((!obj) || (!sysVarObj) || ((obj.Type() != OT_VARDP) && (obj.Type() != OT_ALARMDP)))
+  {
+    WriteLine(objID);
+  }
+}
+WriteLine("done");
+                            `, function (err, output, objects) {
+                                if (err) {
+                                    done(err);
+                                } else {
+                                    output.should.equal('done\r\n');
+                                    done();
+                                }
+                            });
+                        });
+                    });
                 });
             });
         });
