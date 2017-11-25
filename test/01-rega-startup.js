@@ -105,7 +105,7 @@ string build = dom.BuildLabel();
                     } else {
                         objects.build.should.not.equal('undefined');
                         done();
-                        console.log(indent(objects.build, 6));
+                        console.log(indent(objects.build, 8));
                     }
                 });
             });
@@ -117,6 +117,35 @@ string build = dom.BuildLabel();
                 this.timeout(30000);
                 subscribe('rega', /Executing \/bin\/hm_startup/, function () {
                     done();
+                });
+            });
+
+            it('should check max objects boundary', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+integer i = 65500;
+integer j = 0;
+object lastsysvar = null;
+while(i >= 0)
+{
+  object sysvar = dom.CreateObject(OT_VARDP, i, i);
+  if(!sysvar) {
+    i = -1;
+  } else {
+    lastsysvar = sysvar;
+    i = i + 1;
+    j = j + 1;
+  }
+}
+Write(lastsysvar.Name());
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('65535');
+                        done();
+                        console.log(indent(output, 8));
+                    }
                 });
             });
         });
