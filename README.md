@@ -1,13 +1,33 @@
 # OCCU Test
-
 [![Build Status](https://travis-ci.org/hobbyquaker/occu-test.svg?branch=master)](https://travis-ci.org/hobbyquaker/occu-test)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![License][mit-badge]][mit-url]
 
-> Automated System Tests of ReGaHss - the HomeMatic (O)CCU "Logic Layer"
+Automated System Tests of ReGaHss - the HomeMatic (O)CCU "Logic Layer"
 
-**... work in progress**
+## HOWTO run the tests locally
+```bash
+# Start the travis container
+docker run --name travis -dit quay.io/travisci/travis-ruby /sbin/init
 
+# Get a shell
+docker start travis
+docker exec -it travis bash -l
+
+# Install Node.js
+nvm install 6
+
+# Clone the repo
+cd /home/travis
+git clone https://github.com/hobbyquaker/occu-test
+
+# Install dependencies
+cd occu-test
+npm install
+
+# Run the tests
+npm test
+```
 
 ## homematic.regadom
 
