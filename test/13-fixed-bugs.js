@@ -331,11 +331,11 @@ foreach(objID, user.UserSharedObjects())
 
                     describe('running test', function (done) {
                         it('should have cleared invalid DP', function (done) {
-                           if (flavor === '.legacy') {
-                               return this.skip();
-                           }
-                           this.timeout(30000);
-                           rega.exec(`
+                            if (flavor === '.legacy') {
+                                return this.skip();
+                            }
+                            this.timeout(30000);
+                            rega.exec(`
 object user = dom.GetObject('Admin');
 string objID;
 foreach(objID, user.UserSharedObjects())
