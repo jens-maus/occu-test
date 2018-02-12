@@ -252,7 +252,7 @@ while (true) { i = i + 1; }
                         if (flavor === '.legacy') {
                             objects.i.should.equal('5001');
                         } else {
-                            objects.i.should.equal('500001');
+                            objects.i.should.equal('500000');
                         }
                         done();
                     }
