@@ -23,7 +23,9 @@ install:
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
   - sudo cp -v homematic.regadom /etc/config/
   - sudo chmod -R a+rw /etc/config
+  - ls /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/
   - sudo sh -c 'echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf'
+  - cat /etc/ld.so.conf.d/hm.conf
   - sudo ldconfig
   - npm install
 
