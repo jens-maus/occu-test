@@ -25,7 +25,6 @@ install:
   - sudo chmod -R a+rw /etc/config
   - ls /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/
   - sudo sh -c 'echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf'
-  - sudo mkdir /lib
   - sudo ln -s /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/libXmlRpc.so /lib/
   - cat /etc/ld.so.conf.d/hm.conf
   - sudo ldconfig
