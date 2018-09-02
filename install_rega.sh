@@ -21,7 +21,6 @@ echo "current time/date: $(date)"
 #cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
 #cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
 #cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
-#mv -v /bin/ReGaHss /bin/ReGaHss.legacy
 #cp -v homematic.regadom /etc/config/
 
 #echo "installing i386 libs"

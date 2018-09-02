@@ -79,7 +79,6 @@ The Rega is started with a prebuilt homematic.regadom:
 
 #### done. :-)
 
-* ~~run tests on all 3 flavors of ReGaHss (legacy, standard, community)~~
 * ~~documentation on how to run the tests in a local docker container~~
 * ~~test time based triggers (edge cases: DST, leap year)~~
 * ~~create a regadom with several test variables and programs~~ 

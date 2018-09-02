@@ -65,15 +65,9 @@ WriteLine(bla");
                 }
                 this.timeout(60000);
 
-                if (flavor === '.legacy') {
-                    subscribe('rega', /Error: IseESP::ExecError= Execution failed:/, function () {
-                        done();
-                    });
-                } else {
-                    subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, function () {
-                        done();
-                    });
-                }
+                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, function () {
+                    done();
+                });
                 rega.exec(`
 var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());

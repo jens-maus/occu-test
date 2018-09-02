@@ -205,9 +205,6 @@ else { s = "i != 1"; }
             });
 
             it('5.1.1 should be able to handle elseif()', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 integer i = 2;
@@ -249,11 +246,7 @@ while (true) { i = i + 1; }
                     if (err) {
                         done(err);
                     } else {
-                        if (flavor === '.legacy') {
-                            objects.i.should.equal('5001');
-                        } else {
-                            objects.i.should.equal('500000');
-                        }
+                        objects.i.should.equal('500000');
                         done();
                     }
                 });
@@ -368,11 +361,7 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
                     } else {
                         objects.i.should.equal('1.234560');
                         objects.s.should.equal('1.235');
-                        if (flavor === '.legacy') {
-                            objects.r.should.equal('1.235');
-                        } else {
-                            objects.r.should.equal('1.2');
-                        }
+                        objects.r.should.equal('1.2');
                         done();
                     }
                 });
@@ -695,9 +684,6 @@ integer world = s.Find("welt"); ! world = -1
             });
 
             it('6.6.5.1 should test Contains(), StartsWith(), EndsWith()', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string s = "Hallo Welt";
@@ -752,9 +738,6 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
             });
 
             it('6.6.8 should use UriEncode()/UriDecode() (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string str = " !\\\"#$%&'()";
@@ -772,9 +755,6 @@ string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
             });
 
             it('6.6.9 should use ToUTF8()/ToLatin() (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string str = "Übergrößenträger";
@@ -792,9 +772,6 @@ string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
             });
 
             it('6.6.10 should use ToUpper()/ToLower() (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string str = "AbCdEfGhI";
@@ -812,9 +789,6 @@ string lower = str.ToLower(); ! lower = "abcdefghi“
             });
 
             it('6.6.11 should use Trim()/LTrim()/RTrim() (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string str = " \\tAnfang und Ende \\r\\n";
@@ -836,9 +810,6 @@ string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
             });
 
             it('6.6.12 should use Replace() (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string str = "John hates Jane";
@@ -854,9 +825,6 @@ string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
             });
 
             it('8.1 should use additional math functions (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 var a;
@@ -942,9 +910,6 @@ var zf = a.Round(1);  ! zf = 0.5
             });
 
             it('8.2 should have math constants like M_E, M_PI, etc. (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 var one = 1.0;
@@ -994,9 +959,6 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
             });
 
             it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec('Write(M_PI);', function (err, output, objects) {
                     if (err) {
@@ -1009,9 +971,6 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
             });
 
             it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', function (err, output, objects) {
                     if (err) {
@@ -1024,9 +983,6 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
             });
 
             it('9.1 should have working random generator (standard/community)', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 var dice = system.Random(1, 6);

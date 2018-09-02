@@ -25,9 +25,6 @@ flavors.forEach(function (flavor) {
 
         describe('running bug fix tests...', function () {
             it('correct date/time output at DST boundaries', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 var t0=@2016-10-30 01:59:57@;
@@ -80,12 +77,9 @@ while (j<3)
             });
 
             it('empty line comment', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
-! Die nächste Zeile ist ein leerer Kommentar (erzeugt Fehler in Legacy version)
+! Die nächste Zeile ist ein leerer Kommentar
 !
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
                `, function (err, output, objects) {
@@ -99,9 +93,6 @@ string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
             });
 
             it('can deal with unclosed <html tags', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string a = "Das ist ein <html & Test";
@@ -116,9 +107,6 @@ string a = "Das ist ein <html & Test";
             });
 
             it('should handle special chars in method call', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 string a = "Hallo\\tWelt";
@@ -135,9 +123,6 @@ integer b = a.Find("\\t");
             });
 
             it('should be able to handle more than 200 variables', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 let prg = '';
                 let res = '';
@@ -157,9 +142,6 @@ integer b = a.Find("\\t");
             });
 
             it('floating-point accuracy test', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 real lReal1 = 0.7;
@@ -190,9 +172,6 @@ boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
             });
 
             it('should allow object names starting with number', function (done) {
-                if (flavor === '.legacy') {
-                    return this.skip();
-                }
                 this.timeout(30000);
                 rega.exec(`
 object obj = dom.GetObject("2Light");
@@ -244,9 +223,6 @@ Write("10: ");WriteLine("1" + "2" + "3");
             describe('UserSharedObjects() tests', function (done) {
 
                 it('should add fake objects', function (done) {
-                    if (flavor === '.legacy') {
-                        return this.skip();
-                    }
                     this.timeout(30000);
                     rega.exec(`
 object sysvar1 = dom.CreateObject(OT_VARDP, "Real-SysVarDP");
@@ -280,9 +256,6 @@ dom.DeleteObject(sysvar3);
                 });
 
                 it('should have removed DP cleared immediately', function (done) {
-                    if (flavor === '.legacy') {
-                        return this.skip();
-                    }
                     this.timeout(30000);
                     rega.exec(`
 object user = dom.GetObject('Admin');
@@ -308,9 +281,6 @@ foreach(objID, user.UserSharedObjects())
 
                 describe('should have invalid DP cleared upon ReGa start', function (done) {
                     it('saving regadom', function (done) {
-                        if (flavor === '.legacy') {
-                            return this.skip();
-                        }
                         this.timeout(30000);
 
                         // save regadom as is.
@@ -331,9 +301,6 @@ foreach(objID, user.UserSharedObjects())
 
                     describe('running test', function (done) {
                         it('should have cleared invalid DP', function (done) {
-                            if (flavor === '.legacy') {
-                                return this.skip();
-                            }
                             this.timeout(30000);
                             rega.exec(`
 object user = dom.GetObject('Admin');
