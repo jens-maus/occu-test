@@ -397,6 +397,21 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
                 });
             });
 
+            it('6.1.3 should do ToInteger(float)', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+real s = 100.000;
+var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.s.should.equal('100');
+                        done();
+                    }
+                });
+            });
+
             it('6.1.4 should do ToTime()', function (done) {
                 this.timeout(30000);
                 rega.exec(`

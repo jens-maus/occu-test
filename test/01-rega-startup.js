@@ -117,21 +117,21 @@ string build = dom.BuildLabel();
                 });
             });
 
-            it('should check max objects boundary', function (done) {
+            it('should check max objects >65535', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 integer i = 65500;
-integer j = 0;
 object lastsysvar = null;
-while(i >= 0)
+while((i >= 0) && (i <= 128000))
 {
+  if(i == 65535) { i = i + 1; }
+
   object sysvar = dom.CreateObject(OT_VARDP, i, i);
   if(!sysvar) {
     i = -1;
   } else {
     lastsysvar = sysvar;
     i = i + 1;
-    j = j + 1;
   }
 }
 Write(lastsysvar.Name());
@@ -139,7 +139,7 @@ Write(lastsysvar.Name());
                     if (err) {
                         done(err);
                     } else {
-                        output.should.equal('65535');
+                        output.should.equal('128000');
                         done();
                         console.log(indent(output, 8));
                     }
