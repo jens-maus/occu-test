@@ -382,7 +382,7 @@ string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
                 });
             });
 
-            it('6.1.3 should do ToInteger()', function (done) {
+            it('6.1.3 should do string.ToInteger()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 var s = "100";
@@ -392,21 +392,23 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
                         done(err);
                     } else {
                         objects.s.should.equal('100');
+                        objects.i.should.equal('100');
                         done();
                     }
                 });
             });
 
-            it('6.1.3 should do ToInteger(float)', function (done) {
+            it('6.1.3 should do real.ToInteger()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-real s = 100.000;
-var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
+real r = 100.000;
+var i = r.ToInteger(); ! i = 100; i ist eine Ganzzahl
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.s.should.equal('100');
+                        objects.r.should.equal('100.000000');
+                        objects.i.should.equal('100');
                         done();
                     }
                 });

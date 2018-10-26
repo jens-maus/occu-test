@@ -117,15 +117,13 @@ string build = dom.BuildLabel();
                 });
             });
 
-            it('should check max objects >65535', function (done) {
+            it('should allow objects with ID >65535', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 integer i = 65500;
 object lastsysvar = null;
 while((i >= 0) && (i <= 128000))
 {
-  if(i == 65535) { i = i + 1; }
-
   object sysvar = dom.CreateObject(OT_VARDP, i, i);
   if(!sysvar) {
     i = -1;
