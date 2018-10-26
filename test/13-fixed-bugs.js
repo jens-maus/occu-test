@@ -221,7 +221,6 @@ Write("10: ");WriteLine("1" + "2" + "3");
             });
 
             describe('UserSharedObjects() tests', function (done) {
-
                 it('should add fake objects', function (done) {
                     this.timeout(30000);
                     rega.exec(`
