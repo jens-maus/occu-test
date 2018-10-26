@@ -121,8 +121,9 @@ string build = dom.BuildLabel();
                 this.timeout(30000);
                 rega.exec(`
 integer i = 65500;
+integer j = 0;
 object lastsysvar = null;
-while((i >= 0) && (i <= 128000))
+while((i >= 0) && (i <= 200000))
 {
   object sysvar = dom.CreateObject(OT_VARDP, i, i);
   if(!sysvar) {
@@ -130,14 +131,16 @@ while((i >= 0) && (i <= 128000))
   } else {
     lastsysvar = sysvar;
     i = i + 1;
+    j = j + 1;
   }
 }
-Write(lastsysvar.Name());
+WriteLine(lastsysvar.Name());
+WriteLine(j);
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        output.should.equal('128000');
+                        output.should.equal('200000\r\n134501\r\n');
                         done();
                         console.log(indent(output, 8));
                     }
