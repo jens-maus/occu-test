@@ -56,8 +56,8 @@ flavors.forEach(function (flavor) {
         test('2019-12-31 23:58:48 CET', 'TimeEveryMinute', '1302', 3, 65000);
 
         // Perform long running regular timer test at DST boundaries
-        test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', '1302', 5, 300000);
-        test('2020-03-29 01:58:40 CET', 'TimeEveryMinute', '1302', 5, 300000);
+        test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', '1302', 5, 70000);
+        test('2020-03-29 01:58:40 CET', 'TimeEveryMinute', '1302', 5, 70000);
 
         // Leap year, Feb, 29. 2020
         test('2020-02-29 01:59:48 CET', 'Time0200', '1470');
