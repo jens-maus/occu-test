@@ -237,6 +237,30 @@ if (y==1) {
                 });
             });
 
+            it('5.1.1 should be able to handle elseif() in while()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+integer i = 0;
+while (i <= 5) {
+  if     (i == 0) { WriteLine("i=0"); }
+  elseif (i == 1) { WriteLine("i=1"); }
+  elseif (i == 2) { WriteLine("i=2"); }
+  elseif (i == 3) { WriteLine("i=3"); }
+  else            { WriteLine("i=x"); }
+  i = i + 1;
+}
+WriteLine("end");
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i.should.equal('6');
+                        output.should.equal('i=0\r\ni=1\r\ni=2\r\ni=3\r\ni=x\r\ni=x\r\nend\r\n');
+                        done();
+                    }
+                });
+            });
+
             it('5.2 should terminate while(true) after max iterations', function (done) {
                 this.timeout(30000);
                 rega.exec(`
