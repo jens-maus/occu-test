@@ -117,32 +117,47 @@ string build = dom.BuildLabel();
                 });
             });
 
-            it('should allow objects with ID >65535', function (done) {
+            it('should allow to create >65535 objects', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-integer i = 65500;
-integer j = 0;
+integer i = 0;
 object lastsysvar = null;
-while((i >= 0) && (i <= 200000))
+system.MaxIterations(1000000);
+while((i >= 0) && (i < 600000))
 {
-  object sysvar = dom.CreateObject(OT_VARDP, i, i);
+  object sysvar = dom.CreateObject(OT_VARDP, "XvarX" # i);
   if(!sysvar) {
     i = -1;
   } else {
     lastsysvar = sysvar;
     i = i + 1;
-    j = j + 1;
   }
 }
+WriteLine(i);
 WriteLine(lastsysvar.Name());
+if(i != -1)
+{
+  i = 0;
+  integer j = 0;
+  while((j < 600000))
+  {
+    object sysvar = dom.GetObject(i);
+    if(sysvar) {
+      if(sysvar.Name().StartsWith("XvarX")) {
+        j = j + 1;
+      }
+    }
+    i = i + 1;
+  }
+}
 WriteLine(j);
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        output.should.equal('200000\r\n134501\r\n');
+                        output.should.equal('600000\r\nXvarX599999\r\n600000\r\n');
                         done();
-                        console.log(indent(output, 8));
+                        console.log(indent(objects.j, 8));
                     }
                 });
             });

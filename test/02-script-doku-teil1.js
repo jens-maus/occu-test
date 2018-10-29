@@ -261,16 +261,17 @@ WriteLine("end");
                 });
             });
 
-            it('5.2 should terminate while(true) after max iterations', function (done) {
+            it('5.2 should terminate while(true) after 1M iterations (system.MaxIterations())', function (done) {
                 this.timeout(30000);
                 rega.exec(`
+system.MaxIterations(1000000);
 integer i = 0;
 while (true) { i = i + 1; }
             `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.i.should.equal('500000');
+                        objects.i.should.equal('1000000');
                         done();
                     }
                 });
