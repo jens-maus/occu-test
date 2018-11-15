@@ -13,7 +13,7 @@ install:
   - sudo dpkg --add-architecture i386
   - sudo apt-get -qq update || true
   - sudo apt-get -qq install libc6:i386 libstdc++6:i386 expect-dev
-  - sudo git clone --depth=50 --branch=master https://github.com/eq-3/occu /occu
+  - sudo git clone --depth=50 --branch=master https://github.com/jens-maus/occu /occu
   - sudo mkdir -p /etc/config /www/rega /config
   - sudo sh -c 'echo -e "#!/bin/bash\necho /bin/hm_startup executed" >/bin/hm_startup'
   - sudo sh -c 'echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" >/bin/hm_autoconf'
