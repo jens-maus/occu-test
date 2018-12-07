@@ -687,7 +687,7 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
                 });
             });
 
-            it('6.6.1 should correctly deal with escape chars', function (done) {
+            it('6.6.1 should correctly deal with escape (\\) chars', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 string a = "xxx\\\\xxx";
@@ -696,20 +696,47 @@ string c = "xxx\\\'xxx";
 string d = "xxx\\txxx";
 string e = "xxx\\nxxx";
 string f = "xxx\\rxxx";
+string g = "xxx\\\\\\\\xxx";
+string h = "xxx\\\\\"xxx";
+string i = "xxx\\\\\'xxx";
+string j = "xxx\\\\txxx";
+string k = "xxx\\\\nxxx";
+string l = "xxx\\\\rxxx";
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.a.should.equal('xxx\\\\xxx'); // FIXME: should only be 'xxx\\xxx' ReGa Bug?
+                        objects.a.should.equal('xxx\\xxx');
                         objects.b.should.equal('xxx"xxx');
                         objects.c.should.equal('xxx\'xxx');
                         objects.d.should.equal('xxx\txxx');
                         objects.e.should.equal('xxx\nxxx');
                         objects.f.should.equal('xxx\rxxx');
+                        objects.g.should.equal('xxx\\\\xxx');
+                        objects.h.should.equal('xxx\\"xxx');
+                        objects.i.should.equal('xxx\\'xxx');
+                        objects.j.should.equal('xxx\\txxx');
+                        objects.k.should.equal('xxx\\nxxx');
+                        objects.l.should.equal('xxx\\rxxx');
                         done();
                     }
                 });
             });
+
+            it('6.6.1 should correctly deal with super string (^xxx^) chars', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'^;
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'');
+                        done();
+                    }
+                });
+            });
+
 
             it('6.6.2 should do ToFloat()', function (done) {
                 this.timeout(30000);
