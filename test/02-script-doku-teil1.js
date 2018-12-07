@@ -237,25 +237,77 @@ if (y==1) {
                 });
             });
 
-            it('5.1.1 should be able to handle elseif() in while()', function (done) {
+            it('5.1.1 should be able to handle elseif() in while()/foreach()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
 integer i = 0;
-while (i <= 5) {
-  if     (i == 0) { WriteLine("i=0"); }
-  elseif (i == 1) { WriteLine("i=1"); }
-  elseif (i == 2) { WriteLine("i=2"); }
-  elseif (i == 3) { WriteLine("i=3"); }
-  else            { WriteLine("i=x"); }
-  i = i + 1;
+while (i < 10) {
+    if     (i == 0) { WriteLine("i=0"); }
+    elseif (i == 1) { WriteLine("i=1"); }
+    elseif (i == 2) { WriteLine("i=2"); i=5; }
+    elseif (i == 7) { WriteLine("i=7"); }
+    else            { WriteLine("I=" # i); }
+    i = i + 1;
+    WriteLine("next:" # i);
 }
-WriteLine("end");
+WriteLine("END:" # i);
+
+string liste = "a\\tb\\tc\\td\\te\\tf";
+string res;
+foreach(res, liste) {
+  if     (res == "a") { WriteLine("res=a"); }
+  elseif (res == "b") { WriteLine("res=b"); }
+  elseif (res == "c") { WriteLine("res=c"); }
+  elseif (res == "e") { WriteLine("res=e"); }
+  else                { WriteLine("RES=" # res); }
+  WriteLine("next:" # res);
+}
+WriteLine("END:" # res);
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.i.should.equal('6');
-                        output.should.equal('i=0\r\ni=1\r\ni=2\r\ni=3\r\ni=x\r\ni=x\r\nend\r\n');
+                        objects.i.should.equal('10');
+                        objects.res.should.equal('f');
+                        output.should.equal('i=0\r\nnext:1\r\ni=1\r\nnext:2\r\ni=2\r\nnext:6\r\nI=6\r\nnext:7\r\ni=7\r\nnext:8\r\nI=8\r\nnext:9\r\nI=9\r\nnext:10\r\nEND:10\r\nres=a\r\nnext:a\r\nres=b\r\nnext:b\r\nres=c\r\nnext:c\r\nRES=d\r\nnext:d\r\nres=e\r\nnext:e\r\nRES=f\r\nnext:f\r\nEND:f\r\n');
+                        done();
+                    }
+                });
+            });
+
+            it('5.1.1 should be able to handle break/continue for while()/foreach()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+integer i = 0;
+while (i < 10) {
+    if     (i == 0) { WriteLine("i=0"); }
+    elseif (i == 1) { WriteLine("i=1"); }
+    elseif (i == 2) { WriteLine("i=2"); i=5; continue; WriteLine("ERROR"); }
+    elseif (i == 7) { WriteLine("i=7"); break; WriteLine("ERROR"); }
+    else            { WriteLine("I=" # i); }
+    i = i + 1;
+    WriteLine("next:" # i);
+}
+WriteLine("END:" # i);
+
+string liste = "a\\tb\\tc\\td\\te\\tf";
+string res;
+foreach(res, liste) {
+  if     (res == "a") { WriteLine("res=a");}
+  elseif (res == "b") { WriteLine("res=b");}
+  elseif (res == "c") { WriteLine("res=c"); continue; WriteLine("ERROR");}
+  elseif (res == "e") { WriteLine("res=e"); break; WriteLine("ERROR");}
+  else                { WriteLine("RES=" # res); }
+  WriteLine("next:" # res);
+}
+WriteLine("END:" # res);
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.i.should.equal('7');
+                        objects.res.should.equal('e');
+                        output.should.equal('i=0\r\nnext:1\r\ni=1\r\nnext:2\r\ni=2\r\nI=5\r\nnext:6\r\nI=6\r\nnext:7\r\ni=7\r\nEND:7\r\nres=a\r\nnext:a\r\nres=b\r\nnext:b\r\nres=c\r\nRES=d\r\nnext:d\r\nres=e\r\nEND:e\r\n');
                         done();
                     }
                 });
