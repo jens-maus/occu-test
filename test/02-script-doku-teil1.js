@@ -737,7 +737,6 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'^;
                 });
             });
 
-
             it('6.6.2 should do ToFloat()', function (done) {
                 this.timeout(30000);
                 rega.exec(`

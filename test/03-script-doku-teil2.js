@@ -138,7 +138,23 @@ if (myObject)
                 });
             });
 
-            // TODO 4.5 .Type()
+            it('4.5 (VarBool1) should do .Type()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+var myObject = dom.GetObject("VarBool1");
+if (myObject)
+{
+    Write(myObject.Type() == OT_VARDP);
+}
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('true');
+                        done();
+                    }
+                });
+            });
 
             it('4.6 (VarBool1) should do .TypeName()', function (done) {
                 this.timeout(30000);
