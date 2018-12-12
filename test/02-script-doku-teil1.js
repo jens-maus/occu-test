@@ -400,7 +400,7 @@ integer tType = t.VarType(); ! 5
             });
 
             it('6.1.1 should determine additional VarType() (community)', function (done) {
-                if (flavor !== '.community') {
+                if (flavor === '.normal') {
                     return this.skip();
                 }
                 this.timeout(30000);

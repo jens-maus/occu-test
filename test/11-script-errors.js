@@ -79,7 +79,7 @@ WriteLine(unknown.Name());
             });
 
             it('should handle invalid method use', function (done) {
-                if (flavor !== '.community' || !procs.rega) {
+                if (flavor === '.normal' || !procs.rega) {
                     return this.skip();
                 }
                 this.timeout(60000);
