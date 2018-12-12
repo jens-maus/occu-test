@@ -21,6 +21,7 @@ install:
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
+  - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI-Beta/bin/ReGaHss /bin/ReGaHss.beta
   - sudo cp -v homematic.regadom /etc/config/
   - sudo chmod -R a+rw /etc/config
   - sudo sh -c 'echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf'
@@ -30,6 +31,7 @@ install:
 env:
   - FLAVOR=normal
   - FLAVOR=community
+  - FLAVOR=beta
 
 before_install:
   - export TZ=Europe/Berlin
