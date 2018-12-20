@@ -737,20 +737,28 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
                 });
             });
 
-            // see http://www.pjb.com.au/comp/diacritics.html
-            it('6.6.1 should correctly deal with ISO-8859-1 special chars in strings', function (done) {
+            // see https://en.wikipedia.org/wiki/ISO/IEC_8859-1
+            it('6.6.1 should correctly deal with all ISO-8859-1 chars in strings', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string units = "\xA2\xA3\xA4\xA5\xB0";
-string umlauts2 = "\xFF";
-string specials = "!\\\"§$%&/()=?\`'*+'#-_.:,;<>^°\\\\@~";
+string chars2X = "\x20\x21\\\\\x22\x23\x24\x25\x26\x27\x28\x29\x2A\x2B\x2C\x2D\x2E\x2F";
+string chars3X = "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3A\x3B\x3C\x3D\x3E\x3F";
+string chars4X = "\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4A\x4B\x4C\x4D\x4E\x4F";
+string chars5X = "\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5A\x5B\\\\\x5C\x5D\x5E\x5F";
+string chars6X = "\\\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6A\x6B\x6C\x6D\x6E\x6F";
+string chars7X = "\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7A\x7B\x7C\x7D\x7E";
+string charsAX = "\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF";
+string charsBX = "\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF";
+string charsCX = "\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF";
+string charsDX = "\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF";
+string charsEX = "\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF";
+string charsFX = "\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF";
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.units.should.equal('\xA2\xA3\xA4\xA5\xB1');
-                        objects.umlauts2.should.equal('\xFF');
-                        objects.specials.should.equal('!\"§$%&/()=?`\'*+\'#-_.:,;<>^°\\@~');
+                        objects.chars2X.should.equal('\x20\x21\x22\x23\x24\x25\x26\\\x27\x28\x29\x2A\x2B\x2C\x2D\x2E\x2F');
+                        objects.chars3X.should.equal('\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3A\x3B\x3C\x3D\x3E\x3F');
                         done();
                     }
                 });
