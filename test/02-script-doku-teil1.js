@@ -741,14 +741,16 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
             it('6.6.1 should correctly deal with ISO-8859-1 special chars in strings', function (done) {
                 this.timeout(30000);
                 rega.exec(`
+string units = "\xA2\xA3\xA4\xA5\xB0";
 string umlauts2 = "\xFF";
 string specials = "!\\\"§$%&/()=?\`'*+'#-_.:,;<>^°\\\\@~";
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
+                        objects.units.should.equal('\xA2\xA3\xA4\xA5\xB1');
                         objects.umlauts2.should.equal('\xFF');
-                        objects.specials.should.equal("!\"§$%&/()=?`'*+'#-_.:,;<>^°\\@~");
+                        objects.specials.should.equal('!\"§$%&/()=?`'*+\'#-_.:,;<>^°\\@~');
                         done();
                     }
                 });
