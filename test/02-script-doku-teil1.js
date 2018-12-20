@@ -741,11 +741,7 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
             it('6.6.1 should correctly deal with ISO-8859-1 special chars in strings', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string units = "\242\243\244\245\260";
-string fraction = "\274\275\276";
-string quotes = "\241\253\273\277";
-string umlauts1 = "\300\301\302\303\304\305\306\307\310\311\312\313\314\315\316\317\320\321\322\323\324\325\326\330\331\332\333\334\335\336\337";
-string umlauts2 = "\340\341\342\343\344\345\346\347\350\351\352\353\354\355\356\357\360\361\362\363\364\365\366\370\371\372\373\374\375\376\377";
+string umlauts2 = "\xFF";
 string specials = "!\\\"§$%&/()=?`'*+'#-_.:,;<>^°\\\\@~";
                 `, function (err, output, objects) {
                     if (err) {
