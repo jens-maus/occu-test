@@ -742,7 +742,7 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
                 this.timeout(30000);
                 rega.exec(`
 string umlauts2 = "\xFF";
-string specials = "!\\\"§$%&/()=?`'+'#-_.:,;<>^°\\\\@~";
+string specials = "!\\\"§$%&/()=?\`'*+'#-_.:,;<>^°\\\\@~";
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
