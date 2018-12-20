@@ -750,7 +750,7 @@ string specials = "!\\\"§$%&/()=?\`'*+'#-_.:,;<>^°\\\\@~";
                     } else {
                         objects.units.should.equal('\xA2\xA3\xA4\xA5\xB1');
                         objects.umlauts2.should.equal('\xFF');
-                        objects.specials.should.equal('!\"§$%&/()=?`'*+\'#-_.:,;<>^°\\@~');
+                        objects.specials.should.equal('!\"§$%&/()=?`\'*+\'#-_.:,;<>^°\\@~');
                         done();
                     }
                 });
