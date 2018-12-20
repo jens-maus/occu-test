@@ -726,12 +726,37 @@ string l = "xxx\\\\rxxx";
             it('6.6.1 should correctly deal with super string (^xxx^) chars', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'^;
+string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'');
+                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=');
+                        done();
+                    }
+                });
+            });
+
+            // see http://www.pjb.com.au/comp/diacritics.html
+            it('6.6.1 should correctly deal with ISO-8859-1 special chars in strings', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string units = "\242\243\244\245\260";
+string fraction = "\274\275\276";
+string quotes = "\241\253\273\277";
+string umlauts1 = "\300\301\302\303\304\305\306\307\310\311\312\313\314\315\316\317\320\321\322\323\324\325\326\330\331\332\333\334\335\336\337";
+string umlauts2 = "\340\341\342\343\344\345\346\347\350\351\352\353\354\355\356\357\360\361\362\363\364\365\366\370\371\372\373\374\375\376\377";
+string specials = "!\\\"§$%&/()=?`'*+'#-_.:,;<>^°\\\\@~";
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.units.should.equal('\242\243\244\245\260');
+                        objects.fraction.should.equal('\274\275\276');
+                        objects.quotes.should.equal('\241\253\273\277');
+                        objects.umlauts1.should.equal('\300\301\302\303\304\305\306\307\310\311\312\313\314\315\316\317\320\321\322\323\324\325\326\330\331\332\333\334\335\336\337');
+                        objects.umlauts2.should.equal('\340\341\342\343\344\345\346\347\350\351\352\353\354\355\356\357\360\361\362\363\364\365\366\370\371\372\373\374\375\376\377');
+                        objects.specials.should.equal("!\"§$%&/()=?`'*+'#-_.:,;<>^°\\@~";
                         done();
                     }
                 });
