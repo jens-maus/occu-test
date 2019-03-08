@@ -29,7 +29,7 @@
   "dependencies": {
     "binrpc": "^3.1.0",
     "camo-purge": "latest",
-    "hm-simulator": "latest",
+    "hm-simulator": "0.0.4",
     "homematic-rega": "latest",
     "homematic-xmlrpc": "^1.0.2",
     "indent-string": "latest",
