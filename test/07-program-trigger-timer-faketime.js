@@ -55,6 +55,14 @@ flavors.forEach(function (flavor) {
         // Perform long running timer test for normal datetime
         test('2019-12-31 23:58:48 CET', 'TimeEveryMinute', '1302', 3, 65000);
 
+        // Perform long running timer test for DST boundaries
+        // (1 day after/before DST switch)
+        test('2019-03-31 23:58:48 CET', 'TimeEveryMinute', '1302', 3, 65000);
+        test('2019-03-31 03:29:48 CEST','Time0330', '1558');
+        test('2019-04-01 23:58:48 CEST','TimeEveryMinute', '1302', 3, 65000);
+        test('2019-04-01 01:59:48 CEST','Time0200', '1470');
+        test('2019-04-01 02:04:48 CEST','Time0205', '1498');
+
         // Perform long running regular timer test at DST boundaries
         test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', '1302', 5, 70000);
         test('2020-03-29 01:58:40 CET', 'TimeEveryMinute', '1302', 5, 70000);
