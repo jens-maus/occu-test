@@ -19,6 +19,7 @@ install:
   - sudo sh -c 'echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" >/bin/hm_autoconf'
   - sudo chmod a+x /bin/hm_startup /bin/hm_autoconf
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
+  - sudo sh -c 'echo -e "XmlRpcServerPort=31999" >>/etc/rega.conf'
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI-Beta/bin/ReGaHss /bin/ReGaHss.beta
