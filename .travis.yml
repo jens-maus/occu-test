@@ -25,7 +25,8 @@ install:
   - sudo cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI-Beta/bin/ReGaHss /bin/ReGaHss.beta
   - sudo cp -v homematic.regadom /etc/config/
   - sudo chmod -R a+rw /etc/config
-  - sudo sh -c 'echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf'
+  - if [[ ${FLAVOR} =~ normal|community ]]; then sudo sh -c 'echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf'; fi
+  - if [[ ${FLAVOR} =~ beta ]]; then sudo sh -c 'echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI-Beta/lib/" >/etc/ld.so.conf.d/hm.conf'; fi
   - sudo ldconfig
   - npm install
 
