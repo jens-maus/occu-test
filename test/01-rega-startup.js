@@ -34,7 +34,7 @@ flavors.forEach(function (flavor) {
 
             it('should start IseRTPrgThread', function (done) {
                 this.timeout(30000);
-                subscribe('rega', /Info: IseRTPrgThread thread function started/, function () {
+                subscribe('rega', /RTPrgThread thread function started/, function () {
                     done();
                 });
             });
