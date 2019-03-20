@@ -146,6 +146,16 @@ Write(']');
                                 enum: '${sysVarPresenceNotPresent};${sysVarPresencePresent}'
                             },
                             {
+                                id: '1923',
+                                name: 'DutyCycle',
+                                val: 57,
+                                min: -1,
+                                max: 100,
+                                unit: '%',
+                                type: 'number',
+                                enum: ''
+                            },
+                            {
                                 id: '1240',
                                 name: 'VarAlarm1',
                                 val: false,
@@ -269,6 +279,16 @@ Write(']');
                                 active: true
                             },
                             {
+                                id: '1911',
+                                name: 'Time0000',
+                                active: true
+                            },
+                            {
+                                id: '1924',
+                                name: 'Time0030',
+                                active: true
+                            },
+                            {
                                 id: '1314',
                                 name: 'Time0100',
                                 active: true
@@ -321,6 +341,26 @@ Write(']');
                             {
                                 id: '1302',
                                 name: 'TimeEveryMinute',
+                                active: true
+                            },
+                            {
+                                id: '1968',
+                                name: 'TimeSpan0100-0103',
+                                active: true
+                            },
+                            {
+                                id: '2012',
+                                name: 'TimeSpan0158-0202',
+                                active: true
+                            },
+                            {
+                                id: '2024',
+                                name: 'TimeSpan0230-0200',
+                                active: true
+                            },
+                            {
+                                id: '2036',
+                                name: 'TimeSpan0230-0232',
                                 active: true
                             }
                         ]);
@@ -632,6 +672,266 @@ Write(']');
                                 id: '1209',
                                 address: 'BidCoS-RF:50',
                                 name: 'HM-RCV-50 BidCoS-RF:50'
+                            },
+                            {
+                                id: '1759',
+                                address: '001F58A992F2A6',
+                                name: 'HmIP-RCV-50 001F58A992F2A6'
+                            },
+                            {
+                                id: '1760',
+                                address: '001F58A992F2A6:0',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:0'
+                            },
+                            {
+                                id: '1761',
+                                address: '001F58A992F2A6:1',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:1'
+                            },
+                            {
+                                id: '1764',
+                                address: '001F58A992F2A6:2',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:2'
+                            },
+                            {
+                                id: '1767',
+                                address: '001F58A992F2A6:3',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:3'
+                            },
+                            {
+                                id: '1770',
+                                address: '001F58A992F2A6:4',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:4'
+                            },
+                            {
+                                id: '1773',
+                                address: '001F58A992F2A6:5',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:5'
+                            },
+                            {
+                                id: '1776',
+                                address: '001F58A992F2A6:6',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:6'
+                            },
+                            {
+                                id: '1779',
+                                address: '001F58A992F2A6:7',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:7'
+                            },
+                            {
+                                id: '1782',
+                                address: '001F58A992F2A6:8',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:8'
+                            },
+                            {
+                                id: '1785',
+                                address: '001F58A992F2A6:9',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:9'
+                            },
+                            {
+                                id: '1788',
+                                address: '001F58A992F2A6:10',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:10'
+                            },
+                            {
+                                id: '1791',
+                                address: '001F58A992F2A6:11',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:11'
+                            },
+                            {
+                                id: '1794',
+                                address: '001F58A992F2A6:12',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:12'
+                            },
+                            {
+                                id: '1797',
+                                address: '001F58A992F2A6:13',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:13'
+                            },
+                            {
+                                id: '1800',
+                                address: '001F58A992F2A6:14',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:14'
+                            },
+                            {
+                                id: '1803',
+                                address: '001F58A992F2A6:15',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:15'
+                            },
+                            {
+                                id: '1806',
+                                address: '001F58A992F2A6:16',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:16'
+                            },
+                            {
+                                id: '1809',
+                                address: '001F58A992F2A6:17',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:17'
+                            },
+                            {
+                                id: '1812',
+                                address: '001F58A992F2A6:18',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:18'
+                            },
+                            {
+                                id: '1815',
+                                address: '001F58A992F2A6:19',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:19'
+                            },
+                            {
+                                id: '1818',
+                                address: '001F58A992F2A6:20',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:20'
+                            },
+                            {
+                                id: '1821',
+                                address: '001F58A992F2A6:21',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:21'
+                            },
+                            {
+                                id: '1824',
+                                address: '001F58A992F2A6:22',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:22'
+                            },
+                            {
+                                id: '1827',
+                                address: '001F58A992F2A6:23',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:23'
+                            },
+                            {
+                                id: '1830',
+                                address: '001F58A992F2A6:24',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:24'
+                            },
+                            {
+                                id: '1833',
+                                address: '001F58A992F2A6:25',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:25'
+                            },
+                            {
+                                id: '1836',
+                                address: '001F58A992F2A6:26',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:26'
+                            },
+                            {
+                                id: '1839',
+                                address: '001F58A992F2A6:27',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:27'
+                            },
+                            {
+                                id: '1842',
+                                address: '001F58A992F2A6:28',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:28'
+                            },
+                            {
+                                id: '1845',
+                                address: '001F58A992F2A6:29',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:29'
+                            },
+                            {
+                                id: '1848',
+                                address: '001F58A992F2A6:30',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:30'
+                            },
+                            {
+                                id: '1851',
+                                address: '001F58A992F2A6:31',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:31'
+                            },
+                            {
+                                id: '1854',
+                                address: '001F58A992F2A6:32',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:32'
+                            },
+                            {
+                                id: '1857',
+                                address: '001F58A992F2A6:33',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:33'
+                            },
+                            {
+                                id: '1860',
+                                address: '001F58A992F2A6:34',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:34'
+                            },
+                            {
+                                id: '1863',
+                                address: '001F58A992F2A6:35',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:35'
+                            },
+                            {
+                                id: '1866',
+                                address: '001F58A992F2A6:36',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:36'
+                            },
+                            {
+                                id: '1869',
+                                address: '001F58A992F2A6:37',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:37'
+                            },
+                            {
+                                id: '1872',
+                                address: '001F58A992F2A6:38',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:38'
+                            },
+                            {
+                                id: '1875',
+                                address: '001F58A992F2A6:39',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:39'
+                            },
+                            {
+                                id: '1878',
+                                address: '001F58A992F2A6:40',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:40'
+                            },
+                            {
+                                id: '1881',
+                                address: '001F58A992F2A6:41',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:41'
+                            },
+                            {
+                                id: '1884',
+                                address: '001F58A992F2A6:42',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:42'
+                            },
+                            {
+                                id: '1887',
+                                address: '001F58A992F2A6:43',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:43'
+                            },
+                            {
+                                id: '1890',
+                                address: '001F58A992F2A6:44',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:44'
+                            },
+                            {
+                                id: '1893',
+                                address: '001F58A992F2A6:45',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:45'
+                            },
+                            {
+                                id: '1896',
+                                address: '001F58A992F2A6:46',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:46'
+                            },
+                            {
+                                id: '1899',
+                                address: '001F58A992F2A6:47',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:47'
+                            },
+                            {
+                                id: '1902',
+                                address: '001F58A992F2A6:48',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:48'
+                            },
+                            {
+                                id: '1905',
+                                address: '001F58A992F2A6:49',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:49'
+                            },
+                            {
+                                id: '1908',
+                                address: '001F58A992F2A6:50',
+                                name: 'HmIP-RCV-50 001F58A992F2A6:50'
                             }
                         ]);
                         done();
@@ -743,7 +1043,58 @@ Write(']');
                                     1033,
                                     1037,
                                     1041,
-                                    1045
+                                    1045,
+                                    1760,
+                                    1761,
+                                    1788,
+                                    1791,
+                                    1794,
+                                    1797,
+                                    1800,
+                                    1803,
+                                    1806,
+                                    1809,
+                                    1812,
+                                    1815,
+                                    1764,
+                                    1818,
+                                    1821,
+                                    1824,
+                                    1827,
+                                    1830,
+                                    1833,
+                                    1836,
+                                    1839,
+                                    1842,
+                                    1845,
+                                    1767,
+                                    1848,
+                                    1851,
+                                    1854,
+                                    1857,
+                                    1860,
+                                    1863,
+                                    1866,
+                                    1869,
+                                    1872,
+                                    1875,
+                                    1770,
+                                    1878,
+                                    1881,
+                                    1884,
+                                    1887,
+                                    1890,
+                                    1893,
+                                    1896,
+                                    1899,
+                                    1902,
+                                    1905,
+                                    1773,
+                                    1908,
+                                    1776,
+                                    1779,
+                                    1782,
+                                    1785
                                 ]
                             },
                             {id: '1215', name: 'funcClimateControl', channels: []},

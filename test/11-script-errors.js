@@ -29,7 +29,7 @@ flavors.forEach(function (flavor) {
                     return this.skip();
                 }
                 this.timeout(60000);
-                subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 2 col 27 near \^\("muh"\);/, function () {
+                subscribe('rega', /Error: .*SyntaxError. Error 1 at row 2 col 27 near \^\("muh"\);/, function () {
                     done();
                 });
                 rega.exec(`
@@ -46,7 +46,7 @@ dom.MethodDoesNotExist("muh");
                     return this.skip();
                 }
                 this.timeout(60000);
-                subscribe('rega', /Error: IseESP::SyntaxError= Error 1 at row 3 col 43 near/, function () {
+                subscribe('rega', /Error: .*SyntaxError. Error 1 at row 3 col 43 near/, function () {
                     done();
                 });
                 rega.exec(`
@@ -65,7 +65,7 @@ WriteLine(bla");
                 }
                 this.timeout(60000);
 
-                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, function () {
+                subscribe('rega', /Error: .*ScriptRuntimeError: /, function () {
                     done();
                 });
                 rega.exec(`
@@ -84,7 +84,7 @@ WriteLine(unknown.Name());
                 }
                 this.timeout(60000);
 
-                subscribe('rega', /Error: IseESP::ScriptRuntimeError:/, function () {
+                subscribe('rega', /Error: .*ScriptRuntimeError: /, function () {
                     done();
                 });
 
@@ -104,7 +104,7 @@ var c = system.ToFloat("a");
                     return this.skip();
                 }
                 this.timeout(60000);
-                subscribe('rega', /Error: IseVar::Div - division by 0!/, function () {
+                subscribe('rega', /Error: .*division by (0|zero)/, function () {
                     done();
                 });
                 rega.exec(`

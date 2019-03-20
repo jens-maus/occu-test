@@ -44,7 +44,7 @@ flavors.forEach(function (flavor) {
                 if (!procs.rega) {
                     return this.skip();
                 }
-                subscribe('rega', /Error: XmlRpcMethodEvent::execute: invalid parameter size/, function () {
+                subscribe('rega', /Error: .*invalid parameter size/, function () {
                     done();
                 });
                 rpcCall('event', ['BidCoS-RF:1']);
@@ -56,7 +56,7 @@ flavors.forEach(function (flavor) {
                 }
                 this.timeout(15000);
                 const buf = Buffer.from([0x42, 0x69, 0x6E, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x05, 0x65, 0x76, 0x65, 0x6E, 0x74, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x0B]);
-                subscribe('rega', /Error: XmlRpc: XmlRpcServerConnection::readRequest: EOF while reading request/, function () {
+                subscribe('rega', /XmlRpcServerConnection::readRequest: EOF while reading request/, function () {
                     done();
                 });
                 rpcWrite(buf);
