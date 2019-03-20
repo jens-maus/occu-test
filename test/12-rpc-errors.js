@@ -44,7 +44,7 @@ flavors.forEach(function (flavor) {
                 if (!procs.rega) {
                     return this.skip();
                 }
-                subscribe('rega', /Error: .*invalid parameter size/, function () {
+                subscribe('rega', /invalid parameter size/, function () {
                     done();
                 });
                 rpcCall('event', ['BidCoS-RF:1']);
