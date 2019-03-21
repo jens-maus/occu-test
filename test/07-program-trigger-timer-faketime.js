@@ -33,7 +33,7 @@ flavors.forEach(function (flavor) {
                         }
                         this.slow(waittime);
                         this.timeout(waittime);
-                        subscribe('rega', new RegExp('execute Program ID = .*' + id), function (output) {
+                        subscribe('rega', new RegExp('execute Program ID = .*' + program), function (output) {
                             cp.exec('/bin/date', function (e, stdout) {
                                 done();
                                 console.log(indent(stdout.replace('\n', ''), 8), output);
