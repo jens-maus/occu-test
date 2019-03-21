@@ -19,8 +19,8 @@ const {
 require('should');
 
 flavors.forEach(function (flavor) {
-    function test(time, program, repetition = 1, waittime = 20000) {
-        describe('Testing for ' + repetition + ' executions of \'' + program + '\' @ ' + time, function () {
+    function test(time, program, desc = '', repetition = 1, waittime = 20000) {
+        describe('Testing ' + repetition + ' executions of \'' + program + '\' @ ' + time + ' \'' + desc + '\'', function () {
             // initialize test environment
             initTest(flavor, false, time);
 
@@ -50,54 +50,55 @@ flavors.forEach(function (flavor) {
 
     describe('Running ' + __filename.split('/').reverse()[0] + ' [' + flavor + ']', function () {
         // Perform normal timer test for single execution
-        test('2020-01-01 23:59:48 CET',  'Time0000');
-        test('2020-01-01 00:29:48 CET',  'Time0030');
-        test('2020-01-01 00:59:48 CET',  'Time0100');
+        test('2020-01-01 23:59:48 CET',  'Time0000', 'TimerFixed @ 00:00');
+        test('2020-01-01 00:29:48 CET',  'Time0030', 'TimerFixed @ 00:30');
+        test('2020-01-01 00:59:48 CET',  'Time0100', 'TimerFixed @ 01:00');
 
         // Perform test of the short 10s timers
-        test('2020-01-01 00:00:00 CET',  'TimeEvery10s', 3, 30000);
-        test('2020-03-29 01:59:48 CET',  'TimeEvery10s', 6, 30000); // winter->summer
-        test('2020-10-25 02:59:48 CEST', 'TimeEvery10s', 6, 30000); // summer->winter
+        test('2020-01-01 00:00:00 CET',  'TimeEvery10s', 'TimerPeriodic (10s) on new year', 2, 30000);
+        test('2020-03-29 01:59:48 CET',  'TimeEvery10s', 'TimerPeriodic (10s) during Winter->Summer DST change', 4, 30000);
+        test('2020-10-25 02:59:48 CEST', 'TimeEvery10s', 'TimerPeriodic (10s) during Summer->Winter DST change', 4, 30000);
 
         // Perform long running timer test for year switch
-        test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 3, 65000);
+        test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during year change', 4, 65000);
 
         // Perform long running regular timer test at DST boundaries
-        test('2020-03-29 01:58:40 CET',  'TimeEveryMinute', 5, 70000); // winter->summer
-        test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', 5, 70000); // summer->winter
+        test('2020-03-29 01:58:40 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during Winter->Summer DST change', 5, 70000);
+        test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', 'TimerPeriodic (1m) during Summer->Winter DST change', 5, 70000);
 
         // Leap/non-leap year tests (Feb, 29. 2020, Feb, 28. 2021)
-        test('2020-02-29 01:59:48 CET',  'Time0200');
-        test('2020-02-29 23:58:48 CET',  'TimeEveryMinute', 5, 70000);
-        test('2021-02-28 23:58:48 CET',  'TimeEveryMinute', 5, 70000);
+        test('2020-02-29 01:59:48 CET',  'Time0200',        'TimerFixed @ 02:00 last feb day (leap year)');
+        test('2020-02-29 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) feb month change (leap year)', 4, 70000);
+        test('2021-02-28 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) feb month change (non-leap year)', 4, 70000);
 
         // -> start of DST (winter->summer) in leap year
-        test('2020-03-28 23:58:48 CET',  'TimeEveryMinute', 5, 70000); // day switch before DST switchdate
-        test('2020-03-29 00:59:48 CET',  'Time0100');
-        test('2020-03-29 01:29:48 CET',  'Time0130');
-        test('2020-03-29 01:54:48 CET',  'Time0155');
-        test('2020-03-29 01:59:48 CET',  'Time0200');
+        test('2020-03-28 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during day change one day before Winter->Summer DST change', 5, 70000); // day switch before DST switchdate
+        test('2020-03-29 00:59:48 CET',  'Time0100',        'TimerFixed @ 01:00 before Winter->Summer DST change');
+        test('2020-03-29 01:29:48 CET',  'Time0130',        'TimerFixed @ 01:30 before Winter->Summer DST change');
+        test('2020-03-29 01:54:48 CET',  'Time0155',        'TimerFixed @ 01:55 before Winter->Summer DST change');
+        test('2020-03-29 01:59:48 CET',  'Time0200',        'TimerFixed @ 02:00 between Winter->Summer DST change');
         // test('2020-03-29 02:04:48 CET', 'Time0205'); // not in DST
         // test('2020-03-29 02:29:48 CET', 'Time0230'); // not in DST
         // test('2020-03-29 02:54:48 CET', 'Time0255'); // not in DST
         // test('2020-03-29 02:59:48 CET', 'Time0300'); // not in DST
-        test('2020-03-29 03:04:48 CEST', 'Time0305');
-        test('2020-03-29 03:29:48 CEST', 'Time0330');
-        test('2020-03-29 23:58:48 CEST', 'TimeEveryMinute', 5, 70000); // day switch after DST switchdate
+        test('2020-03-29 03:04:48 CEST', 'Time0305',        'TimerFixed @ 03:05 after Winter->Summer DST change');
+        test('2020-03-29 03:29:48 CEST', 'Time0330',        'TimerFixed @ 03:30 after Winter->Summer DST change');
+        test('2020-03-29 23:58:48 CEST', 'TimeEveryMinute', 'TimerPeriodic (1m) during day change one day after Winter->Summer DST change', 5, 70000); // day switch after DST switchdate
 
         // -> end of DST (summer->winter) in leap year
-        test('2020-10-24 23:58:48 CEST', 'TimeEveryMinute', 5, 70000); // day switch before DST switchdate
-        test('2020-10-25 00:59:48 CEST', 'Time0100');
-        test('2020-10-25 01:29:48 CEST', 'Time0130');
-        test('2020-10-25 01:54:48 CEST', 'Time0155');
-        test('2020-10-25 01:59:48 CEST', 'Time0200');
-        test('2020-10-25 02:04:48 CEST', 'Time0205');
-        test('2020-10-25 02:29:48 CEST', 'Time0230');
-        test('2020-10-25 02:54:48 CEST', 'Time0255');
-        test('2020-10-25 02:59:48 CEST', 'Time0200'); // @ 03:00 (CEST) time will be switch to 02:00 (CET), thus Time0200 should trigger
-        test('2020-10-25 02:59:48 CET', 'Time0300');
-        test('2020-10-25 03:04:48 CET', 'Time0305');
-        test('2020-10-25 03:29:48 CET', 'Time0330');
-        test('2020-10-25 23:58:48 CET', 'TimeEveryMinute', 5, 70000); // day switch after DST switchdate
+        test('2020-10-24 23:58:48 CEST', 'TimeEveryMinute', 'TimerPeriodic (1m) during day change one day before Summer->Winter DST change', 5, 70000); // day switch before DST switchdate
+        test('2020-10-25 00:59:48 CEST', 'Time0100',        'TimerFixed @ 01:00 before Summer->Winter DST change');
+        test('2020-10-25 01:29:48 CEST', 'Time0130',        'TimerFixed @ 01:30 before Summer->Winter DST change');
+        test('2020-10-25 01:54:48 CEST', 'Time0155',        'TimerFixed @ 01:55 before Summer->Winter DST change');
+        test('2020-10-25 01:59:48 CEST', 'Time0200',        'TimerFixed @ 02:00 before Summer->Winter DST change');
+        test('2020-10-25 02:04:48 CEST', 'Time0205',        'TimerFixed @ 02:05 before Summer->Winter DST change');
+        test('2020-10-25 02:29:48 CEST', 'Time0230',        'TimerFixed @ 02:30 before Summer->Winter DST change');
+        test('2020-10-25 02:54:48 CEST', 'Time0255',        'TimerFixed @ 02:55 before Summer->Winter DST change');
+        //test('2020-10-25 02:59:48 CEST', 'Time0200',        'TimerFixed @ 02:00 between Summer->Winter DST change'); // @ 03:00 (CEST) time will be switch to 02:00 (CET), thus Time0200 should usually trigger (but this is not possible)
+        test('2020-10-25 02:04:48 CET', 'Time0205',         'TimerFixed @ 02:05 after Summer->Winter DST change');
+        test('2020-10-25 02:59:48 CET', 'Time0300',         'TimerFixed @ 03:00 after Summer->Winter DST change');
+        test('2020-10-25 03:04:48 CET', 'Time0305',         'TimerFixed @ 03:05 after Summer->Winter DST change');
+        test('2020-10-25 03:29:48 CET', 'Time0330',         'TimerFixed @ 03:30 after Summer->Winter DST change');
+        test('2020-10-25 23:58:48 CET', 'TimeEveryMinute',  'TimerPeriodic (1m) during day change one day after Summer->Winter DST change', 5, 70000); // day switch after DST switchdate
     });
 });
