@@ -87,8 +87,8 @@ if (c_zeit < c_tagesbeginn - 2) {
                     } else {
                         objects.should.containEql({
                             c_zeit: '12.000000',
-                            c_tagesbeginn: '7.580000',
-                            c_tagesende: '15.530000',
+                            c_tagesbeginn: '7.560000',
+                            c_tagesende: '15.560000',
                             c_mittag: '13.000000',
                             v_tageszeit: '4'
                         });
