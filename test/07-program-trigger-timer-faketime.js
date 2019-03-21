@@ -94,7 +94,7 @@ flavors.forEach(function (flavor) {
         test('2020-10-25 02:04:48 CEST', 'Time0205',        'TimerFixed @ 02:05 before Summer->Winter DST change');
         test('2020-10-25 02:29:48 CEST', 'Time0230',        'TimerFixed @ 02:30 before Summer->Winter DST change');
         test('2020-10-25 02:54:48 CEST', 'Time0255',        'TimerFixed @ 02:55 before Summer->Winter DST change');
-        //test('2020-10-25 02:59:48 CEST', 'Time0200',        'TimerFixed @ 02:00 between Summer->Winter DST change'); // @ 03:00 (CEST) time will be switch to 02:00 (CET), thus Time0200 should usually trigger (but this is not possible)
+        // test('2020-10-25 02:59:48 CEST', 'Time0200',        'TimerFixed @ 02:00 between Summer->Winter DST change'); // @ 03:00 (CEST) time will be switch to 02:00 (CET), thus Time0200 should usually trigger (but this is not possible)
         test('2020-10-25 02:04:48 CET', 'Time0205',         'TimerFixed @ 02:05 after Summer->Winter DST change');
         test('2020-10-25 02:59:48 CET', 'Time0300',         'TimerFixed @ 03:00 after Summer->Winter DST change');
         test('2020-10-25 03:04:48 CET', 'Time0305',         'TimerFixed @ 03:05 after Summer->Winter DST change');
