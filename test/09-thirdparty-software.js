@@ -339,6 +339,11 @@ Write(']');
                                 active: true
                             },
                             {
+                                id: '2148',
+                                name: 'TimeEvery10s',
+                                active: true
+                            },
+                            {
                                 id: '1302',
                                 name: 'TimeEveryMinute',
                                 active: true
@@ -361,6 +366,21 @@ Write(']');
                             {
                                 id: '2036',
                                 name: 'TimeSpan0230-0232',
+                                active: true
+                            },
+                            {
+                                id: '2124',
+                                name: 'TimeSpanDay',
+                                active: true
+                            },
+                            {
+                                id: '2112',
+                                name: 'TimeSpanFullday',
+                                active: true
+                            },
+                            {
+                                id: '2136',
+                                name: 'TimeSpanNight',
                                 active: true
                             }
                         ]);
