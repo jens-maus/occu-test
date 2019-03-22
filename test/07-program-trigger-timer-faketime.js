@@ -59,6 +59,10 @@ flavors.forEach(function (flavor) {
         test('2020-03-29 01:59:48 CET',  'TimeEvery10s', 'TimerPeriodic (10s) during Winter->Summer DST change', 4, 30000);
         test('2020-10-25 02:59:48 CEST', 'TimeEvery10s', 'TimerPeriodic (10s) during Summer->Winter DST change', 4, 30000);
 
+        // Perform test of day/night astro switches
+        test('2017-12-01 07:55:48 CET',  'TimeSpanDay',   'TimeSpanDay switch @ 07:56');
+        test('2017-12-01 15:55:48 CET',  'TimeSpanNight', 'TimeSpanNight switch @ 15:56');
+
         // Perform long running timer test for year switch
         test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during year change', 4, 65000);
 
