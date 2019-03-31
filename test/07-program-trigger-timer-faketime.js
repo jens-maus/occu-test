@@ -63,8 +63,10 @@ flavors.forEach(function (flavor) {
         // and non-DST times
         test('2017-12-01 07:55:48 CET',  'TimeSpanDay',   'TimeSpanDay switch @ 07:56');
         test('2017-12-01 15:55:48 CET',  'TimeSpanNight', 'TimeSpanNight switch @ 15:56');
-        test('2019-03-31 06:40:48 CEST', 'TimeSpanDay',   'TimeSpanDay switch @ 06:42', 1, 80000);
-        test('2019-03-31 19:34:48 CEST', 'TimeSpanNight', 'TimeSpanNight switch @ 19:36', 1, 80000);
+        test('2019-03-31 06:41:48 CEST', 'TimeSpanDay',   'TimeSpanDay switch @ 06:42');
+        test('2019-03-31 19:35:48 CEST', 'TimeSpanNight', 'TimeSpanNight switch @ 19:36');
+        test('2019-04-01 06:38:48 CEST', 'TimeSpanDay',   'TimeSpanDay switch @ 06:39');
+        test('2019-04-01 19:38:48 CEST', 'TimeSpanNight', 'TimeSpanNight switch @ 19:39');
 
         // Perform long running timer test for year switch
         test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during year change', 4, 65000);
