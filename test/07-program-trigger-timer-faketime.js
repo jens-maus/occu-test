@@ -71,10 +71,12 @@ flavors.forEach(function (flavor) {
         // and non-DST times
         test('2017-12-01 07:55:48 CET',  'TimeSpanDay',   'TimeSpanDay switch @ 07:56 (CET)', ['2017-12-01 07:56:00 CET']);
         test('2017-12-01 15:55:48 CET',  'TimeSpanNight', 'TimeSpanNight switch @ 15:56 (CET)', ['2017-12-01 15:56:00 CET']);
-        test('2019-03-31 06:41:48 CEST', 'TimeSpanDay',   'TimeSpanDay switch @ 06:42 on DST day', ['2019-03-31 06:42:00 CEST']);
-        test('2019-03-31 19:35:48 CEST', 'TimeSpanNight', 'TimeSpanNight switch @ 19:36 on DST day', ['2019-03-31 19:36:00 CEST']);
+        test('2019-03-31 06:41:48 CEST', 'TimeSpanDay',   'TimeSpanDay switch @ 06:42 on winter->summer day', ['2019-03-31 06:42:00 CEST']);
+        test('2019-03-31 19:35:48 CEST', 'TimeSpanNight', 'TimeSpanNight switch @ 19:36 on winter->summer day', ['2019-03-31 19:36:00 CEST']);
         test('2019-04-01 06:38:48 CEST', 'TimeSpanDay',   'TimeSpanDay switch @ 06:39 (CEST)', ['2019-04-01 06:39:00 CEST']);
         test('2019-04-01 19:38:48 CEST', 'TimeSpanNight', 'TimeSpanNight switch @ 19:39 (CEST)', ['2019-04-01 19:39:00 CEST']);
+        test('2019-10-27 06:59:48 CET',  'TimeSpanDay',   'TimeSpanDay switch @ 07:00 on summer->winter day', ['2019-10-27 07:00:00 CET']);
+        test('2019-10-27 16:39:48 CET',  'TimeSpanNight', 'TimeSpanNight switch @ 16:40 on summer->winter day', ['2019-10-27 16:40:00 CET']);
 
         // Perform long running timer test for year switch
         test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during year change', ['23:59:00', '00:00:00', '00:01:00'], 65000);
