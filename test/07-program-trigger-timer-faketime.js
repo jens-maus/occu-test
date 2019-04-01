@@ -27,7 +27,7 @@ flavors.forEach(function (flavor) {
             // perform the timer test
             describe('runnig timer test...', function () {
                 for (let i = 0; i < repetition; i++) {
-                    it('[' + (i + 1) + '/' + repetition + '] should call program \'' + program + '\'', function (done) {
+                    it('[' + (i + 1) + '/' + repetition + '] should call program \'' + program + '\' @ ' + targetTime, function (done) {
                         if (!procs.rega) {
                             return this.skip();
                         }
@@ -35,10 +35,10 @@ flavors.forEach(function (flavor) {
                         this.timeout(waittime);
                         subscribe('rega', new RegExp('execute Program ID = .*' + program), function (output) {
                             cp.exec('/bin/date +"%Y-%m-%d %H:%M:%S %Z"', function (e, stdout) {
-                                console.log(indent(stdout.replace('\n', ''), 8), '-', output);
-                                if(targetTime === '' || targetTime.includes(stdout)) {
+                                if(targetTime === '' || stdout.includes(targetTime)) {
                                   done();
                                 }
+                                console.log(indent('@', 8), stdout.replace('\n', ''), ':', output);
                             });
                         });
                     });
