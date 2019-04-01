@@ -41,6 +41,7 @@ flavors.forEach(function (flavor) {
                                 if (targetTime === '' || stdout.includes(targetTime)) {
                                     done();
                                 } else {
+                                    done(new Error("target time does not match"));
                                     stopProcessing = true;
                                 }
                                 console.log(indent('@', 8), stdout.replace('\n', ''), ':', output);
