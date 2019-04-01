@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, max-params, capitalized-comments, no-multi-spaces */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, max-params, capitalized-comments, no-multi-spaces, array-bracket-spacing */
 
 const {
     cp,
@@ -20,7 +20,7 @@ require('should');
 
 flavors.forEach(function (flavor) {
     function test(time, program, desc = '', targetTimeArray = [ '' ], waittime = 20000) {
-        var repetition = targetTimeArray.length();
+        const repetition = targetTimeArray.length;
         describe('Testing ' + repetition + ' executions of \'' + program + '\' @ ' + time + ' \'' + desc + '\'', function () {
             // initialize test environment
             initTest(flavor, false, time);
@@ -28,7 +28,7 @@ flavors.forEach(function (flavor) {
             // perform the timer test
             describe('runnig timer test...', function () {
                 for (let i = 0; i < repetition; i++) {
-                    var targetTime = targetTimeArray[i];
+                    const targetTime = targetTimeArray[i];
                     it('[' + (i + 1) + '/' + repetition + '] should call program \'' + program + '\' @ ' + targetTime, function (done) {
                         if (!procs.rega) {
                             return this.skip();
