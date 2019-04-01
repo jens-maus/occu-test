@@ -27,10 +27,11 @@ flavors.forEach(function (flavor) {
 
             // perform the timer test
             describe('runnig timer test...', function () {
+                let stopProcessing = false;
                 for (let i = 0; i < repetition; i++) {
                     const targetTime = targetTimeArray[i];
                     it('[' + (i + 1) + '/' + repetition + '] should call program \'' + program + '\' @ ' + targetTime, function (done) {
-                        if (!procs.rega) {
+                        if (!procs.rega || stopProcessing === true) {
                             return this.skip();
                         }
                         this.slow(waittime);
@@ -39,6 +40,8 @@ flavors.forEach(function (flavor) {
                             cp.exec('/bin/date +"%Y-%m-%d %H:%M:%S %Z"', function (e, stdout) {
                                 if (targetTime === '' || stdout.includes(targetTime)) {
                                     done();
+                                } else {
+                                    stopProcessing = true;
                                 }
                                 console.log(indent('@', 8), stdout.replace('\n', ''), ':', output);
                             });
