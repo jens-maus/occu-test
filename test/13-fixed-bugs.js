@@ -326,6 +326,91 @@ WriteLine("done");
                     });
                 });
             });
+
+            describe('Channel() removal tests', function (done) {
+                it('should add fake objects', function (done) {
+                    this.timeout(30000);
+                    rega.exec(`
+object channel = dom.CreateObject(OT_CHANNEL, "Testchannel");
+dom.GetObject(ID_DATAPOINTS).Add(channel.ID());
+object sysvar = dom.CreateObject(OT_VARDP, "Test-SysVar");
+sysvar.Channel(channel.ID());
+object alarmvar = dom.CreateObject(OT_ALARMDP, "Test-AlarmVar");
+alarmvar.Channel(channel.ID());
+dom.GetObject(ID_SYSTEM_VARIABLES).Add(sysvar.ID());
+dom.GetObject(ID_SYSTEM_VARIABLES).Add(alarmvar.ID());
+dom.DeleteObject(channel);
+                    `, function (err, output, objects) {
+                        if (err) {
+                            done(err);
+                        } else {
+                            objects.should.containEql({
+                                sysvar:   'Test-SysVar',
+                                alarmvar: 'Test-AlarmVar',
+                                channel:  'null',
+                            });
+                            done();
+                        }
+                    });
+                });
+
+                it('should have removed Channel-DP immediately', function (done) {
+                    this.timeout(30000);
+                    rega.exec(`
+object sysVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-SysVar");
+object alarmVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-AlarmVar");
+WriteLine(sysVarObj.Channel());
+WriteLine(alarmVarObj.Channel());
+                    `, function (err, output, objects) {
+                        if (err) {
+                            done(err);
+                        } else {
+                            output.should.equal('65535\r\n65535\r\n');
+                            done();
+                        }
+                    });
+                });
+
+                describe('should have invalid DP cleared upon ReGa start', function (done) {
+                    it('saving regadom', function (done) {
+                        this.timeout(30000);
+
+                        // save regadom as is.
+                        rega.exec('system.Save();', function (err, output, objects) {
+                            if (err) {
+                                done(err);
+                            } else {
+                                done();
+                            }
+                        });
+                    });
+
+                    // cleanup test environment (stop ReGaHss)
+                    cleanupTest(flavor);
+
+                    // init test environment (start ReGa)
+                    initTest(flavor, false, null, null, true);
+
+                    describe('running test', function (done) {
+                        it('should have cleared invalid DP', function (done) {
+                            this.timeout(30000);
+                            rega.exec(`
+object sysVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-SysVar");
+object alarmVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-AlarmVar");
+WriteLine(sysVarObj.Channel());
+WriteLine(alarmVarObj.Channel());
+                            `, function (err, output, objects) {
+                                if (err) {
+                                    done(err);
+                                } else {
+                                    output.should.equal('65535\r\n65535\r\n');
+                                    done();
+                                }
+                            });
+                        });
+                    });
+                });
+            });
         });
 
         // cleanup test environment
