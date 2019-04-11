@@ -345,9 +345,9 @@ dom.DeleteObject(channel);
                             done(err);
                         } else {
                             objects.should.containEql({
-                                sysvar:   'Test-SysVar',
+                                sysvar: 'Test-SysVar',
                                 alarmvar: 'Test-AlarmVar',
-                                channel:  'null',
+                                channel: 'null'
                             });
                             done();
                         }
