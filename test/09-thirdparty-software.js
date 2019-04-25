@@ -148,7 +148,7 @@ Write(']');
                             {
                                 id: '1923',
                                 name: 'DutyCycle',
-                                val: 57,
+                                val: 0,
                                 min: -1,
                                 max: 100,
                                 unit: '%',
@@ -366,6 +366,11 @@ Write(']');
                             {
                                 id: '2036',
                                 name: 'TimeSpan0230-0232',
+                                active: true
+                            },
+                            {
+                                id: '2244',
+                                name: 'TimeSpan2235-2305',
                                 active: true
                             },
                             {

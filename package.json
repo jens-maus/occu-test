@@ -32,7 +32,7 @@
     "hm-simulator": "0.0.4",
     "homematic-rega": "latest",
     "homematic-xmlrpc": "^1.0.2",
-    "indent-string": "latest",
+    "indent-string": "^3.2.0",
     "mocha": "latest",
     "mocha-clean": "latest",
     "should": "latest",
