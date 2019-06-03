@@ -459,6 +459,64 @@ string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
                 });
             });
 
+            it('6.1.2.2 should deal with @time@ strings', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+time t1 = @2019-05-01 12:34:56@;
+string s1 = t1.ToString();
+time t2 = @2019-05-01 12:34@;
+string s2 = t2.ToString();
+time t3 = @05-01 12:34:56@;
+string s3 = t3.ToString();
+time t4 = @05-01 12:34@;
+string s4 = t4.ToString();
+time t5 = @01 12:34:56@;
+string s5 = t5.ToString();
+time t6 = @01 12:34@;
+string s6 = t6.ToString();
+time t7 = @2019-05-01@;
+string s7 = t7.ToString();
+time t8 = @2019-05-1@;
+string s8 = s8.ToString();
+time t9 = @2019-5-01@;
+string s9 = s9.ToString();
+time t10 = @2019-5-1@;
+string s10 = s10.ToString();
+time t11 = @12:34:56@;
+string s11 = s11.ToString();
+time t12 = @1:2:3@;
+string s12 = s12.ToString();
+time t13 = @12:34@;
+string s13 = s13.ToString();
+time t14 = @05-01@;
+string s14 = s14.ToString();
+time t15 = @01@;
+string s15 = s15.ToString();
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.s1.should.equal('2019-05-01 12:34:56');
+                        objects.s2.should.equal('2019-05-01 12:34:00');
+                        objects.s3.should.equal('2019-05-01 12:34:56');
+                        objects.s4.should.equal('2019-05-01 12:34:00');
+                        objects.s5.should.equal('2019-05-01 12:34:56');
+                        objects.s6.should.equal('2019-05-01 12:34:00');
+                        objects.s7.should.equal('2019-05-01 00:00:00');
+                        objects.s8.should.equal('2019-05-01 00:00:00');
+                        objects.s9.should.equal('2019-05-01 00:00:00');
+                        objects.s10.should.equal('2019-05-01 00:00:00');
+                        objects.s11.should.equal('2019-05-29 12:34:56');
+                        objects.s12.should.equal('2019-05-29 01:02:03');
+                        objects.s13.should.equal('2019-05-29 12:34:00');
+                        objects.s14.should.equal('2019-05-01 00:00:00');
+                        objects.s15.should.equal('2019-05-01 00:00:00');
+                        done();
+                    }
+                });
+            });
+
+
             it('6.1.3 should do string.ToInteger()', function (done) {
                 this.timeout(30000);
                 rega.exec(`
