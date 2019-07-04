@@ -22,6 +22,7 @@ if [[ ! -x /bin/faketime ]]; then
   if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
     apt-get -qq install libc6-dev:i386
   fi
+  apt-get -qq install build-essential
 
   # checkout and compile
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
