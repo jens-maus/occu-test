@@ -2,6 +2,8 @@
 
 FLAVOR=${FLAVOR:-beta}
 
+set -x
+
 echo "creating directories"
 [[ ! -d /etc/config ]] && mkdir -p /etc/config
 [[ ! -d /www/rega ]] && mkdir -p /www/rega
@@ -21,14 +23,12 @@ fi
 if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   apt-get -qq install libstdc++6:i386
 fi
-if [ $(dpkg-query -W -f='${Status}' libgcc:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install libgcc:i386
-fi
+#if [ $(dpkg-query -W -f='${Status}' libgcc:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+#  apt-get -qq install libgcc:i386
+#fi
 if [ $(dpkg-query -W -f='${Status}' expect-dev 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   apt-get -qq install expect-dev
 fi
-
-apt-get search libgcc
 
 echo "check that libfaketime is available"
 if [[ ! -x /bin/faketime ]]; then
