@@ -19,9 +19,9 @@ if [[ ! -x /bin/faketime ]]; then
   #if [ $(dpkg-query -W -f='${Status}' libgcc:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   #  apt-get -qq install libgcc:i386
   #fi
-  if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-    apt-get -qq install libc6-dev:i386
-  fi
+  #if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  #  apt-get -qq install libc6-dev:i386
+  #fi
 
   # checkout and compile
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
