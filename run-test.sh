@@ -14,14 +14,27 @@ echo -e "#!/bin/bash\necho /bin/hm_startup executed" > /bin/hm_startup
 echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" > /bin/hm_autoconf
 chmod a+x /bin/hm_startup /bin/hm_autoconf
 
+echo "installing required packages"
+#dpkg --add-architecture i386
+#apt-get -qq update || true
+if [ $(dpkg-query -W -f='${Status}' libc6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install libc6:i386
+fi
+if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install libstdc++6:i386
+fi
+if [ $(dpkg-query -W -f='${Status}' expect-dev 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install expect-dev
+fi
+
 echo "check that libfaketime is available"
 if [[ ! -x /bin/faketime ]]; then
-  if [ $(dpkg-query -W -f='${Status}' libgcc1:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-    apt-get -qq install libgcc1:i386
-  fi
-  if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-    apt-get -qq install libc6-dev:i386
-  fi
+  #if [ $(dpkg-query -W -f='${Status}' libgcc1:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  #  apt-get -qq install libgcc1:i386
+  #fi
+  #if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  #  apt-get -qq install libc6-dev:i386
+  #fi
   apt-get -qq install build-essential
   apt-get -qq install gcc-multilib
 
@@ -33,22 +46,6 @@ if [[ ! -x /bin/faketime ]]; then
   git checkout 579b908580bcbe5f05c61c8103bf1cbddadde299
   CC=gcc CFLAGS=-m32 LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install
   file /bin/faketime
-fi
-
-echo "installing required packages"
-#dpkg --add-architecture i386
-#apt-get -qq update || true
-if [ $(dpkg-query -W -f='${Status}' libc6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install libc6:i386
-fi
-if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install libstdc++6:i386
-fi
-#if [ $(dpkg-query -W -f='${Status}' libgcc:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-#  apt-get -qq install libgcc:i386
-#fi
-if [ $(dpkg-query -W -f='${Status}' expect-dev 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install expect-dev
 fi
 
 echo "cloning occu"
