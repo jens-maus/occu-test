@@ -36,16 +36,16 @@ flavors.forEach(function (flavor) {
                         }
                         this.slow(waittime);
                         this.timeout(waittime);
-                        subscribe('rega', new RegExp('execute Program ID = .*' + program), function (output) {
-                            cp.exec('/bin/date +"%Y-%m-%d %H:%M:%S %Z"', function (e, stdout) {
-                                if (targetTime === '' || stdout.includes(targetTime)) {
-                                    done();
-                                } else {
-                                    done(new Error('executed time (' + stdout.replace('\n', '') + ') does not match expected one (' + targetTime + ')'));
-                                    stopProcessing = true;
-                                }
-                                console.log(indent('@', 8), stdout.replace('\n', ''), ':', output);
-                            });
+                        subscribe('rega', new RegExp('ExecuteDestination succeeded from Program ID = .*' + program), function (output) {
+                            if (targetTime === '' || output.includes(targetTime)) {
+                                done();
+                            } else {
+                                const timeRegExp = /^\[(.*)\] .*/g;
+                                const match = timeRegExp.exec(output);
+                                done(new Error('executed time (' + match[1] + ') does not match expected one (' + targetTime + ')'));
+                                stopProcessing = true;
+                            }
+                            console.log(indent(output, 8));
                         });
                     });
                 }
