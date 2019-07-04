@@ -13,11 +13,12 @@ echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" > /bin/hm_autoconf
 chmod a+x /bin/hm_startup /bin/hm_autoconf
 
 echo "check that libfaketime is available"
-if [[ -x /bin/faketime ]]; then
+if [[ ! -x /bin/faketime ]]; then
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
   cd /faketime
   git checkout 579b908580bcbe5f05c61c8103bf1cbddadde299
-  make install
+  make PREFIX= install
+  file /bin/faketime
 fi
 
 echo "cloning occu"
