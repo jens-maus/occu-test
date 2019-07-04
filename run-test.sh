@@ -39,7 +39,7 @@ if [[ ! -x /bin/faketime ]]; then
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
   cd /faketime
   git checkout 579b908580bcbe5f05c61c8103bf1cbddadde299
-  CFLAGS=-m32 LDFLAGS=-m32 make PREFIX= install
+  CC=gcc CFLAGS=-m32 LDFLAGS=-m32 make PREFIX= install
   file /bin/faketime
 fi
 
