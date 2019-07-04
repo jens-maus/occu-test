@@ -12,7 +12,6 @@ notifications:
 install:
   - sudo dpkg --add-architecture i386
   - sudo apt-get -qq update || true
-  - sudo apt-get -qq install libc6:i386 libstdc++6:i386 expect-dev
   - sudo ./run-test.sh
 
 env:

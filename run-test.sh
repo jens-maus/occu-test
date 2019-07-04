@@ -12,8 +12,24 @@ echo -e "#!/bin/bash\necho /bin/hm_startup executed" > /bin/hm_startup
 echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" > /bin/hm_autoconf
 chmod a+x /bin/hm_startup /bin/hm_autoconf
 
+echo "installing required packages"
+#dpkg --add-architecture i386
+#apt-get -qq update || true
+if [ $(dpkg-query -W -f='${Status}' libc6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install libc6:i386
+fi
+if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install libstdc++6:i386
+fi
+if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install expect-dev
+fi
+
 echo "check that libfaketime is available"
 if [[ ! -x /bin/faketime ]]; then
+  if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    apt-get -qq install libc6-dev:i386
+  fi
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
   cd /faketime
   git checkout 579b908580bcbe5f05c61c8103bf1cbddadde299
@@ -38,19 +54,6 @@ cp -v homematic.regadom /etc/config/
 chmod -R a+rw /etc/config
 [[ ${FLAVOR} =~ normal|community ]] && echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf
 [[ ${FLAVOR} =~ beta ]] && echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI-Beta/lib/" >/etc/ld.so.conf.d/hm.conf
-
-echo "installing required packages"
-#dpkg --add-architecture i386
-#apt-get -qq update || true
-if [ $(dpkg-query -W -f='${Status}' libc6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install libc6:i386
-fi
-if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install libstdc++6:i386
-fi
-if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install expect-dev
-fi
 ldconfig
 
 echo "installing nvm/nodejs dependencies"
