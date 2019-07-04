@@ -11,6 +11,7 @@ notifications:
 
 install:
   - sudo dpkg --add-architecture i386
+  - sudo dpkg --print-foreign-architectures
   - sudo apt-get -qq update || true
   - sudo ./run-test.sh
 
