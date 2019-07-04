@@ -23,12 +23,15 @@ if [[ ! -x /bin/faketime ]]; then
     apt-get -qq install libc6-dev:i386
   fi
   apt-get -qq install build-essential
+  apt-get -qq install gcc-multilib
+
+  ls -la /usr/
 
   # checkout and compile
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
   cd /faketime
   git checkout 579b908580bcbe5f05c61c8103bf1cbddadde299
-  CC=gcc CFLAGS=-m32 LDFLAGS=-m32 make PREFIX= install
+  CC=gcc CFLAGS=-m32 LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install
   file /bin/faketime
 fi
 
