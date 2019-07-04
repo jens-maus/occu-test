@@ -21,9 +21,9 @@ fi
 if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   apt-get -qq install libstdc++6:i386
 fi
-if [ $(dpkg-query -W -f='${Status}' libgcc:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-  apt-get -qq install libgcc:i386
-fi
+#if [ $(dpkg-query -W -f='${Status}' libgcc:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+#  apt-get -qq install libgcc:i386
+#fi
 if [ $(dpkg-query -W -f='${Status}' expect-dev 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   apt-get -qq install expect-dev
 fi
@@ -36,6 +36,9 @@ if [[ ! -x /bin/faketime ]]; then
   if [ $(dpkg-query -W -f='${Status}' libc6-dev:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
     apt-get -qq install libc6-dev:i386
   fi
+  apt-get -qq install build-essential:i386
+
+  # checkout and compile
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
   cd /faketime
   git checkout 579b908580bcbe5f05c61c8103bf1cbddadde299
