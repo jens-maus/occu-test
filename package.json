@@ -37,7 +37,8 @@
     "mocha-clean": "latest",
     "should": "latest",
     "stream-splitter": "latest",
-    "mocha-steps": "latest"
+    "mocha-steps": "latest",
+    "moment": "latest"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2",

@@ -1,6 +1,8 @@
 /* global describe, it */
 /* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, max-params, capitalized-comments, no-multi-spaces, array-bracket-spacing */
 
+const moment = require('moment');
+
 const {
     cp,
     rega,
@@ -37,13 +39,23 @@ flavors.forEach(function (flavor) {
                         this.slow(waittime);
                         this.timeout(waittime);
                         subscribe('rega', new RegExp('ExecuteDestination succeeded from Program ID = .*' + program), function (output) {
-                            if (targetTime === '' || output.includes(targetTime)) {
+                            if (targetTime === '') {
                                 done();
                             } else {
+                                // extract the time portion
                                 const timeRegExp = /^\[(.*)\] .*/g;
                                 const match = timeRegExp.exec(output);
-                                done(new Error('executed time (' + match[1] + ') does not match expected one (' + targetTime + ')'));
-                                stopProcessing = true;
+                                if (match !== '') {
+                                    const curTime = moment(match[1], 'YYYY-MM-DD hh:mm:ss z');
+                                    const tTime = moment(targetTime, 'YYYY-MM-DD hh:mm:ss z');
+
+                                    if (Math.abs(tTime - curTime) <= 1000) {
+                                        done();
+                                    } else {
+                                        done(new Error('executed time (' + match[1] + ') does not match expected one (' + targetTime + ')'));
+                                        stopProcessing = true;
+                                    }
+                                }
                             }
                             console.log(indent(output, 8));
                         });
@@ -63,9 +75,9 @@ flavors.forEach(function (flavor) {
         test('2020-01-01 00:59:48 CET',  'Time0100', 'TimerFixed @ 01:00', ['2020-01-01 01:00:00 CET']);
 
         // Perform test of the short 10s timers
-        test('2020-01-01 00:00:00 CET',  'TimeEvery10s', 'TimerPeriodic (10s) on new year', ['00:00:10', '00:00:20'], 30000);
-        test('2020-03-29 01:59:48 CET',  'TimeEvery10s', 'TimerPeriodic (10s) during Winter->Summer DST change', ['03:00:00 CEST', '03:00:10 CEST', '03:00:20 CEST', '03:00:30 CEST'], 30000);
-        test('2020-10-25 02:59:48 CEST', 'TimeEvery10s', 'TimerPeriodic (10s) during Summer->Winter DST change', ['02:00:00 CET', '02:00:10 CET', '02:00:20 CET', '02:00:30 CET'], 30000);
+        test('2020-01-01 00:00:00 CET',  'TimeEvery10s', 'TimerPeriodic (10s) on new year', ['2020-01-01 00:00:10 CET', '2020-01-01 00:00:20 CET'], 30000);
+        test('2020-03-29 01:59:48 CET',  'TimeEvery10s', 'TimerPeriodic (10s) during Winter->Summer DST change', ['2020-03-29 03:00:00 CEST', '2020-03-29 03:00:10 CEST', '2020-03-29 03:00:20 CEST', '2020-03-29 03:00:30 CEST'], 30000);
+        test('2020-10-25 02:59:48 CEST', 'TimeEvery10s', 'TimerPeriodic (10s) during Summer->Winter DST change', ['2020-10-25 02:00:00 CET', '2020-10-25 02:00:10 CET', '2020-10-25 02:00:20 CET', '2020-10-25 02:00:30 CET'], 30000);
 
         // Perform test of day/night astro switches (Europe/Berlin) in DST and
         // and non-DST times
@@ -79,11 +91,11 @@ flavors.forEach(function (flavor) {
         test('2019-10-27 16:39:48 CET',  'TimeSpanNight', 'TimeSpanNight switch @ 16:40 on summer->winter day', ['2019-10-27 16:40:00 CET']);
 
         // Perform long running timer test for year switch
-        test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during year change', ['23:59:00', '00:00:00', '00:01:00'], 65000);
+        test('2019-12-31 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during year change', ['2019-12-31 23:59:00 CET', '2020-01-01 00:00:00 CET', '2020-01-01 00:01:00 CET'], 65000);
 
         // Perform long running regular timer test at DST boundaries
-        test('2020-03-29 01:58:40 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during Winter->Summer DST change', ['01:59:00 CET', '03:00:00 CEST', '03:01:00 CEST'], 70000);
-        test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', 'TimerPeriodic (1m) during Summer->Winter DST change', ['02:59:00 CEST', '02:00:00 CET', '02:01:00 CET'], 70000);
+        test('2020-03-29 01:58:40 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during Winter->Summer DST change', ['2020-03-29 01:59:00 CET', '2020-03-29 03:00:00 CEST', '2020-03-29 03:01:00 CEST'], 70000);
+        test('2020-10-25 02:58:40 CEST', 'TimeEveryMinute', 'TimerPeriodic (1m) during Summer->Winter DST change', ['2020-10-25 02:59:00 CEST', '2020-10-25 02:00:00 CET', '2020-10-25 02:01:00 CET'], 70000);
 
         // Leap/non-leap year tests (Feb, 29. 2020, Feb, 28. 2021)
         test('2020-02-29 01:59:48 CET',  'Time0200',        'TimerFixed @ 02:00 last feb day (leap year)', ['2020-02-29 02:00:00 CET']);
@@ -91,7 +103,7 @@ flavors.forEach(function (flavor) {
         test('2021-02-28 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) feb month change (non-leap year)', ['2021-02-28 23:59:00 CET', '2021-03-01 00:00:00 CET'], 70000);
 
         // -> start of DST (winter->summer) in leap year
-        test('2020-03-28 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during day change one day before Winter->Summer DST change', ['23:59:00 CET', '00:00:00 CET', '00:01:00 CET'], 70000); // day switch before DST switchdate
+        test('2020-03-28 23:58:48 CET',  'TimeEveryMinute', 'TimerPeriodic (1m) during day change one day before Winter->Summer DST change', ['2020-03-28 23:59:00 CET', '2020-03-29 00:00:00 CET', '2020-03-29 00:01:00 CET'], 70000); // day switch before DST switchdate
         test('2020-03-29 00:59:48 CET',  'Time0100',        'TimerFixed @ 01:00 before Winter->Summer DST change', ['2020-03-29 01:00:00 CET']);
         test('2020-03-29 01:29:48 CET',  'Time0130',        'TimerFixed @ 01:30 before Winter->Summer DST change', ['2020-03-29 01:30:00 CET']);
         test('2020-03-29 01:54:48 CET',  'Time0155',        'TimerFixed @ 01:55 before Winter->Summer DST change', ['2020-03-29 01:55:00 CET']);
