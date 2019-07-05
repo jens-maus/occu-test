@@ -2,6 +2,8 @@
 
 FLAVOR=${FLAVOR:-beta}
 
+umask 022
+
 echo "STEP: creating directories"
 [[ ! -d /etc/config ]] && mkdir -p /etc/config
 [[ ! -d /www/rega ]] && mkdir -p /www/rega
@@ -65,7 +67,3 @@ fi
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 nvm install 6
 npm install
-
-echo "STEP: running occu test..."
-export FLAVOR=${FLAVOR}
-npm test ${1}
