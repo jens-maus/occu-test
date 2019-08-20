@@ -49,7 +49,7 @@ flavors.forEach(function (flavor) {
                                     const curTime = moment(match[1], 'YYYY-MM-DD hh:mm:ss z');
                                     const tTime = moment(targetTime, 'YYYY-MM-DD hh:mm:ss z');
 
-                                    if (Math.abs(tTime - curTime) <= 1000) {
+                                    if (Math.abs(tTime - curTime) <= 2000) {
                                         done();
                                     } else {
                                         done(new Error('executed time (' + match[1] + ') does not match expected one (' + targetTime + ')'));
