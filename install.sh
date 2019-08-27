@@ -46,9 +46,13 @@ fi
 echo "STEP: copying OCCU files"
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf /etc/
 echo -e "XmlRpcServerPort=31999" >>/etc/rega.conf
+echo -e "SessionMaxCount=300" >>/etc/rega.conf
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* /bin/
 cp -v /occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI-Beta/bin/ReGaHss /bin/ReGaHss.beta
+rm -rf /www
+mkdir -p /www
+cp -av /occu/WebUI/www/* /www/
 cp -v homematic.regadom /etc/config/
 chmod -R a+rw /etc/config
 [[ ${FLAVOR} =~ normal|community ]] && echo "/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf
