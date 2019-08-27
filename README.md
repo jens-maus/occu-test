@@ -1,5 +1,5 @@
 # OCCU Test
-[![Build Status](https://travis-ci.org/hobbyquaker/occu-test.svg?branch=master)](https://travis-ci.org/hobbyquaker/occu-test)
+[![Build Status](https://travis-ci.org/jens-maus/occu-test.svg?branch=master)](https://travis-ci.org/jens-maus/occu-test)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![License][mit-badge]][mit-url]
 
@@ -19,7 +19,7 @@ nvm install 6
 
 # Clone the repo
 cd /home/travis
-git clone https://github.com/hobbyquaker/occu-test
+git clone https://github.com/jens-maus/occu-test
 
 # Install dependencies
 cd occu-test
@@ -100,8 +100,9 @@ Help and Feedback highly appreciated, Pull Requests Welcome! :-)
 
 ## License
 
-MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
+MIT (c) 2018-2019 [Jens Maus](https://github.com/jens-maus)
 
+MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
 
 [mit-badge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat
 [mit-url]: LICENSE
