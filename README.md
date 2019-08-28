@@ -1,9 +1,20 @@
-# OCCU Test
-[![Build Status](https://travis-ci.org/jens-maus/occu-test.svg?branch=master)](https://travis-ci.org/jens-maus/occu-test)
+# ReGaHss Testing Environment
+[![Test Summary](https://img.shields.io/travis/jens-maus/occu-test?label=tests)](https://travis-ci.org/jens-maus/occu-test)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
-[![License][mit-badge]][mit-url]
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Automated System Tests of ReGaHss - the HomeMatic (O)CCU "Logic Layer"
+This repository performs automated daily system tests of `ReGaHss` - the HomeMatic (O)CCU "Logic Layer" engine. It uses a [mocha](https://github.com/mochajs/mocha)-based node.js testing framework to test all published `ReGaHss` binaries in the [OCCU](https://github.com/eq-3/occu) environment published by eQ3. Beside testing common corner cases of the embedded scripting language of ReGaHss this testing framework also tests for security vulnerabilities.
+
+Recent test results can be viewed by looking at recent [travis-based test execution results](https://travis-ci.org/jens-maus/occu-test):
+
+| Normal            | Community         | Beta              |
+|-------------------|-------------------|-------------------|
+| [![Normal][1]][4] | [![Build2][2]][4] | [![Build3][3]][4] |
+
+[1]: https://travis-matrix-badges.herokuapp.com/repos/jens-maus/occu-test/branches/master/1
+[2]: https://travis-matrix-badges.herokuapp.com/repos/jens-maus/occu-test/branches/master/2
+[3]: https://travis-matrix-badges.herokuapp.com/repos/jens-maus/occu-test/branches/master/3
+[4]: https://travis-ci.org/jens-maus/occu-test
 
 ## HOWTO run the tests locally
 ```bash
@@ -31,7 +42,7 @@ npm test
 
 ## homematic.regadom
 
-The Rega is started with a prebuilt homematic.regadom:
+ReGaHss is started with a prebuilt `homematic.regadom` which contains the following variables, programs and objects:
 
 #### Variables
 
@@ -60,7 +71,6 @@ The Rega is started with a prebuilt homematic.regadom:
 * Key16Key17 - on BidCoS-RF:16 PRESS_LONG => BidCoS-RF:17 PRESS_LONG
 * Key1 - on BidCos-RF:1 PRESS_SHORT => BidCoS-RF:2 PRESS_LONG
 
-
 ## Todo
 
 * test all examples of the official homematic script documentation **wip**
@@ -77,32 +87,18 @@ The Rega is started with a prebuilt homematic.regadom:
 * WebUI tests?
 * ...
 
-#### done. :-)
-
-* ~~documentation on how to run the tests in a local docker container~~
-* ~~test time based triggers (edge cases: DST, leap year)~~
-* ~~create a regadom with several test variables and programs~~ 
-* ~~integrate simulated rfd/hmipserver~~
-
-
 ## Links
 
-* [occu](https://github.com/eq-3/occu)
+* [OCCU](https://github.com/eq-3/occu)
 * [hm-simulator](https://github.com/hobbyquaker/hm-simulator) (simulates rfd/hmipserver)
 * [ccu x86 docker image](https://hub.docker.com/r/litti/ccu2/) (used for creation of the prebuilt homematic.regadom)
 * [homematic-rega](https://github.com/hobbyquaker/homematic-rega) (Node.js Homematic CCU ReGaHSS Remote Script Interface)
-
 
 ## Contributing
 
 Help and Feedback highly appreciated, Pull Requests Welcome! :-)
 
-
 ## License
 
-MIT (c) 2018-2019 [Jens Maus](https://github.com/jens-maus)
-
+MIT (c) 2018-2019 [Jens Maus](https://github.com/jens-maus)<br/>
 MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
-
-[mit-badge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat
-[mit-url]: LICENSE
