@@ -14,4 +14,4 @@ fi
 
 echo "STEP: running occu test..."
 export FLAVOR=${FLAVOR}
-npm test ${1}
+npm test test/14-cve-tests.js ${1}
