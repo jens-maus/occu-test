@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/hobbyquaker/occu-test#readme",
   "dependencies": {
-    "async": "^3.1.0",
+    "async": "^2.6.3",
     "request": "^2.88.0",
     "binrpc": "^3.1.0",
     "camo-purge": "latest",
