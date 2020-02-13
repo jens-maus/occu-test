@@ -1,0 +1,40 @@
+name: CI
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: [normal, community, beta]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: install dependencies
+      run: |
+        # Required for libc6-dbg:i386 and g++-multilib packages which are
+        # needed for x86 builds.
+        sudo dpkg --add-architecture i386
+        sudo dpkg --print-foreign-architectures
+        sudo apt-get -qq update || true
+
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '6.x'
+
+    - name: install OCCU
+      run: |
+        export TZ=Europe/Berlin
+        sudo ./install.sh
+
+    - name: run OCCU test
+      run: |
+        sudo ./run.sh
