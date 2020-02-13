@@ -1,5 +1,6 @@
 sudo: required
 dist: bionic
+os: linux
 language: node_js
 node_js:
   - '6'
@@ -9,14 +10,20 @@ notifications:
     on_success: change
     on_failure: change
 
+addons:
+  apt:
+    packages:
+    - gcc-8
+    - g++-8
+
 install:
-  - sudo dpkg --add-architecture i386
-  - sudo dpkg --print-foreign-architectures
-  - sudo apt-get -qq update || true
-  - sudo ./install.sh
+  - dpkg --add-architecture i386
+  - dpkg --print-foreign-architectures
+  - apt-get -qq update || true
+  - ./install.sh
 
 script:
-  - sudo ./run.sh
+  - ./run.sh
 
 env:
   - FLAVOR=normal
