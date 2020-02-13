@@ -20,11 +20,14 @@ jobs:
 
     - name: install dependencies
       run: |
-        # Required for libc6-dbg:i386 and g++-multilib packages which are
-        # needed for x86 builds.
         sudo dpkg --add-architecture i386
         sudo dpkg --print-foreign-architectures
         sudo apt-get -qq update || true
+
+    - name: set timezone to Europe/Berlin
+      run: |
+        sudo timedatectl set-timezone Europe/Berlin
+        date
 
     - uses: actions/setup-node@v1
       with:
@@ -32,9 +35,9 @@ jobs:
 
     - name: install OCCU
       run: |
-        export TZ=Europe/Berlin
         sudo ./install.sh
 
     - name: run OCCU test
       run: |
+        export TERM=xterm-256color
         sudo ./run.sh
