@@ -17,13 +17,13 @@ addons:
     - g++-8
 
 install:
-  - dpkg --add-architecture i386
-  - dpkg --print-foreign-architectures
-  - apt-get -qq update || true
-  - ./install.sh
+  - sudo dpkg --add-architecture i386
+  - sudo dpkg --print-foreign-architectures
+  - sudo apt-get -qq update || true
+  - sudo ./install.sh
 
 script:
-  - ./run.sh
+  - sudo ./run.sh
 
 env:
   - FLAVOR=normal
