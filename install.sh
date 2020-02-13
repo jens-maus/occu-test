@@ -50,7 +50,6 @@ echo -e "SessionMaxCount=300" >>/etc/rega.conf
 cp -v /occu/X86_32_GCC8/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
 cp -v /occu/X86_32_GCC8/packages-eQ-3/WebUI/bin/* /bin/
 cp -v /occu/X86_32_GCC8/packages-eQ-3/WebUI-Beta/bin/ReGaHss /bin/ReGaHss.beta
-ldd /occu/X86_32_GCC8/packages-eQ-3/WebUI/bin/ReGaHss.community
 rm -rf /www
 mkdir -p /www
 cp -a /occu/WebUI/www/* /www/
@@ -59,6 +58,7 @@ chmod -R a+rw /etc/config
 [[ ${FLAVOR} =~ normal|community ]] && echo "/occu/X86_32_GCC8/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf
 [[ ${FLAVOR} =~ beta ]] && echo "/occu/X86_32_GCC8/packages-eQ-3/WebUI-Beta/lib/" >/etc/ld.so.conf.d/hm.conf
 ldconfig
+ldd /occu/X86_32_GCC8/packages-eQ-3/WebUI/bin/ReGaHss.community
 
 echo "STEP: installing nvm/nodejs dependencies"
 source ~/.bashrc
