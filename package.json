@@ -4,7 +4,7 @@
   "description": "Automated System Tests for the eQ-3 OCCU",
   "private": true,
   "scripts": {
-    "test": "camo-purge; xo; mocha",
+    "test": "camo-purge; xo; mocha --colors",
     "lint": "xo",
     "lintfix": "xo --fix"
   },
