@@ -1,5 +1,5 @@
 # ReGaHss Testing Environment
-[![Test Summary](https://img.shields.io/travis/jens-maus/occu-test?label=tests)](https://travis-ci.org/jens-maus/occu-test)
+[![CI](https://github.com/jens-maus/occu-test/workflows/CI/badge.svg)](https://github.com/jens-maus/occu-test/actions)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -100,5 +100,4 @@ Help and Feedback highly appreciated, Pull Requests Welcome! :-)
 
 ## License
 
-MIT (c) 2018-2019 [Jens Maus](https://github.com/jens-maus)<br/>
-MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
+MIT (c) 2017-2020 [Jens Maus](https://github.com/jens-maus), [Sebastian Raff](https://github.com/hobbyquaker)
