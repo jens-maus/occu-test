@@ -31,7 +31,7 @@ jobs:
 
     - uses: actions/setup-node@v1
       with:
-        node-version: '6.x'
+        node-version: '12.x'
 
     - name: install OCCU
       run: |
@@ -39,5 +39,4 @@ jobs:
 
     - name: run OCCU test
       run: |
-        export TERM=xterm-256color
         sudo ./run.sh
