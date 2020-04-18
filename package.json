@@ -21,6 +21,12 @@
     "automation"
   ],
   "author": "Sebastian Raff <hq@ccu.io>",
+  "contributors": [
+    {
+      "name": "Jens Maus",
+      "email": "mail@jens-maus.de"
+    }
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hobbyquaker/occu-test/issues"
