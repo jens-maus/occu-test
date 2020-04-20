@@ -33,10 +33,14 @@ jobs:
       with:
         node-version: '12.x'
 
+    - uses: setup env
+      run: |
+        echo ::set-env name=ARCH::$(echo X86_32_GCC8)
+
     - name: install OCCU
       run: |
-        sudo ./install.sh
+        sudo FLAVOR=${{ matrix.platform }} ./install.sh
 
     - name: run OCCU test
       run: |
-        sudo ./run.sh
+        sudo FLAVOR=${{ matrix.platform }} ./run.sh
