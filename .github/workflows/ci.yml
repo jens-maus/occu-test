@@ -35,7 +35,7 @@ jobs:
 
     - name: install OCCU
       run: |
-        sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_GCC8 ./install.sh
+        sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_Debian_Wheezy ./install.sh
 
     - name: run OCCU test
       run: |
