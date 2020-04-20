@@ -33,7 +33,7 @@ jobs:
       with:
         node-version: '12.x'
 
-    - uses: setup env
+    - name: setup env
       run: |
         echo ::set-env name=ARCH::$(echo X86_32_GCC8)
 
