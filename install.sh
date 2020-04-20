@@ -56,10 +56,10 @@ mkdir -p /www
 cp -a /occu/WebUI/www/* /www/
 cp -v homematic.regadom /etc/config/
 chmod -R a+rw /etc/config
-[[ ${FLAVOR} =~ normal|community ]] && echo "/occu/${ARCH}/packages-eQ-3/WebUI/lib/" >/etc/ld.so.conf.d/hm.conf
 [[ ${FLAVOR} =~ beta ]] && echo "/occu/${ARCH}/packages-eQ-3/WebUI-Beta/lib/" >/etc/ld.so.conf.d/hm.conf
-ldconfig
-ldd /occu/${ARCH}/packages-eQ-3/WebUI/bin/ReGaHss.community
+echo "/occu/${ARCH}/packages-eQ-3/WebUI/lib/" >>/etc/ld.so.conf.d/hm.conf
+/sbin/ldconfig
+ldd /occu/${ARCH}/packages-eQ-3/WebUI/bin/ReGaHss.${FLAVOR}
 
 echo "STEP: installing nvm/nodejs dependencies"
 source ~/.bashrc
