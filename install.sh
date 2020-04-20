@@ -59,7 +59,7 @@ chmod -R a+rw /etc/config
 [[ ${FLAVOR} =~ beta ]] && echo "/occu/${ARCH}/packages-eQ-3/WebUI-Beta/lib/" >/etc/ld.so.conf.d/hm.conf
 echo "/occu/${ARCH}/packages-eQ-3/WebUI/lib/" >>/etc/ld.so.conf.d/hm.conf
 /sbin/ldconfig
-ldd /occu/${ARCH}/packages-eQ-3/WebUI/bin/ReGaHss.${FLAVOR}
+ldd /bin/ReGaHss.${FLAVOR}
 
 echo "STEP: installing nvm/nodejs dependencies"
 source ~/.bashrc
