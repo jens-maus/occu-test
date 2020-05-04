@@ -1,7 +1,7 @@
 {
   "name": "occu-test",
-  "version": "0.3.0",
-  "description": "Automated System Tests for the eQ-3 OCCU",
+  "version": "0.4.0",
+  "description": "Automated System Tests for ReGaHss",
   "private": true,
   "scripts": {
     "test": "camo-purge; xo; mocha --colors",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hobbyquaker/occu-test.git"
+    "url": "git+https://github.com/jens-maus/occu-test.git"
   },
   "keywords": [
     "eQ-3",
@@ -29,9 +29,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hobbyquaker/occu-test/issues"
+    "url": "https://github.com/jens-maus/occu-test/issues"
   },
-  "homepage": "https://github.com/hobbyquaker/occu-test#readme",
+  "homepage": "https://github.com/jens-maus/occu-test#readme",
   "dependencies": {
     "async": "^2.6.3",
     "request": "^2.88.0",

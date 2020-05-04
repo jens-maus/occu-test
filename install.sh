@@ -33,7 +33,7 @@ if [[ ! -x /bin/faketime ]]; then
   apt-get -qq install gcc-multilib
   # checkout and compile
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
-  (cd /faketime; git checkout 90f11685b5c46f0b1b48d9aaa7e70172e4a2c44e; CC=gcc CFLAGS=-m32 LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
+  (cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32 -DFORCE_MONOTONIC_FIX" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
 fi
 
 echo "STEP: cloning occu"
@@ -71,5 +71,5 @@ if [ ! -d ${NVM_DIR} ]; then
 fi
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-[ -x /usr/bin/nvm ] && nvm install 6
+[ -x /usr/bin/nvm ] && nvm install 12
 npm install
