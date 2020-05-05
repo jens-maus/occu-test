@@ -185,6 +185,23 @@ object obj = dom.GetObject("2Light");
                 });
             });
 
+            it('should handle umlauts in ToUTF8().UriEncode()/UriDecode()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string str = " !\\"#$%&'()öäüÖÄÜß";
+string kodiert = str.ToUTF8().UriEncode(); ! kodiert = %20%21%22%23%24%25%26%27%28%29%C3%B6%C3%A4%C3%BC%C3%96%C3%84%C3%9C%C3%9F
+string dekodiert = kodiert.UriDecode().ToLatin(); ! dekodiert = !"#$%&\\'()öäüÖÄÜß
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        objects.kodiert.should.equal('%20%21%22%23%24%25%26%27%28%29%C3%B6%C3%A4%C3%BC%C3%96%C3%84%C3%9C%C3%9F');
+                        objects.dekodiert.should.equal(' !"#$%&\'()öäüÖÄÜß');
+                        done();
+                    }
+                });
+            });
+
             it('operand tests', function (done) {
                 this.timeout(30000);
                 rega.exec(`
