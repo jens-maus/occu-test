@@ -38,10 +38,11 @@ fi
 
 echo "STEP: cloning occu"
 if [[ -d /occu ]]; then
- (cd /occu; git pull)
+  (cd /occu; git pull)
 else
   git clone --depth=50 --branch=master https://github.com/jens-maus/occu /occu
 fi
+(cd /occu; git rev-parse HEAD)
 
 echo "STEP: copying OCCU files"
 ARCH=${ARCH:-X86_32_Debian_Wheezy}
