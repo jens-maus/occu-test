@@ -1,6 +1,7 @@
 # ReGaHss Testing Environment
 [![CI](https://github.com/jens-maus/occu-test/workflows/CI/badge.svg)](https://github.com/jens-maus/occu-test/actions)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![Known Vulnerabilities](https://snyk.io/test/github/jens-maus/occu-test/badge.svg)](https://snyk.io/test/github/jens-maus/occu-test)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This repository performs automated daily system tests of `ReGaHss` - the HomeMatic (O)CCU "Logic Layer" engine. It uses a [mocha](https://github.com/mochajs/mocha)-based node.js testing framework to test all published `ReGaHss` binaries in the [OCCU](https://github.com/eq-3/occu) environment published by eQ3. Beside testing common corner cases of the embedded scripting language of ReGaHss this testing framework also tests for security vulnerabilities.
