@@ -787,12 +787,12 @@ string l = "xxx\\\\rxxx";
             it('6.6.1 should correctly deal with super string (^xxx^) chars', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
+string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=\\\\^^;
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=');
+                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=^');
                         done();
                     }
                 });
