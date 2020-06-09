@@ -792,7 +792,7 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=\\\\^^;
                     if (err) {
                         done(err);
                     } else {
-                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=^');
+                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=\\^');
                         done();
                     }
                 });
