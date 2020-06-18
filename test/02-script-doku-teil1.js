@@ -758,12 +758,12 @@ string d = "xxx\\txxx";
 string e = "xxx\\nxxx";
 string f = "xxx\\rxxx";
 string g = "xxx\\\\\\\\xxx";
-string h = "xxx\\\\\"xxx";
-string i = "xxx\\\\\'xxx";
+string h = "xxx\\\\\\"xxx";
+string i = "xxx\\\\'xxx";
 string j = "xxx\\\\txxx";
 string k = "xxx\\\\nxxx";
 string l = "xxx\\\\rxxx";
-string m = "\\"";
+string m = "\\\"";
 string n = "\\\\";
 string o = "\\\\\\"";
 string p = "\\\\\\\\";
@@ -801,7 +801,7 @@ string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
 string b = ^\\^;
 string c = ^\\\\^;
 string d = ^\\\\\\^;
-string e = "abcd\\zui".Replace(^\\^,^\\\\^);
+string e = ^abcd\\zui^.Replace(^\\^,^\\\\^);
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
@@ -810,7 +810,7 @@ string e = "abcd\\zui".Replace(^\\^,^\\\\^);
                         objects.b.should.equal('\\');
                         objects.c.should.equal('\\\\');
                         objects.d.should.equal('\\\\\\');
-                        objects.d.should.equal('abcd\\\\zui');
+                        objects.e.should.equal('abcd\\\\zui');
                         done();
                     }
                 });
