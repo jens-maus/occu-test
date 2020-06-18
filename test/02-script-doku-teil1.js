@@ -763,6 +763,11 @@ string i = "xxx\\\\\'xxx";
 string j = "xxx\\\\txxx";
 string k = "xxx\\\\nxxx";
 string l = "xxx\\\\rxxx";
+string m = "\\"";
+string n = "\\\\";
+string o = "\\\\\\"";
+string p = "\\\\\\\\";
+string q = "\\\\\\t\\"";
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
@@ -779,20 +784,33 @@ string l = "xxx\\\\rxxx";
                         objects.j.should.equal('xxx\\txxx');
                         objects.k.should.equal('xxx\\nxxx');
                         objects.l.should.equal('xxx\\rxxx');
+                        objects.m.should.equal('"');
+                        objects.n.should.equal('\\');
+                        objects.o.should.equal('\\"');
+                        objects.p.should.equal('\\\\');
+                        objects.q.should.equal('\\\t"');
                         done();
                     }
                 });
             });
 
-            it('6.6.1 should correctly deal with super string (^xxx^) chars', function (done) {
+            it('6.6.1 should correctly deal with raw/super string (^xxx^) literal', function (done) {
                 this.timeout(30000);
                 rega.exec(`
-string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=\\\\^^;
+string a = ^\\\\t\\n\\r\\\'\\\"\"\'\'~&=^;
+string b = ^\\^;
+string c = ^\\\\^;
+string d = ^\\\\\\^;
+string e = "abcd\\zui".Replace(^\\^,^\\\\^);
                 `, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
-                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=\\^');
+                        objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=');
+                        objects.b.should.equal('\\');
+                        objects.c.should.equal('\\\\');
+                        objects.d.should.equal('\\\\\\');
+                        objects.d.should.equal('abcd\\\\zui');
                         done();
                     }
                 });
