@@ -427,6 +427,23 @@ WriteLine(alarmVarObj.Channel());
                         });
                     });
                 });
+
+                // see https://github.com/jens-maus/RaspberryMatic/issues/870
+                it('should have xml response overflow fixed', function (done) {
+                    this.timeout(30000);
+                    rega.exec(`
+var aaaaaaaaaaaaa = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+WriteLine("SUCCESS");
+                    `, function (err, output, objects) {
+                        if (err) {
+                            done(err);
+                        } else {
+                            output.should.equal('SUCCESS\r\n');
+                            done();
+                        }
+                    });
+                });
+
             });
         });
 
