@@ -218,6 +218,135 @@ WriteLine("SUCCESS");
                 });
             });
 
+            // see https://github.com/jens-maus/RaspberryMatic/issues/847
+            it('should have system.Exec() stdin blocking fixed', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string stdout;
+string stderr;
+system.Exec("cat", &stdout, &stderr);
+WriteLine("SUCCESS");
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('SUCCESS\r\n');
+                        done();
+                    }
+                });
+            });
+
+            // see https://github.com/jens-maus/RaspberryMatic/issues/847
+            it('allows a 4th stdin parameter with system.Exec()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string stdout;
+string stderr;
+string stdin="SUCCESS";
+system.Exec("cat", &stdout, &stderr, stdin);
+WriteLine(stdout);
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('SUCCESS\r\n');
+                        done();
+                    }
+                });
+            });
+
+            // see https://github.com/jens-maus/RaspberryMatic/issues/876
+            it('allows a 2nd parameter with dom.GetObject()', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+object obj = dom.GetObject("VarString1", OT_VARDP);
+WriteLine(obj.Name());
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('VarString1\r\n');
+                        done();
+                    }
+                });
+            });
+
+            // see https://github.com/jens-maus/RaspberryMatic/issues/878
+            it('should have nested break/continue fixed', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+Write("START");
+string LISTE1 = ("A\\tB\\tC\\tD");
+string ELEMENT1;
+string LISTE2 = ("1\\t2\\t3\\t4");
+string ELEMENT2;
+boolean GEFUNDEN = false;
+foreach(ELEMENT1, LISTE1)
+{
+  Write("-");
+  if(GEFUNDEN) { Write("break1"); break; }
+
+  foreach(ELEMENT2, LISTE2)
+  {
+    Write(".");
+    if((ELEMENT2 == 3) && (ELEMENT1 == "C")) { GEFUNDEN = true; }
+  }
+
+  Write("x");
+  if(GEFUNDEN) { Write("break2"); break; }
+}
+WriteLine("END");
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('START-....x-....x-....xbreak2END');
+                        done();
+                    }
+                });
+            });
+
+            // see https://github.com/jens-maus/RaspberryMatic/issues/883
+            it('should allow .ToFloat() also on real/integer variables', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+var Test = 2;
+var Test2;
+Test2 = Test.ToFloat();
+WriteLine(":"#Test2);
+var Test3;
+Test3 = Test.ToInteger();
+WriteLine(":"#Test3);
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal(':2.000000\r\n:2\r\n);
+                        done();
+                    }
+                });
+            });
+
+            // see https://github.com/jens-maus/RaspberryMatic/issues/922
+            it('should have nested method calls fixed', function (done) {
+                this.timeout(30000);
+                rega.exec(`
+string stdout;
+string stderr;
+string str="XXecho -n hallo";
+system.Exec(str.Substr(2), &stdout, &stderr);
+WriteLine(stdout);
+WriteLine("SUCCESS");
+                `, function (err, output, objects) {
+                    if (err) {
+                        done(err);
+                    } else {
+                        output.should.equal('hallo\r\nSUCCESS\r\n');
+                        done();
+                    }
+                });
+            });
+
             it('operand tests', function (done) {
                 this.timeout(30000);
                 rega.exec(`
