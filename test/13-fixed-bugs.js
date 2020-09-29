@@ -300,7 +300,7 @@ WriteLine("END");
                     if (err) {
                         done(err);
                     } else {
-                        output.should.equal('START-....x-....x-....xbreak2END');
+                        output.should.equal('START-....x-....x-....xbreak2END\r\n');
                         done();
                     }
                 });
