@@ -321,7 +321,7 @@ WriteLine(":"#Test3);
                     if (err) {
                         done(err);
                     } else {
-                        output.should.equal(':2.000000\r\n:2\r\n);
+                        output.should.equal(':2.000000\r\n:2\r\n');
                         done();
                     }
                 });
