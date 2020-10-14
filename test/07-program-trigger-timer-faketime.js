@@ -36,6 +36,7 @@ flavors.forEach(function (flavor) {
                         if (!procs.rega || stopProcessing === true) {
                             return this.skip();
                         }
+
                         this.slow(waittime);
                         this.timeout(waittime);
                         subscribe('rega', new RegExp('ExecuteDestination succeeded from Program ID = .*' + program), function (output) {
@@ -43,7 +44,7 @@ flavors.forEach(function (flavor) {
                                 done();
                             } else {
                                 // extract the time portion
-                                const timeRegExp = /^\[(.*)\] .*/g;
+                                const timeRegExp = /^\[(.*)] .*/g;
                                 const match = timeRegExp.exec(output);
                                 if (match !== '') {
                                     const curTime = moment(match[1], 'YYYY-MM-DD hh:mm:ss z');
@@ -57,6 +58,7 @@ flavors.forEach(function (flavor) {
                                     }
                                 }
                             }
+
                             console.log(indent(output, 8));
                         });
                     });

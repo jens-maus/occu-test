@@ -101,9 +101,10 @@ Write(']');
                         done(err);
                     } else {
                         const data = JSON.parse(output);
-                        for (let i = 0; i < data.length; i++) {
-                            delete data[i].ts;
+                        for (const datum of data) {
+                            delete datum.ts;
                         }
+
                         data.should.deepEqual([
                             {
                                 id: '40',
@@ -248,9 +249,10 @@ Write(']');
                         done(err);
                     } else {
                         const data = JSON.parse(output);
-                        for (let i = 0; i < data.length; i++) {
-                            delete data[i].ts;
+                        for (const datum of data) {
+                            delete datum.ts;
                         }
+
                         data.should.deepEqual([
                             {
                                 id: '1269',

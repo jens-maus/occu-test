@@ -28,6 +28,7 @@ flavors.forEach(function (flavor) {
                 if (!procs.rega) {
                     return this.skip();
                 }
+
                 this.timeout(30000);
                 rega.exec(`
 ! Tageszeiten

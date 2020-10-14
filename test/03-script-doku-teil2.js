@@ -34,8 +34,8 @@ string sTime = system.Date("%H:%M:%S"); ! sTime = "18:30:00";
                     if (err) {
                         done(err);
                     } else {
-                        objects.sDate.should.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{4}/);
-                        objects.sTime.should.match(/[0-9]{2}:[0-9]{2}:[0-9]{2}/);
+                        objects.sDate.should.match(/(?:\d{2}\.){2}\d{4}/);
+                        objects.sTime.should.match(/\d{2}:\d{2}:\d{2}/);
                         done();
                     }
                 });

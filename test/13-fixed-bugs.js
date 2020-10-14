@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint-disable no-unused-vars, import/no-unassigned-import, no-template-curly-in-string, camelcase, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
+/* eslint-disable no-unused-vars, import/no-unassigned-import, max-nested-callbacks, prefer-arrow-callback, capitalized-comments */
 
 const {
     cp,
@@ -125,17 +125,18 @@ integer b = a.Find("\\t");
             it('should be able to handle more than 200 variables', function (done) {
                 this.timeout(30000);
                 let prg = '';
-                let res = '';
+                let result = '';
                 for (let i = 1; i <= 1000; i++) {
                     prg = prg + 'var i' + i + '=' + i + '; if(i' + i + '==' + i + ') { WriteLine(i' + i + '); }\n';
-                    res = res + i + '\r\n';
+                    result = result + i + '\r\n';
                 }
+
                 rega.exec(prg, function (err, output, objects) {
                     if (err) {
                         done(err);
                     } else {
                         objects.i876.should.equal('876');
-                        output.should.equal(res);
+                        output.should.equal(result);
                         done();
                     }
                 });

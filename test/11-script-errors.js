@@ -28,6 +28,7 @@ flavors.forEach(function (flavor) {
                 if (!procs.rega) {
                     return this.skip();
                 }
+
                 this.timeout(60000);
                 subscribe('rega', /SyntaxError. Error 1 at row 2 col 27 near \^\("muh"\);/, function () {
                     done();
@@ -45,6 +46,7 @@ dom.MethodDoesNotExist("muh");
                 if (!procs.rega) {
                     return this.skip();
                 }
+
                 this.timeout(60000);
                 subscribe('rega', /SyntaxError. Error 1 at row 3 col 43 near/, function () {
                     done();
@@ -63,6 +65,7 @@ WriteLine(bla");
                 if (!procs.rega) {
                     return this.skip();
                 }
+
                 this.timeout(60000);
 
                 subscribe('rega', /ScriptRuntimeError: /, function () {
@@ -82,6 +85,7 @@ WriteLine(unknown.Name());
                 if (flavor === '.normal' || !procs.rega) {
                     return this.skip();
                 }
+
                 this.timeout(60000);
 
                 subscribe('rega', /ScriptRuntimeError: /, function () {
@@ -103,6 +107,7 @@ var c = system.ToFloat("a");
                 if (!procs.rega) {
                     return this.skip();
                 }
+
                 this.timeout(60000);
                 subscribe('rega', /division by (0|zero)/, function () {
                     done();
