@@ -49,7 +49,7 @@
     "stream-splitter": "latest",
     "mocha-steps": "latest",
     "moment": "latest",
-    "snyk": "^1.415.0"
+    "snyk": "^1.420.1"
   },
   "devDependencies": {
     "eslint": ">=7.12.0",
