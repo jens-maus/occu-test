@@ -55,7 +55,7 @@
     "eslint": ">=7.12.1",
     "pre-commit": "^1.2.2",
     "xo": "^0.34.1",
-    "yargs-parser": ">=20.2.3"
+    "yargs-parser": ">=20.2.4"
   },
   "xo": {
     "space": 4
