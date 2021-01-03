@@ -6,9 +6,7 @@
   "scripts": {
     "test": "camo-purge; xo; mocha --colors",
     "lint": "xo",
-    "lintfix": "xo --fix",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "lintfix": "xo --fix"
   },
   "repository": {
     "type": "git",
@@ -48,8 +46,7 @@
     "should": "latest",
     "stream-splitter": "latest",
     "mocha-steps": "latest",
-    "moment": "latest",
-    "snyk": "^1.421.1"
+    "moment": "latest"
   },
   "devDependencies": {
     "eslint": ">=7.12.1",
@@ -62,6 +59,5 @@
   },
   "pre-commit": [
     "lintfix"
-  ],
-  "snyk": true
+  ]
 }
