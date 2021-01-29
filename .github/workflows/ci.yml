@@ -4,6 +4,12 @@ on:
   pull_request:
   schedule:
     - cron: '0 2 * * *' # run at 2 AM UTC
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'enter remote debug environment'
+        required: true
+        default: "false"
 
 jobs:
   build:
@@ -36,6 +42,10 @@ jobs:
     - name: install OCCU
       run: |
         sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_GCC8 ./install.sh
+
+    - name: remote debug tmate session
+      uses: mxschmitt/action-tmate@v1
+      if: github.event.inputs.debug == 'true'
 
     - name: run OCCU test
       run: |
