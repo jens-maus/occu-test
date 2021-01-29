@@ -82,9 +82,9 @@ if (c_zeit < c_tagesbeginn - 2) {
 }
 
 ! dom.GetObject("Tageszeit").State(v_tageszeit);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.should.containEql({
                             c_zeit: '12.000000',

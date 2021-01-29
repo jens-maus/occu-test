@@ -96,9 +96,9 @@ foreach (sSysVarId, dom.GetObject(ID_SYSTEM_VARIABLES).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         const data = JSON.parse(output);
                         for (const datum of data) {
@@ -244,9 +244,9 @@ foreach (oPrgID, dom.GetObject(ID_PROGRAMS).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         const data = JSON.parse(output);
                         for (const datum of data) {
@@ -438,9 +438,9 @@ foreach (sDevId, root.Devices().EnumUsedIDs()) {
 }
 
 Write(']');
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         const data = JSON.parse(output);
                         data.should.deepEqual([
@@ -1010,9 +1010,9 @@ foreach (sFunctionId, dom.GetObject(ID_FUNCTIONS).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         const data = JSON.parse(output);
                         data.should.deepEqual([
@@ -1182,9 +1182,9 @@ foreach (sRoomId, dom.GetObject(ID_ROOMS).EnumUsedIDs()) {
 }
 
 Write(']');
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         const data = JSON.parse(output);
                         data.should.deepEqual([

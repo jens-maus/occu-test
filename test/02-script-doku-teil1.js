@@ -30,9 +30,9 @@ flavors.forEach(function (flavor) {
                 rega.exec(`
 ! Dies ist ein Kommentar.
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.MyString.should.equal('Hallo Welt!');
                         done();
@@ -45,9 +45,9 @@ string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
                 rega.exec(`
 integer i; ! Deklaration ohne Initialisierung
 integer j = 1; ! Deklaration mit Initialisierung
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.j.should.equal('1');
                         done();
@@ -59,9 +59,9 @@ integer j = 1; ! Deklaration mit Initialisierung
                 this.timeout(30000);
                 rega.exec(`
 integer i = "Hallo Welt!"; ! i ist eine Zeichenkette
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('Hallo Welt!');
                         done();
@@ -92,9 +92,9 @@ integer r = i | 1; ! r=1
 string s = "Hallo" # "Welt"; ! s="HalloWelt"
 boolean t = system.IsVar("i"); ! t=true
 integer u = i % 3; ! u=1
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('1');
                         objects.j.should.equal('2');
@@ -127,9 +127,9 @@ integer u = i % 3; ! u=1
 integer i = 1 + 2 * 3; ! i = (3 * 2) + 1 = 7
 integer j = 3 * 2 + 1; ! j = (1 + 2) * 3 = 9
 integer k = (3 * 2) + 1; ! k = 1 + (3 * 2) = 7
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('7');
                         objects.j.should.equal('9');
@@ -145,9 +145,9 @@ integer k = (3 * 2) + 1; ! k = 1 + (3 * 2) = 7
 var x = 1 / 10.0; ! x = 0; x ist eine Ganzzahl
 var y = 1.0 / 10; ! y = 0.1; y ist eine Gleitkommazahl
 var z = 1.0 + "1.0"; ! z == 2.0
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.x.should.equal('0');
                         objects.y.should.equal('0.100000');
@@ -162,9 +162,9 @@ var z = 1.0 + "1.0"; ! z == 2.0
                 rega.exec(`
 var a = 3 * 2.5; ! a = 6; a ist eine Ganzzahl
 var b = 2.5 * 3; ! b = 7.5; b ist eine Gleitkommazahl
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.a.should.equal('6');
                         objects.b.should.equal('7.500000');
@@ -177,9 +177,9 @@ var b = 2.5 * 3; ! b = 7.5; b ist eine Gleitkommazahl
                 this.timeout(30000);
                 rega.exec(`
 var c = 0.0 + 3; ! c = 3.0; c ist eine Gleitkommazahl
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.c.should.equal('3.000000');
                         done();
@@ -194,9 +194,9 @@ integer i = 1;
 string s;
 if (i == 1) { s = "i == 1"; }
 else { s = "i != 1"; }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.s.should.equal('i == 1');
                         done();
@@ -225,9 +225,9 @@ if (y==1) {
   else { y = 9; }
   x=10;
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.s.should.equal('i == 2');
                         objects.x.should.equal('10');
@@ -263,9 +263,9 @@ foreach(res, liste) {
   WriteLine("next:" # res);
 }
 WriteLine("END:" # res);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('10');
                         objects.res.should.equal('f');
@@ -301,9 +301,9 @@ foreach(res, liste) {
   WriteLine("next:" # res);
 }
 WriteLine("END:" # res);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('7');
                         objects.res.should.equal('e');
@@ -319,9 +319,9 @@ WriteLine("END:" # res);
 system.MaxIterations(1000000);
 integer i = 0;
 while (true) { i = i + 1; }
-            `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+            `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('1000000');
                         done();
@@ -340,9 +340,9 @@ foreach (index, liste)
     ausgabe = index # ausgabe;
 }
 ! ausgabe = "cba";
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.ausgabe.should.equal('cba');
                         done();
@@ -356,9 +356,9 @@ foreach (index, liste)
 integer even = 3;
 if (even & 1) { quit; } ! "even" ist nicht gerade -> Abbruch
 boolean didNotQuit = true;
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.even.should.equal('3');
                         objects.didNotQuit.should.not.equal('true');
@@ -385,9 +385,9 @@ integer sType = s.VarType(); ! 4;
 time t;
 integer tType = t.VarType(); ! 5
 
-            `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+            `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.bType.should.equal('1');
                         objects.iType.should.equal('2');
@@ -415,9 +415,9 @@ integer oType = o.VarType(); ! 9
 idarray d;
 integer dType = d.VarType(); ! 10
 
-            `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+            `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.vType.should.equal('0');
                         objects.oType.should.equal('9');
@@ -433,9 +433,9 @@ integer dType = d.VarType(); ! 10
 var i = 1.23456;
 var s = i.ToString(3); ! s = "1.235"; s ist eine Zeichenkette
 var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('1.234560');
                         objects.s.should.equal('1.235');
@@ -450,9 +450,9 @@ var r = s.ToString(1); ! r = "1.2"; r ist eine Zeichenkette
                 rega.exec(`
 time t = @2008-12-24 18:30:00@;
 string sDate = t.ToString("%d.%m.%Y"); ! sDate = "24.12.2008";
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.sDate.should.equal('24.12.2008');
                         done();
@@ -493,9 +493,9 @@ time t14 = @05-01@;
 string s14 = t14.ToString();
 time t15 = @01@;
 string s15 = t15.ToString();
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         const curDate = new Date();
                         const year = curDate.getFullYear();
@@ -526,9 +526,9 @@ string s15 = t15.ToString();
                 rega.exec(`
 var s = "100";
 var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.s.should.equal('100');
                         objects.i.should.equal('100');
@@ -542,9 +542,9 @@ var i = s.ToInteger(); ! i = 100; i ist eine Ganzzahl
                 rega.exec(`
 real r = 100.000;
 var i = r.ToInteger(); ! i = 100; i ist eine Ganzzahl
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.r.should.equal('100.000000');
                         objects.i.should.equal('100');
@@ -558,9 +558,9 @@ var i = r.ToInteger(); ! i = 100; i ist eine Ganzzahl
                 rega.exec(`
 var i = 1;
 var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.t.should.equal('1970-01-01 01:00:01');
                         done();
@@ -573,9 +573,9 @@ var t = i.ToTime(); ! t = @1970-01-01 01:00:01@ (CET)
                 rega.exec(`
 boolean bTRUE = true;
 boolean bFALSE = false;
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.bTRUE.should.equal('true');
                         objects.bFALSE.should.equal('false');
@@ -588,9 +588,9 @@ boolean bFALSE = false;
                 this.timeout(30000);
                 rega.exec(`
 integer i = -123;
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i.should.equal('-123');
                         done();
@@ -603,9 +603,9 @@ integer i = -123;
                 rega.exec(`
 real r = 1.0;
 real s = "-1.0E-1".ToFloat(); ! -0.1
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.r.should.equal('1.000000');
                         objects.s.should.equal('-0.100000');
@@ -629,9 +629,9 @@ integer weekday = t.Weekday(); ! weekday = 4
 integer yearday = t.Yearday(); ! yearday = 359
 integer isLocalTime = t.IsLocalTime(); ! isLocalTime = 1
 integer isDST = t.IsDST(); ! isDST = 0
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.should.containEql({
                             t: '2008-12-24 18:30:00',
@@ -691,9 +691,9 @@ string lowerZ = t.Format("%z"); ! lowerZ = "+0100"
 string upperZ = t.Format("%Z"); ! upperZ = "CET"
 string sDate = t.Format("%d.%m.%Y"); ! sDate = "24.12.2008"
 string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.should.containEql({
                             perc: '%',
@@ -739,9 +739,9 @@ string sTime = t.Format("%H:%M:%S"); ! sTime = "18:30:00"
 
             it('6.6 should output Hello World', function (done) {
                 this.timeout(30000);
-                rega.exec('string x = "Hello";\nWriteLine(x # " World!");', function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                rega.exec('string x = "Hello";\nWriteLine(x # " World!");', function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('Hello World!\r\n');
                         done();
@@ -769,9 +769,9 @@ string n = "\\\\";
 string o = "\\\\\\"";
 string p = "\\\\\\\\";
 string q = "\\\\\\t\\"";
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.a.should.equal('xxx\\xxx');
                         objects.b.should.equal('xxx"xxx');
@@ -803,9 +803,9 @@ string b = ^\\^;
 string c = ^\\\\^;
 string d = ^\\\\\\^;
 string e = ^abcd\\zui^.Replace(^\\^,^\\\\^);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.a.should.equal('\\\\t\\n\\r\\\'\\\"\"\'\'~&=');
                         objects.b.should.equal('\\');
@@ -833,9 +833,9 @@ string charsCX = "\u00C0\u00C1\u00C2\u00C3\u00C4\u00C5\u00C6\u00C7\u00C8\u00C9\u
 string charsDX = "\u00D0\u00D1\u00D2\u00D3\u00D4\u00D5\u00D6\u00D7\u00D8\u00D9\u00DA\u00DB\u00DC\u00DD\u00DE\u00DF";
 string charsEX = "\u00E0\u00E1\u00E2\u00E3\u00E4\u00E5\u00E6\u00E7\u00E8\u00E9\u00EA\u00EB\u00EC\u00ED\u00EE\u00EF";
 string charsFX = "\u00F0\u00F1\u00F2\u00F3\u00F4\u00F5\u00F6\u00F7\u00F8\u00F9\u00FA\u00FB\u00FC\u00FD\u00FE\u00FF";
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.chars2X.should.equal('\u0020\u0021\u0022\u0023\u0024\u0025\u0026\u0027\u0028\u0029\u002A\u002B\u002C\u002D\u002E\u002F');
                         objects.chars3X.should.equal('\u0030\u0031\u0032\u0033\u0034\u0035\u0036\u0037\u0038\u0039\u003A\u003B\u003C\u003D\u003E\u003F');
@@ -861,9 +861,9 @@ string s = "1.01";
 real r1 = s.ToFloat(); ! r1 = 1.01;
 real r2 = "0.1".ToFloat(); ! r2 = 0.1;
 real r3 = "1E-1".ToFloat(); ! r3 = 0.1       
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.r1.should.equal('1.010000');
                         objects.r2.should.equal('0.100000');
@@ -878,9 +878,9 @@ real r3 = "1E-1".ToFloat(); ! r3 = 0.1
                 rega.exec(`
 string s = "Hallo\\tWelt!";
 integer length = s.Length(); ! length = 11
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.length.should.equal('11');
                         done();
@@ -893,9 +893,9 @@ integer length = s.Length(); ! length = 11
                 rega.exec(`
 string s = "Hallo Welt!";
 string world = s.Substr(6, 4); ! world = "Welt"
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.world.should.equal('Welt');
                         done();
@@ -909,9 +909,9 @@ string world = s.Substr(6, 4); ! world = "Welt"
 string s = "Hallo Welt";
 integer World = s.Find("Welt"); ! World = 6
 integer world = s.Find("welt"); ! world = -1
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.World.should.equal('6');
                         objects.world.should.equal('-1');
@@ -927,9 +927,9 @@ string s = "Hallo Welt";
 boolean bWorld = s.Contains("Welt"); ! bWorld = true
 boolean bStart = s.StartsWith("Hallo"); !bStart = true
 boolean bEnd = s.EndsWith("Welt"); !bEnd = true
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.bWorld.should.equal('true');
                         objects.bStart.should.equal('true');
@@ -949,9 +949,9 @@ foreach(summand, summanden.Split(","))
 {
     summe = summe + summand.ToInteger();
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.summe.should.equal('6');
                         done();
@@ -964,9 +964,9 @@ foreach(summand, summanden.Split(","))
                 rega.exec(`
 string Rezept = "Butter,Eier,Mehl,Milch,Zucker";
 string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.ErsteZutat.should.equal('Butter');
                         done();
@@ -980,9 +980,9 @@ string ErsteZutat = Rezept.StrValueByIndex(",", 0); ! ErsteZutat = Butter
 string str = " !\\\"#$%&'()";
 string kodiert = str.UriEncode(); ! kodiert = %20%21%22%23%24%25%26%27%28%29
 string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.kodiert.should.equal('%20%21%22%23%24%25%26%27%28%29');
                         objects.dekodiert.should.equal(' !"#$%&\'()');
@@ -997,9 +997,9 @@ string dekodiert = kodiert.UriDecode(); ! dekodiert = !"#$%&\\'()
 string str = "Übergrößenträger";
 string utf8 = str.ToUTF8(); ! utf8 = "ÃbergrÃ¶ÃentrÃ¤ger“
 string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.utf8.should.equal('ÃbergrÃ¶ÃentrÃ¤ger');
                         objects.latin.should.equal('Übergrößenträger');
@@ -1014,9 +1014,9 @@ string latin = utf8.ToLatin(); ! latin= "Übergrößenträger“
 string str = "AbCdEfGhI";
 string upper = str.ToUpper(); ! upper = "ABCDEFGHI“
 string lower = str.ToLower(); ! lower = "abcdefghi“
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.upper.should.equal('ABCDEFGHI');
                         objects.lower.should.equal('abcdefghi');
@@ -1033,9 +1033,9 @@ string trim = str.Trim();               ! trim = "Anfang und Ende"
 string ltrim = str.LTrim();             ! ltrim = "Anfang und Ende \\r\\n"
 string rtrim = str.RTrim();             ! rtrim = " \\tAnfang und Ende"
 string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.trim.should.equal('Anfang und Ende');
                         objects.ltrim.should.equal('Anfang und Ende \r\n');
@@ -1051,9 +1051,9 @@ string trimc = str.Trim(" \\t\\nAnfang"); ! trimc = "und Ende \\r"
                 rega.exec(`
 string str = "John hates Jane";
 string replaced = str.Replace("hates", "loves"); ! replaced = "John loves Jane"
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.replaced.should.equal('John loves Jane');
                         done();
@@ -1104,9 +1104,9 @@ var zc = a.Ceil();    ! zc = 1.0
 var zd = a.Floor();   ! zd = 0.0
 var ze = a.Trunc(1);  ! ze = 0.4
 var zf = a.Round(1);  ! zf = 0.5
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.should.containEql({
                             b: '1.500000',
@@ -1167,9 +1167,9 @@ var m_sqrt2 = (two.Sqrt() == M_SQRT2);
 var m_sqrt1_2 = (1.0 / two.Sqrt()) == M_SQRT1_2;
 var r = 4.2; ! Kreisradius in cm
 var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.should.containEql({
                             one: '1.000000',
@@ -1197,9 +1197,9 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
 
             it('8.2 should return M_PI with 6 digits (standard/community)', function (done) {
                 this.timeout(30000);
-                rega.exec('Write(M_PI);', function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                rega.exec('Write(M_PI);', function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('3.141593');
                         done();
@@ -1209,9 +1209,9 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
 
             it('8.2 should return M_PI with 15 digits (standard/community)', function (done) {
                 this.timeout(30000);
-                rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                rega.exec('var pi = M_PI;\nWrite(pi.ToString(15));', function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('3.141592653589793');
                         done();
@@ -1225,9 +1225,9 @@ var A = (M_PI * r.Pow(2)).Round(2); ! Kreisfläche A =  pi * r^2 = 55.42 cm
 var dice = system.Random(1, 6);
 system.Srandom(12345);
 var nonrandom = system.Random(-1000, 1000); ! nonrandom = 545
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         Number.parseFloat(objects.dice).should.be.within(1, 6);
                         objects.nonrandom.should.equal('545');

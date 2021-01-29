@@ -99,9 +99,9 @@ flavors.forEach(function (flavor) {
                 this.timeout(30000);
                 rega.exec(`
 string build = dom.BuildLabel();
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.build.should.not.equal('undefined');
                         done();
@@ -151,9 +151,9 @@ if(i != -1)
   }
 }
 WriteLine(j);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('600000\r\nXvarX599999\r\n600000\r\n');
                         done();

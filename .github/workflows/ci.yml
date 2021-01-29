@@ -8,7 +8,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       fail-fast: false
@@ -35,7 +35,7 @@ jobs:
 
     - name: install OCCU
       run: |
-        sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_Debian_Wheezy ./install.sh
+        sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_GCC8 ./install.sh
 
     - name: run OCCU test
       run: |

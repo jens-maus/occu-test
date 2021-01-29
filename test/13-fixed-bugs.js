@@ -47,9 +47,9 @@ while (j<3)
   }
   j=j+1;
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal(`\r
 1477785597 1 1 2016-10-30 01:59:57 +0200 CEST\r
@@ -82,9 +82,9 @@ while (j<3)
 ! Die nächste Zeile ist ein leerer Kommentar
 !
 string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
-               `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+               `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.MyString.should.equal('Hallo Welt!');
                         done();
@@ -96,9 +96,9 @@ string MyString = "Hallo Welt!"; ! Dies ist ebenfalls ein Kommentar
                 this.timeout(30000);
                 rega.exec(`
 string a = "Das ist ein <html & Test";
-               `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+               `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.a.should.equal('Das ist ein <html & Test');
                         done();
@@ -111,9 +111,9 @@ string a = "Das ist ein <html & Test";
                 rega.exec(`
 string a = "Hallo\\tWelt";
 integer b = a.Find("\\t");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.a.should.equal('Hallo\tWelt');
                         objects.b.should.equal('5');
@@ -131,9 +131,9 @@ integer b = a.Find("\\t");
                     result = result + i + '\r\n';
                 }
 
-                rega.exec(prg, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                rega.exec(prg, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.i876.should.equal('876');
                         output.should.equal(result);
@@ -159,9 +159,9 @@ real lReal7 = lReal2 + lReal6;
 boolean diff3 = (lReal2 == lReal7);
 
 boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.diff1.should.equal('true');
                         objects.diff2.should.equal('true');
@@ -176,9 +176,9 @@ boolean diff4 = (lReal3.ToString(20) == (0.3).ToString(30));
                 this.timeout(30000);
                 rega.exec(`
 object obj = dom.GetObject("2Light");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.obj.should.equal('null');
                         done();
@@ -192,9 +192,9 @@ object obj = dom.GetObject("2Light");
 string str = " !\\"#$%&'()öäüÖÄÜß";
 string kodiert = str.ToUTF8().UriEncode(); ! kodiert = %20%21%22%23%24%25%26%27%28%29%C3%B6%C3%A4%C3%BC%C3%96%C3%84%C3%9C%C3%9F
 string dekodiert = kodiert.UriDecode().ToLatin(); ! dekodiert = !"#$%&\\'()öäüÖÄÜß
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.kodiert.should.equal('%20%21%22%23%24%25%26%27%28%29%C3%B6%C3%A4%C3%BC%C3%96%C3%84%C3%9C%C3%9F');
                         objects.dekodiert.should.equal(' !"#$%&\'()öäüÖÄÜß');
@@ -209,9 +209,9 @@ string dekodiert = kodiert.UriDecode().ToLatin(); ! dekodiert = !"#$%&\\'()öä�
                 rega.exec(`
 var aaaaaaaaaaaaa = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 WriteLine("SUCCESS");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('SUCCESS\r\n');
                         done();
@@ -227,9 +227,9 @@ string stdout;
 string stderr;
 system.Exec("cat", &stdout, &stderr);
 WriteLine("SUCCESS");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('SUCCESS\r\n');
                         done();
@@ -246,9 +246,9 @@ string stderr;
 string stdin="SUCCESS";
 system.Exec("cat", &stdout, &stderr, stdin);
 WriteLine(stdout);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('SUCCESS\r\n');
                         done();
@@ -262,9 +262,9 @@ WriteLine(stdout);
                 rega.exec(`
 object obj = dom.GetObject("VarString1", OT_VARDP);
 WriteLine(obj.Name());
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('VarString1\r\n');
                         done();
@@ -297,9 +297,9 @@ foreach(ELEMENT1, LISTE1)
   if(GEFUNDEN) { Write("break2"); break; }
 }
 WriteLine("END");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('START-....x-....x-....xbreak2END\r\n');
                         done();
@@ -318,9 +318,9 @@ WriteLine(":"#Test2);
 var Test3;
 Test3 = Test.ToInteger();
 WriteLine(":"#Test3);
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal(':2.000000\r\n:2\r\n');
                         done();
@@ -338,9 +338,9 @@ string str="XXecho -n hallo";
 system.Exec(str.Substr(2), &stdout, &stderr);
 WriteLine(stdout);
 WriteLine("SUCCESS");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('hallo\r\nSUCCESS\r\n');
                         done();
@@ -362,9 +362,9 @@ Write("07: ");WriteLine("1" + 2 + 3);
 Write("08: ");WriteLine("1" + 2 + "3");
 Write("09: ");WriteLine("1" + "2" + 3);
 Write("10: ");WriteLine("1" + "2" + "3");
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal(`\r
 01: 12\r
@@ -402,9 +402,9 @@ user.UserSharedObjects().Add("33334");
 user.UserSharedObjects().Add("33335");
 user.UserSharedObjects().Add("33336");
 dom.DeleteObject(sysvar3);
-                    `, function (err, output, objects) {
-                        if (err) {
-                            done(err);
+                    `, function (error, output, objects) {
+                        if (error) {
+                            done(error);
                         } else {
                             objects.should.containEql({
                                 sysvar1: 'Real-SysVarDP',
@@ -431,9 +431,9 @@ foreach(objID, user.UserSharedObjects())
     WriteLine(objID);
   }
 }
-                    `, function (err, output, objects) {
-                        if (err) {
-                            done(err);
+                    `, function (error, output, objects) {
+                        if (error) {
+                            done(error);
                         } else {
                             output.should.equal('33333\r\n33334\r\n33335\r\n33336\r\n');
                             done();
@@ -446,9 +446,9 @@ foreach(objID, user.UserSharedObjects())
                         this.timeout(30000);
 
                         // save regadom as is.
-                        rega.exec('system.Save();', function (err, output, objects) {
-                            if (err) {
-                                done(err);
+                        rega.exec('system.Save();', function (error, output, objects) {
+                            if (error) {
+                                done(error);
                             } else {
                                 done();
                             }
@@ -477,9 +477,9 @@ foreach(objID, user.UserSharedObjects())
   }
 }
 WriteLine("done");
-                            `, function (err, output, objects) {
-                                if (err) {
-                                    done(err);
+                            `, function (error, output, objects) {
+                                if (error) {
+                                    done(error);
                                 } else {
                                     output.should.equal('done\r\n');
                                     done();
@@ -503,9 +503,9 @@ alarmvar.Channel(channel.ID());
 dom.GetObject(ID_SYSTEM_VARIABLES).Add(sysvar.ID());
 dom.GetObject(ID_SYSTEM_VARIABLES).Add(alarmvar.ID());
 dom.DeleteObject(channel);
-                    `, function (err, output, objects) {
-                        if (err) {
-                            done(err);
+                    `, function (error, output, objects) {
+                        if (error) {
+                            done(error);
                         } else {
                             objects.should.containEql({
                                 sysvar: 'Test-SysVar',
@@ -524,9 +524,9 @@ object sysVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-SysVar");
 object alarmVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-AlarmVar");
 WriteLine(sysVarObj.Channel());
 WriteLine(alarmVarObj.Channel());
-                    `, function (err, output, objects) {
-                        if (err) {
-                            done(err);
+                    `, function (error, output, objects) {
+                        if (error) {
+                            done(error);
                         } else {
                             output.should.equal('65535\r\n65535\r\n');
                             done();
@@ -539,9 +539,9 @@ WriteLine(alarmVarObj.Channel());
                         this.timeout(30000);
 
                         // save regadom as is.
-                        rega.exec('system.Save();', function (err, output, objects) {
-                            if (err) {
-                                done(err);
+                        rega.exec('system.Save();', function (error, output, objects) {
+                            if (error) {
+                                done(error);
                             } else {
                                 done();
                             }
@@ -562,9 +562,9 @@ object sysVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-SysVar");
 object alarmVarObj = dom.GetObject(ID_SYSTEM_VARIABLES).Get("Test-AlarmVar");
 WriteLine(sysVarObj.Channel());
 WriteLine(alarmVarObj.Channel());
-                            `, function (err, output, objects) {
-                                if (err) {
-                                    done(err);
+                            `, function (error, output, objects) {
+                                if (error) {
+                                    done(error);
                                 } else {
                                     output.should.equal('65535\r\n65535\r\n');
                                     done();

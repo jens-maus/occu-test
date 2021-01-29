@@ -35,9 +35,9 @@ flavors.forEach(function (flavor) {
                 });
                 rega.exec(`
 dom.MethodDoesNotExist("muh");
-                `, function (err, stdout, objects) {
-                    if (err) {
-                        console.error(indent(err, 6));
+                `, function (error, stdout, objects) {
+                    if (error) {
+                        console.error(indent(error, 6));
                     }
                 });
             });
@@ -54,9 +54,9 @@ dom.MethodDoesNotExist("muh");
                 rega.exec(`
 
 WriteLine(bla");
-                `, function (err, stdout, objects) {
-                    if (err) {
-                        console.error(indent(err, 6));
+                `, function (error, stdout, objects) {
+                    if (error) {
+                        console.error(indent(error, 6));
                     }
                 });
             });
@@ -74,9 +74,9 @@ WriteLine(bla");
                 rega.exec(`
 var unknown = dom.GetObject("doesNotExist");
 WriteLine(unknown.Name());
-                `, function (err, stdout, objects) {
-                    if (err) {
-                        console.error(indent(err, 6));
+                `, function (error, stdout, objects) {
+                    if (error) {
+                        console.error(indent(error, 6));
                     }
                 });
             });
@@ -96,9 +96,9 @@ WriteLine(unknown.Name());
 var a = system.ToFloat();
 var b = system.ToFloat("1.4");
 var c = system.ToFloat("a");
-                `, function (err, stdout, objects) {
-                    if (err) {
-                        console.error(indent(err, 6));
+                `, function (error, stdout, objects) {
+                    if (error) {
+                        console.error(indent(error, 6));
                     }
                 });
             });
@@ -117,9 +117,9 @@ var one = 1;
 var zero = 0;
 var infinite  = one / zero;
 WriteLine(infinite);
-                `, function (err, stdout, objects) {
-                    if (err) {
-                        console.error(indent(err, 6));
+                `, function (error, stdout, objects) {
+                    if (error) {
+                        console.error(indent(error, 6));
                     }
                 });
             });

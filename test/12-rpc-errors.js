@@ -31,9 +31,9 @@ flavors.forEach(function (flavor) {
                     return this.skip();
                 }
 
-                rpcCall('doesNotExist', [], function (err, result) {
-                    if (err) {
-                        done(err);
+                rpcCall('doesNotExist', [], function (error, result) {
+                    if (error) {
+                        done(error);
                     } else {
                         result.should.deepEqual({faultCode: -1, faultString: 'doesNotExist: unknown method name'});
                         done();

@@ -1,12 +1,13 @@
 {
   "name": "occu-test",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Automated System Tests for ReGaHss",
   "private": true,
   "scripts": {
-    "test": "camo-purge; xo; mocha --colors",
+    "test": "camo-purge; xo && mocha --colors",
     "lint": "xo",
-    "lintfix": "xo --fix"
+    "lintfix": "xo --fix",
+    "precommit": "npm run lint && npm run lintfix"
   },
   "repository": {
     "type": "git",

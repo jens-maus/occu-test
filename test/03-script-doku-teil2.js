@@ -30,9 +30,9 @@ flavors.forEach(function (flavor) {
                 rega.exec(`
 string sDate = system.Date("%d.%m.%Y"); ! sDate = "24.12.2008";
 string sTime = system.Date("%H:%M:%S"); ! sTime = "18:30:00";
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.sDate.should.match(/(?:\d{2}\.){2}\d{4}/);
                         objects.sTime.should.match(/\d{2}:\d{2}:\d{2}/);
@@ -50,9 +50,9 @@ if (system.IsVar("MY_DEFINE"))
 {
     Write('OK');
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('OK');
                         done();
@@ -73,9 +73,9 @@ if (system.IsVar("myVar"))
 
 ! myVar = 1
 ! x = 2          
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         objects.myVar.should.equal('1');
                         objects.x.should.equal('2');
@@ -92,9 +92,9 @@ if (myObject)
 {
     Write("OK");
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('OK');
                         done();
@@ -110,9 +110,9 @@ if (myObject)
 {
     Write(myObject.ID());
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('1237');
                         done();
@@ -128,9 +128,9 @@ if (myObject)
 {
     Write(myObject.Name());
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('VarBool1');
                         done();
@@ -146,9 +146,9 @@ if (myObject)
 {
     Write(myObject.Type() == OT_VARDP);
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('true');
                         done();
@@ -164,9 +164,9 @@ if (myObject)
 {
     Write(myObject.TypeName());
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('VARDP');
                         done();
@@ -182,9 +182,9 @@ if (myObject.IsTypeOf(OT_VARDP))
 {
     Write("OK");
 }
-                `, function (err, output, objects) {
-                    if (err) {
-                        done(err);
+                `, function (error, output, objects) {
+                    if (error) {
+                        done(error);
                     } else {
                         output.should.equal('OK');
                         done();
