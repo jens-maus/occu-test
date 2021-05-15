@@ -58,7 +58,7 @@ mkdir -p /www
 cp -a /occu/WebUI/www/* /www/
 cp -v homematic.regadom /etc/config/
 cp -v /occu/${ARCH}/packages-eQ-3/WebUI/bin/tclsh /bin/tclsh8.2
-cp -v /occu/${ARCH}/packages-eQ-3/WebUI/lib/tcl8.2 /lib/
+cp -av /occu/${ARCH}/packages-eQ-3/WebUI/lib/tcl8.2 /lib/
 rm -f /bin/tclsh
 ln -s /bin/tclsh8.2 /bin/tclsh
 chmod -R a+rw /etc/config
