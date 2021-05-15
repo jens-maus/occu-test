@@ -6,16 +6,9 @@
 
 This repository performs automated daily system tests of `ReGaHss` - the HomeMatic (O)CCU "Logic Layer" engine. It uses a [mocha](https://github.com/mochajs/mocha)-based node.js testing framework to test all published `ReGaHss` binaries in the [OCCU](https://github.com/eq-3/occu) environment published by eQ3. Beside testing common corner cases of the embedded scripting language of ReGaHss this testing framework also tests for security vulnerabilities.
 
-Recent test results can be viewed by looking at recent [travis-based test execution results](https://travis-ci.org/jens-maus/occu-test):
+Recent test results for the different build flavors of ReGaHss can be viewed here:
 
-| Normal            | Community         | Beta              |
-|-------------------|-------------------|-------------------|
-| [![Normal][1]][4] | [![Build2][2]][4] | [![Build3][3]][4] |
-
-[1]: https://travis-matrix-badges.herokuapp.com/repos/jens-maus/occu-test/branches/master/1
-[2]: https://travis-matrix-badges.herokuapp.com/repos/jens-maus/occu-test/branches/master/2
-[3]: https://travis-matrix-badges.herokuapp.com/repos/jens-maus/occu-test/branches/master/3
-[4]: https://travis-ci.org/jens-maus/occu-test
+[![](http://github-actions.40ants.com/jens-maus/occu-test/matrix.svg?only=ci.build)](https://github.com/jens-maus/occu-test/actions)
 
 ## HOWTO run the tests locally
 ```bash
