@@ -22,7 +22,7 @@ jobs:
         flavor: [normal, community, beta]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: install dependencies
       run: |
@@ -35,7 +35,7 @@ jobs:
         sudo timedatectl set-timezone Europe/Berlin
         date
 
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v4
       with:
         node-version: '12.x'
 
