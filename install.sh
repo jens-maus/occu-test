@@ -34,7 +34,8 @@ if [[ ! -x /bin/faketime ]]; then
   # checkout and compile
   git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
   #(cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32 -DFORCE_MONOTONIC_FIX" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
-  (cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
+  #(cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
+  (cd /faketime; git checkout v0.9.10; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
 fi
 
 echo "STEP: cloning occu"
