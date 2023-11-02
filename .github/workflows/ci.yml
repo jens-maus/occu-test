@@ -44,7 +44,7 @@ jobs:
         sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_Debian_Wheezy ./install.sh
 
     - name: remote debug tmate session
-      uses: mxschmitt/action-tmate@v1
+      uses: mxschmitt/action-tmate@v3
       if: github.event.inputs.debug == 'true'
 
     - name: run OCCU test
