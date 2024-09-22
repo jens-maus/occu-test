@@ -49,7 +49,7 @@ echo "STEP: cloning occu"
 if [[ -d /occu ]]; then
   (cd /occu; git pull)
 else
-  git clone --depth=1 --branch=master https://github.com/jens-maus/occu /occu
+  git clone --depth=50 --branch=master https://github.com/jens-maus/occu /occu
 fi
 (cd /occu; git rev-parse HEAD)
 
