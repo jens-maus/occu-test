@@ -13,21 +13,23 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        flavor: [normal, community, beta]
+        flavor: [community, beta]
+        arch: [X86_32_GCC8, x86_64-linux-gnu]
 
     steps:
     - uses: actions/checkout@v4
 
     - name: install dependencies
       run: |
-        sudo dpkg --add-architecture i386
-        sudo dpkg --print-foreign-architectures
+        if [[ "${{ matrix.arch }}" == "X86_32_GCC8" ]]; then
+          sudo dpkg --add-architecture i386
+          sudo dpkg --print-foreign-architectures
+        fi
         sudo apt-get -qq update || true
 
     - name: set timezone to Europe/Berlin
@@ -41,7 +43,7 @@ jobs:
 
     - name: install OCCU
       run: |
-        sudo FLAVOR=${{ matrix.flavor }} ARCH=X86_32_Debian_Wheezy ./install.sh
+        sudo FLAVOR=${{ matrix.flavor }} ARCH=${{ matrix.arch }} ./install.sh
 
     - name: remote debug tmate session
       uses: mxschmitt/action-tmate@v3
