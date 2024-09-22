@@ -26,7 +26,7 @@ jobs:
 
     - name: install dependencies
       run: |
-        if [[ "${{ matrix.arch }}" == "X86_32_GCC8" ]]; then
+        if [[ ! "${{ matrix.arch }}" =~ "64" ]]; then
           sudo dpkg --add-architecture i386
           sudo dpkg --print-foreign-architectures
         fi

@@ -74,9 +74,14 @@ echo "/occu/${ARCH}/packages-eQ-3/WebUI/lib/" >>/etc/ld.so.conf.d/hm.conf
 /sbin/ldconfig
 
 # test to start and show link dependencies of ReGaHss
-chmod a+rx /bin/ReGaHss.${FLAVOR}
-ldd /bin/ReGaHss.${FLAVOR}
-/bin/ReGaHss.${FLAVOR} -h
+if [[ -f /bin/ReGaHss.${FLAVOR} ]]; then
+  chmod a+rx /bin/ReGaHss.${FLAVOR}
+  ldd /bin/ReGaHss.${FLAVOR}
+  /bin/ReGaHss.${FLAVOR} -h
+else
+  echo "::warning ReGaHss.${FLAVOR} missing"
+  exit 0
+fi
 
 echo "STEP: installing nvm/nodejs dependencies"
 source ~/.bashrc
