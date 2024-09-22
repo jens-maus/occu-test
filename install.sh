@@ -1,7 +1,6 @@
 #!/bin/bash
 
 FLAVOR=${FLAVOR:-beta}
-ARCH=${ARCH:-X86_32_GCC8}
 
 umask 022
 
@@ -16,15 +15,13 @@ echo -e "#!/bin/bash\necho /bin/hm_autoconf executed" > /bin/hm_autoconf
 chmod a+x /bin/hm_startup /bin/hm_autoconf
 
 echo "STEP: installing required packages"
-if [[ ! "${ARCH}" =~ "64" ]]; then
-  #dpkg --add-architecture i386
-  #apt-get -qq update || true
-  if [ $(dpkg-query -W -f='${Status}' libc6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-    apt-get -qq install libc6:i386
-  fi
-  if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-    apt-get -qq install libstdc++6:i386
-  fi
+#dpkg --add-architecture i386
+#apt-get -qq update || true
+if [ $(dpkg-query -W -f='${Status}' libc6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install libc6:i386
+fi
+if [ $(dpkg-query -W -f='${Status}' libstdc++6:i386 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get -qq install libstdc++6:i386
 fi
 if [ $(dpkg-query -W -f='${Status}' expect-dev 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
   apt-get -qq install expect-dev
@@ -32,17 +29,13 @@ fi
 
 echo "STEP: check for libfaketime"
 if [[ ! -x /bin/faketime ]]; then
+  # get everyting setup for a 32bit compile
+  apt-get -qq install gcc-multilib
   # checkout and compile
-  git clone --depth 1 --branch=master https://github.com/wolfcw/libfaketime.git /faketime
-  if [[ ! "${ARCH}" =~ "64" ]]; then
-    # get everyting setup for a 32bit compile
-    apt-get -qq install gcc-multilib
-    #(cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32 -DFORCE_MONOTONIC_FIX" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
-    #(cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
-    (cd /faketime; git checkout v0.9.10; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
-  else
-    (cd /faketime; git checkout v0.9.10; CC=gcc CFLAGS="" LDFLAGS="-L/usr/lib" make PREFIX= install)
-  fi
+  git clone --branch=master https://github.com/wolfcw/libfaketime.git /faketime
+  #(cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32 -DFORCE_MONOTONIC_FIX" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
+  #(cd /faketime; git checkout 112809f986548903f8ff0923c6bfb715f29a2acd; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
+  (cd /faketime; git checkout v0.9.10; CC=gcc CFLAGS="-m32" LDFLAGS="-m32 -L/usr/lib32" make PREFIX= install)
 fi
 
 echo "STEP: cloning occu"
@@ -54,7 +47,8 @@ fi
 (cd /occu; git rev-parse HEAD)
 
 echo "STEP: copying OCCU files"
-cp -v rega.conf /etc/
+ARCH=${ARCH:-X86_32_GCC8}
+cp -v /occu/${ARCH}/packages-eQ-3/WebUI/etc/rega.conf /etc/
 echo -e "XmlRpcServerPort=31999" >>/etc/rega.conf
 echo -e "SessionMaxCount=300" >>/etc/rega.conf
 cp -v /occu/${ARCH}/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
@@ -72,11 +66,7 @@ chmod -R a+rw /etc/config
 [[ ${FLAVOR} =~ beta ]] && echo "/occu/${ARCH}/packages-eQ-3/WebUI-Beta/lib/" >/etc/ld.so.conf.d/hm.conf
 echo "/occu/${ARCH}/packages-eQ-3/WebUI/lib/" >>/etc/ld.so.conf.d/hm.conf
 /sbin/ldconfig
-
-# test to start and show link dependencies of ReGaHss
-chmod a+rx /bin/ReGaHss.${FLAVOR}
 ldd /bin/ReGaHss.${FLAVOR}
-/bin/ReGaHss.${FLAVOR} -h
 
 echo "STEP: installing nvm/nodejs dependencies"
 source ~/.bashrc
