@@ -57,7 +57,8 @@ echo "STEP: copying OCCU files"
 cp -v rega.conf /etc/
 echo -e "XmlRpcServerPort=31999" >>/etc/rega.conf
 echo -e "SessionMaxCount=300" >>/etc/rega.conf
-cp -v /occu/${ARCH}/packages-eQ-3/WebUI/etc/config/InterfacesList.xml /etc/config/
+cp -v InterfacesList.xml /etc/config/
+
 cp -v /occu/${ARCH}/packages-eQ-3/WebUI/bin/ReGaHss.* /bin/
 cp -v /occu/${ARCH}/packages-eQ-3/WebUI-Beta/bin/ReGaHss /bin/ReGaHss.beta
 rm -rf /www
