@@ -80,7 +80,7 @@ if [[ -f /bin/ReGaHss.${FLAVOR} ]]; then
   ldd /bin/ReGaHss.${FLAVOR}
   /bin/ReGaHss.${FLAVOR} -h
 else
-  echo "::warning ReGaHss.${FLAVOR} missing"
+  echo "::warning /bin/ReGaHss.${FLAVOR} missing"
   exit 0
 fi
 

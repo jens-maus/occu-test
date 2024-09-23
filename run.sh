@@ -2,6 +2,11 @@
 
 FLAVOR=${FLAVOR:-beta}
 
+if [[ ! -f /bin/ReGaHss.${FLAVOR} ]]; then
+  echo "::warning /bin/ReGaHss.${FLAVOR} missing"
+  exit 0
+fi
+
 source ~/.bashrc
 source ~/.profile
 if [ ! -d ${NVM_DIR} ]; then
