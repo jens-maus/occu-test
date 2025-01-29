@@ -78,8 +78,8 @@ flavors.forEach(function (flavor) {
 
         // Perform test of the short 10s timers
         test('2020-01-01 00:00:00 CET',  'TimeEvery10s', 'TimerPeriodic (10s) on new year', ['2020-01-01 00:00:10 CET', '2020-01-01 00:00:20 CET'], 30000);
-        test('2020-03-29 01:59:48 CET',  'TimeEvery10s', 'TimerPeriodic (10s) during Winter->Summer DST change', ['2020-03-29 03:00:00 CEST', '2020-03-29 03:00:10 CEST', '2020-03-29 03:00:20 CEST', '2020-03-29 03:00:30 CEST'], 30000);
-        test('2020-10-25 02:59:48 CEST', 'TimeEvery10s', 'TimerPeriodic (10s) during Summer->Winter DST change', ['2020-10-25 02:00:00 CET', '2020-10-25 02:00:10 CET', '2020-10-25 02:00:20 CET', '2020-10-25 02:00:30 CET'], 30000);
+        test('2020-03-29 01:59:49 CET',  'TimeEvery10s', 'TimerPeriodic (10s) during Winter->Summer DST change', ['2020-03-29 03:00:00 CEST', '2020-03-29 03:00:10 CEST', '2020-03-29 03:00:20 CEST', '2020-03-29 03:00:30 CEST'], 30000);
+        test('2020-10-25 02:59:49 CEST', 'TimeEvery10s', 'TimerPeriodic (10s) during Summer->Winter DST change', ['2020-10-25 02:00:00 CET', '2020-10-25 02:00:10 CET', '2020-10-25 02:00:20 CET', '2020-10-25 02:00:30 CET'], 30000);
 
         // Perform test of day/night astro switches (Europe/Berlin) in DST and
         // and non-DST times
