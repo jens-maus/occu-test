@@ -119,6 +119,7 @@ var infinite  = one / zero;
 WriteLine(infinite);
                 `, function (error, stdout, objects) {
                     if (error) {
+                        console.error(error);
                         console.error(indent(error, 6));
                     }
                 });
