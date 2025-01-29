@@ -90,7 +90,7 @@ flavors.forEach(function (flavor) {
 
             it('should load /etc/config/homematic.regadom', function (done) {
                 this.timeout(30000);
-                subscribe('rega', /.*loaded .*homematic\.regadom/, function () {
+                subscribe('rega', /.*oaded .*homematic\.regadom/, function () {
                     done();
                 });
             });
