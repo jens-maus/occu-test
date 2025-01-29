@@ -6,8 +6,7 @@
   "scripts": {
     "test": "camo-purge; xo && mocha --colors",
     "lint": "xo",
-    "lintfix": "xo --fix",
-    "precommit": "npm run lint && npm run lintfix"
+    "lintfix": "xo --fix"
   },
   "repository": {
     "type": "git",
@@ -51,7 +50,6 @@
   },
   "devDependencies": {
     "eslint": ">=7.32.0",
-    "pre-commit": "^1.2.2",
     "xo": "^0.37.1",
     "yargs-parser": ">=21.1.1"
   },
