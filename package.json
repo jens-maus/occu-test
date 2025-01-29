@@ -57,8 +57,5 @@
   },
   "xo": {
     "space": 4
-  },
-  "pre-commit": [
-    "lintfix"
-  ]
+  }
 }
